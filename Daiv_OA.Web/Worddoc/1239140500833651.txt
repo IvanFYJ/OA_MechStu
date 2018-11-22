@@ -1,0 +1,228 @@
+1>.jquery中的eq()和get()
+eq()返回的是一个jquery对象,而
+get()返回的是一个dom对象
+
+举个例子:
+<p style="color:yellow">绯雨</p>
+使用eq()来获得第一个p标签的color值
+$("p").eq(0).css("color"); //因为eq(num)返回的是个jq对象,所以可以用jq的方法css
+
+使用get来获得第一个p标签的color值
+$("p").get(0).style.color; //因为get(num)返回的是个html对象,所以要使用传统的HTML对象方法,jq对象此时就没用了
+
+当然也可以get(num)后把对象转化为jquery对象再进行操作
+$($("p").get(0)).css("color");
+2>.获取文本框的值
+$("#txtuname").val();
+or $("input[@name='txtuname']").val(); 
+<input type="text" nam="txtuname" id="txtuname" />
+
+=======================================================================
+$.map(array, fn):数组映射.把一个数组中的项目(处理转换后)保存到到另一个新数组中,返回生成的新数组.
+eg: var tempArr1=$.map([0,1,2],function(i){ return i + 4; });
+    tempArr1为[4,5,6]
+
+========================================================================
+由于jquery对象本身是一个集合所以如果jquery对象要转换为dom对象则必须取出其中的某一项一般可通过索引取出
+如：$("#msg")[0]，$("div").eq(1)[0]，$("td")[5]这些都是dom对象
+
+toggle(); 
+1.切换元素的可见状态，隐藏则显示，显示则隐藏
+2.每次点击时切换要调用的函数
+eg:
+$("p:eq(0)").toggle(function()
+            {
+                $(this).css("color","red");
+            },
+            function()
+            {
+                $(this).css("color","yellow");
+            });
+========================================================================
+$(document).ready()是在DOM结构载入完后执行的，
+而window.onload是得在所有文件都加载完后执行的，
+注意区别,一个是DOM加载完,一个是所有文件加载完
+========================================================================
+ function test()
+    {
+        $("#zc li:eq(0)").fadeOut("slow",function()
+        {
+            $(this).clone().appendTo($(this).parent()).fadeIn("slow");
+            $(this).remove();
+        });
+    }
+    setInterval("test()",1000);
+
+
+<div id="zc">
+     <ul>
+         <li>1111</li>
+         <li>2222</li>
+         <li>3333</li>
+         <li>4444</li>
+     </ul>
+</div>
+=======================================================================
+jquery中判断浏览器的类型
+$.browser.msie
+$.browser.mozilla
+$.browser.safari
+$.browser.opera
+=======================================================================
+$('#faq').find('dd').hide().end().find('dt').click(function() {
+         1> var answer = $(this).next();
+         2> if (answer.is(':visible'))
+         3> {
+         4>    answer.slideUp();
+         5> } 
+         6> else 
+         7> {
+         8>    answer.slideDown();
+         9> }
+
+});
+<dl id="faq">
+    <dt>性别</dt>
+    <dd>男</dd>
+    <dt>年龄</dt>
+    <dd>23</dd>
+</dl>
+
+补充:1>-9> 可以写为 $(this).next().slideToggle();
+===========================================================================
+empty() 删除匹配对象的所有子节点
+
+<div id="test">
+   <span>span</span>
+   <p>after</p>
+</div>
+<a href="#" onClick="jq()">jQuery</a>
+ 
+function jq(){  
+     $("#test").empty();  
+}
+执行后相当于
+<div id="test"></div><a href="#" onClick="jq()">jQuery</a>
+=========================================================================
+:first 只匹配一个元素
+:first-child 为每个父元素匹配一个子元素
+
+:last
+:last-child 同理
+eg:
+<ul>
+  <li>John</li>
+  <li>Karl</li>
+  <li>Brandon</li>
+</ul>
+<ul>
+  <li>Glen</li>
+  <li>Tane</li>
+  <li>Ralph</li>
+</ul> 
+$("ul li:first")        //[<li>John</li>]
+$("ul li:first-child")  //[<li>John</li>,<li>Glen</li>]
+========================================================================
+<table width="50%">
+  <tr>
+     <td>选择资源类型</td>
+     <td id="changeContent">HTML页面</td>
+      <td>
+          <select id="s1">
+             <option value="1">HTML页面</option>
+             <option value="2">下载资源</option>
+             <option value="3">超链接资源</option>
+             <option value="4">自测题</option>
+             <option value="5">课件资源</option>
+             <option value="6">问卷调查</option>
+             <option value="7">FAQ</option>
+             <option value="8">文本及附件</option>
+           </select>
+      </td>
+  </tr>
+</table>
+
+获取选中的值
+$(function()
+{
+	$("#s1").change(function()
+	{
+		    $("#changeContent").html($("option[value="+$(this).val()+"]").html());
+	});
+});
+================================================================================
+排除第一行
+$("tr:not(:first)").css("color","red");
+================================================================================
+提问：
+<input id="remember" name="remember"  type="checkbox">Test 
+JS：
+var remember = $("#remember").val();
+为什么我无论是否选中该复选框 remember的值都是on
+answer:
+因为checkbox的默认value值是on,你checked or unchecked只是改变了checked这个属性而已
+================================================================================
+解说$("div [a]")与$("div a")
+$("div[a]") 表示包含a标签的div,返回的是div标签对象
+$("div a")  表示div中的a标签,返回的是a标签对象 
+================================================================================
+表格中的每一个空列中都添加一个横杠 可以使用:empty伪选择器
+$('td:empty').html('-');
+================================================================================
+表格的隔行换色
+$("tr").each(function(i)
+{
+	this.style.backgroundColor=['red'][i%2]  //表示偶数行为红色 奇数行色不变
+});
+==>
+$("tr:even").each(function()
+{
+	this.style.backgroundColor='red'		
+});
+注意:
+this.style.backgroundColor=['#ccc','#fff'][i%2]
+对i%2取余数，要么为0要么为1，
+所以要么是['#ccc','#fff'][0]  要么是['#ccc','#fff'][1]
+所以要么是#ccc,要么是#fff -->即奇数行为#ccc,偶数行为#fff
+===============================================================================
+next()  next(expr)  返回匹配对象剩余的兄弟节点 
+<p>Hello</p><p id="a">Hello Again</p><p class="selected">And Again</p>
+jQuery代码及功能 
+function jq(){
+        alert($("p").next().html());
+        alert($("p").next(".selected").html());
+}
+$("p").next()返回 [ <p id="a">Hello Again</p> , <p class="selected">And Again</p> ]两个对象
+$("p").next(".selected)只返回 [<p class="selected">And Again</p> ]一个对象
+================================================================================
+1. :nth-child(index/even/odd/equation)用法
+定义：匹配其父元素下的第N个子或奇偶元素 ':eq(index)' 只匹配一个元素，而这个将为每一个父元素匹配子元素。:nth-child从1开始的，而:eq()是从0算起的！ 
+可以使用如下语法：
+:nth-child(2) //索引为2的元素
+:nth-child(even) //索引为偶数元素
+:nth-child(odd)  //索引为奇数元素
+:nth-child(3n)   //索引为3 * n的元素，n=0,1,2,3,4...，呃...3不是死的，你可以换成如1,2,4,5,6...之类的，下同
+:nth-child(3n+1) //索引为3 * n + 1的元素，n=0,1,2,3,4...
+:nth-child(3n+2) //索引为3 * n + 2的元素，n=0,1,2,3,4...
+返回值：Array<Element>
+参数：index (Number) : 要匹配元素的序号，从1开始
+
+
+2.  :first-child用法
+定义:匹配第一个子元素 ':first' 只匹配一个元素,而此选择符将为每个父元素匹配一个子元素
+
+
+3.  :last-child用法
+定义:匹配最后一个子元素 ':last'只匹配一个元素,而此选择符将为每个父元素匹配一个子元素 
+
+
+4.  :only-child用法
+定义:如果某个元素是父元素中唯一的子元素,那将会被匹配 如果父元素中含有其他元素,那将不
+会被匹配
+=====================================================================================
+工具函数是指在jQuery对象(即变量"$")上定义的函数，这些函数都是工具类函数。比如C#中最常用的trim()函数
+
+
+JSON 基础
+简单地说，JSON 可以将 JavaScript 对象中表示的一组数据转换为字符串，然后就可以在函数之间轻松地传递这个字符串，或者
+在异步应用程序中将字符串从 Web 客户机传递给服务器端程序

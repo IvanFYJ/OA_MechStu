@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.BLL", "Daiv_OA.BLL\Daiv_OA.BLL.csproj", "{76BB5960-AA3B-4209-8EBC-F19518A5C23B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.DAL", "Daiv_OA.DAL\Daiv_OA.DAL.csproj", "{F9735697-F574-44E5-A018-C8A36161B984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.Entity", "Daiv_OA.Entity\Daiv_OA.Entity.csproj", "{E681697D-8BB9-4FE7-AFFE-24F20676D930}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.Web", "Daiv_OA.Web\Daiv_OA.Web.csproj", "{F1E7ECFE-8D78-40BB-8FD3-3398ABAC0B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.DBUtility", "Daiv_OA.DBUtility\Daiv_OA.DBUtility.csproj", "{0988C62E-247F-471F-A183-DB509C7A3839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.Utils", "Daiv_OA.Utils\Daiv_OA.Utils.csproj", "{E42D51BB-0368-4BBC-BF69-89F11B42E675}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daiv_OA.UI", "Daiv_OA.UI\Daiv_OA.UI.csproj", "{EB5380F2-3BD4-489B-AF46-B29CF0E4BE24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76BB5960-AA3B-4209-8EBC-F19518A5C23B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BB5960-AA3B-4209-8EBC-F19518A5C23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BB5960-AA3B-4209-8EBC-F19518A5C23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BB5960-AA3B-4209-8EBC-F19518A5C23B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9735697-F574-44E5-A018-C8A36161B984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9735697-F574-44E5-A018-C8A36161B984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9735697-F574-44E5-A018-C8A36161B984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9735697-F574-44E5-A018-C8A36161B984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E681697D-8BB9-4FE7-AFFE-24F20676D930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E681697D-8BB9-4FE7-AFFE-24F20676D930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E681697D-8BB9-4FE7-AFFE-24F20676D930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E681697D-8BB9-4FE7-AFFE-24F20676D930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E7ECFE-8D78-40BB-8FD3-3398ABAC0B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E7ECFE-8D78-40BB-8FD3-3398ABAC0B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E7ECFE-8D78-40BB-8FD3-3398ABAC0B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E7ECFE-8D78-40BB-8FD3-3398ABAC0B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0988C62E-247F-471F-A183-DB509C7A3839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0988C62E-247F-471F-A183-DB509C7A3839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0988C62E-247F-471F-A183-DB509C7A3839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0988C62E-247F-471F-A183-DB509C7A3839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E42D51BB-0368-4BBC-BF69-89F11B42E675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E42D51BB-0368-4BBC-BF69-89F11B42E675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E42D51BB-0368-4BBC-BF69-89F11B42E675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E42D51BB-0368-4BBC-BF69-89F11B42E675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB5380F2-3BD4-489B-AF46-B29CF0E4BE24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB5380F2-3BD4-489B-AF46-B29CF0E4BE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB5380F2-3BD4-489B-AF46-B29CF0E4BE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB5380F2-3BD4-489B-AF46-B29CF0E4BE24}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

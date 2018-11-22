@@ -1,0 +1,15 @@
+D:\Projects\OA\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.dll
+D:\Projects\OA\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.pdb
+D:\Projects\OA\Daiv_OA.DBUtility\obj\Debug\ResolveAssemblyReference.cache
+D:\Projects\OA\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.dll
+D:\Projects\OA\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.pdb
+F:\临时\Daiv_OA_15845\Daiv_OA\OA\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.dll
+F:\临时\Daiv_OA_15845\Daiv_OA\OA\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.pdb
+F:\临时\Daiv_OA_15845\Daiv_OA\OA\Daiv_OA.DBUtility\obj\Debug\ResolveAssemblyReference.cache
+F:\临时\Daiv_OA_15845\Daiv_OA\OA\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.dll
+F:\临时\Daiv_OA_15845\Daiv_OA\OA\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.pdb
+I:\CSProject\51aspx_DaivOAad61207a-be59-4c2e-a11a-f0adf3071954\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.dll
+I:\CSProject\51aspx_DaivOAad61207a-be59-4c2e-a11a-f0adf3071954\Daiv_OA.DBUtility\bin\Debug\Daiv_OA.DBUtility.pdb
+I:\CSProject\51aspx_DaivOAad61207a-be59-4c2e-a11a-f0adf3071954\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.dll
+I:\CSProject\51aspx_DaivOAad61207a-be59-4c2e-a11a-f0adf3071954\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.pdb
+I:\CSProject\51aspx_DaivOAad61207a-be59-4c2e-a11a-f0adf3071954\Daiv_OA.DBUtility\obj\Debug\Daiv_OA.DBUtility.csprojResolveAssemblyReference.cache
