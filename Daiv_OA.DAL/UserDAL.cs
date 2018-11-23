@@ -11,6 +11,8 @@ namespace Daiv_OA.DAL
     /// </summary>
     public class UserDAL
     {
+        private static log4net.ILog log = log4net.LogManager.GetLogger("UserDAL");
+
         public UserDAL()
         { }
         #region  成员方法
@@ -93,6 +95,31 @@ namespace Daiv_OA.DAL
                 strSql1.Append("Setting,");
                 strSql2.Append("'" + model.Setting + "',");
             }
+            if (model.UClassID > 0)
+            {
+                strSql1.Append("UClassID,");
+                strSql2.Append("" + model.UClassID + ",");
+            }
+            if (model.Mphone != null)
+            {
+                strSql1.Append("Mphone,");
+                strSql2.Append("'" + model.Mphone + "',");
+            }
+            if (model.UClassName != null)
+            {
+                strSql1.Append("UClassName,");
+                strSql2.Append("'" + model.UClassName + "',");
+            }
+            if (model.ULongName != null)
+            {
+                strSql1.Append("ULongName,");
+                strSql2.Append("'" + model.ULongName + "',");
+            }
+            if (model.IsDeleted >= 0)
+            {
+                strSql1.Append("IsDeleted,");
+                strSql2.Append("" + model.IsDeleted + ",");
+            }
             strSql.Append("insert into [OA_User](");
             strSql.Append(strSql1.ToString().Remove(strSql1.Length - 1));
             strSql.Append(")");
@@ -123,7 +150,11 @@ namespace Daiv_OA.DAL
             strSql.Append("Upwd='" + model.Upwd + "',");
             strSql.Append("Position='" + model.Position + "',");
             strSql.Append("Setting='" + model.Setting + "',");
-            strSql.Append("Uipaddress='" + model.Uipaddress + "'");
+            strSql.Append("Uipaddress='" + model.Uipaddress + "',");
+            strSql.Append("UClassID=" + model.UClassID + ",");
+            strSql.Append("UClassName='" + model.UClassName + "',");
+            strSql.Append("Mphone='" + model.Mphone + "',");
+            strSql.Append("ULongName='" + model.ULongName + "'");
             strSql.Append(" where Uid=" + model.Uid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
         }
@@ -161,37 +192,88 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Uid,Pid,Did,Uname,Upwd,Uipaddress,Position,Setting ");
+            strSql.Append(" Uid,Pid,Did,Uname,Upwd,Uipaddress,Position,Setting,UClassID,UClassName,Mphone,ULongName,IsDeleted ");
             strSql.Append(" FROM [OA_User] ");
             strSql.Append(" where Uid=" + Uid + " ");
             Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
             DataSet ds = DbHelperSQL.Query(strSql.ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
-                if (ds.Tables[0].Rows[0]["Uid"].ToString() != "")
-                {
-                    model.Uid = int.Parse(ds.Tables[0].Rows[0]["Uid"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Did"].ToString() != "")
-                {
-                    model.Did = int.Parse(ds.Tables[0].Rows[0]["Did"].ToString());
-                }
-                if (ds.Tables[0].Rows[0]["Pid"].ToString() != "")
-                {
-                    model.Pid = int.Parse(ds.Tables[0].Rows[0]["Pid"].ToString());
-                }
-                model.Uname = ds.Tables[0].Rows[0]["Uname"].ToString();
-                model.Upwd = ds.Tables[0].Rows[0]["Upwd"].ToString();
-                model.Uipaddress = ds.Tables[0].Rows[0]["Uipaddress"].ToString();
-                model.Position = ds.Tables[0].Rows[0]["Position"].ToString();
-                model.Setting = ds.Tables[0].Rows[0]["Setting"].ToString();
-                return model;
+                //if (ds.Tables[0].Rows[0]["Uid"].ToString() != "")
+                //{
+                //    model.Uid = int.Parse(ds.Tables[0].Rows[0]["Uid"].ToString());
+                //}
+                //if (ds.Tables[0].Rows[0]["Did"].ToString() != "")
+                //{
+                //    model.Did = int.Parse(ds.Tables[0].Rows[0]["Did"].ToString());
+                //}
+                //if (ds.Tables[0].Rows[0]["Pid"].ToString() != "")
+                //{
+                //    model.Pid = int.Parse(ds.Tables[0].Rows[0]["Pid"].ToString());
+                //}
+                //model.Uname = ds.Tables[0].Rows[0]["Uname"].ToString();
+                //model.Upwd = ds.Tables[0].Rows[0]["Upwd"].ToString();
+                //model.Uipaddress = ds.Tables[0].Rows[0]["Uipaddress"].ToString();
+                //model.Position = ds.Tables[0].Rows[0]["Position"].ToString();
+                //model.Setting = ds.Tables[0].Rows[0]["Setting"].ToString();
+                //return model;
+                return ConvertModel(ds.Tables[0], 0);
             }
             else
             {
                 return null;
             }
         }
+
+
+        /// <summary>
+        /// 构造实体对象
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="rowindex"></param>
+        /// <returns></returns>
+        public Daiv_OA.Entity.UserEntity ConvertModel(DataTable dt, int rowindex)
+        {
+            Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
+            try
+            {
+                if (dt.Rows[rowindex]["Uid"].ToString() != "")
+                {
+                    model.Uid = int.Parse(dt.Rows[rowindex]["Uid"].ToString());
+                }
+                if (dt.Rows[rowindex]["Did"].ToString() != "")
+                {
+                    model.Did = int.Parse(dt.Rows[rowindex]["Did"].ToString());
+                }
+                if (dt.Rows[rowindex]["Pid"].ToString() != "")
+                {
+                    model.Pid = int.Parse(dt.Rows[rowindex]["Pid"].ToString());
+                }
+                model.Uname = dt.Rows[rowindex]["Uname"].ToString();
+                model.Upwd = dt.Rows[rowindex]["Upwd"].ToString();
+                model.Uipaddress = dt.Rows[rowindex]["Uipaddress"].ToString();
+                model.Position = dt.Rows[rowindex]["Position"].ToString();
+                model.Setting = dt.Rows[rowindex]["Setting"].ToString();
+                model.UClassName = dt.Rows[rowindex]["UClassName"].ToString();
+                model.Mphone = dt.Rows[rowindex]["Mphone"].ToString();
+                model.ULongName = dt.Rows[rowindex]["ULongName"].ToString();
+                if (dt.Rows[rowindex]["UClassID"].ToString() != "")
+                {
+                    model.UClassID = int.Parse(dt.Rows[rowindex]["UClassID"].ToString());
+                }
+                if (dt.Rows[rowindex]["IsDeleted"].ToString() != "")
+                {
+                    model.IsDeleted = int.Parse(dt.Rows[rowindex]["IsDeleted"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("转换成用户对象失败！原因：" + ex.Message);
+                return new Entity.UserEntity();
+            }
+            return model;
+        }
+
 
         /// <summary>
         /// 获得数据列表

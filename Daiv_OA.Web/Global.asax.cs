@@ -15,6 +15,9 @@ namespace Daiv_OA.Web
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            //项目启动加载
+            log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(Server.MapPath("~/Web.config")));
+
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(TimeEvent);
             aTimer.Interval = 10000;// 设置引发时间的时间间隔　此处设置为１0秒

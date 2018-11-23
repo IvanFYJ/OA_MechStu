@@ -19,6 +19,11 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\UsingDll\Layers.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>commdll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="RadUpload.Net2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\NOVEL 2011\Out_Novel_20111116\CGWNetNovel111116\CGWNetNovel_src\CGWNetNovel.WebFile\bin\RadUpload.Net2.dll</HintPath>
@@ -82,6 +91,7 @@
     <Content Include="ajax.aspx" />
     <Content Include="Callinfo_List.aspx" />
     <Content Include="Callinfo_Show.aspx" />
+    <Content Include="commdll\log4net.dll" />
     <Content Include="images\arrow_left.png" />
     <Content Include="images\btn_bg.gif" />
     <Content Include="images\folder.gif" />

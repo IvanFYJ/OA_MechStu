@@ -98,20 +98,22 @@ namespace Daiv_OA.BLL
                 Daiv_OA.Entity.UserEntity model;
                 for (int n = 0; n < rowsCount; n++)
                 {
-                    model = new Daiv_OA.Entity.UserEntity();
-                    if (ds.Tables[0].Rows[n]["Uid"].ToString() != "")
-                    {
-                        model.Uid = int.Parse(ds.Tables[0].Rows[n]["Uid"].ToString());
-                    }
-                    if (ds.Tables[0].Rows[n]["Pid"].ToString() != "")
-                    {
-                        model.Pid = int.Parse(ds.Tables[0].Rows[n]["Pid"].ToString());
-                    }
-                    model.Uname = ds.Tables[0].Rows[n]["Uname"].ToString();
-                    model.Upwd = ds.Tables[0].Rows[n]["Upwd"].ToString();
-                    model.Uipaddress = ds.Tables[0].Rows[n]["Uipaddress"].ToString();
-                    model.Setting = ds.Tables[0].Rows[n]["Setting"].ToString();
-                    modelList.Add(model);
+                    //model = new Daiv_OA.Entity.UserEntity();
+                    //if (ds.Tables[0].Rows[n]["Uid"].ToString() != "")
+                    //{
+                    //    model.Uid = int.Parse(ds.Tables[0].Rows[n]["Uid"].ToString());
+                    //}
+                    //if (ds.Tables[0].Rows[n]["Pid"].ToString() != "")
+                    //{
+                    //    model.Pid = int.Parse(ds.Tables[0].Rows[n]["Pid"].ToString());
+                    //}
+                    //model.Uname = ds.Tables[0].Rows[n]["Uname"].ToString();
+                    //model.Upwd = ds.Tables[0].Rows[n]["Upwd"].ToString();
+                    //model.Uipaddress = ds.Tables[0].Rows[n]["Uipaddress"].ToString();
+                    //model.Setting = ds.Tables[0].Rows[n]["Setting"].ToString();
+                    //modelList.Add(model);
+
+                    modelList.Add(dal.ConvertModel(ds.Tables[0], n));
                 }
             }
             return modelList;

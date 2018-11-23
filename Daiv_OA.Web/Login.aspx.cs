@@ -37,15 +37,19 @@ namespace Daiv_OA.Web
                     switch (pid)
                     {
                         case 1:
+                            Session["UserName"] = model.Uname;
                             Response.Redirect("Index.aspx");
                             break;
                         case 2:
+                            Session["UserName"] = model.Uname;
                             Response.Redirect("Index.aspx");
                             break;
                         case 3:
+                            Session["UserName"] = model.Uname;
                             Response.Redirect("Index.aspx");
                             break;
                         case 4:
+                            Session["UserName"] = model.Uname;
                             Response.Redirect("Index.aspx");
                             break;
                     }

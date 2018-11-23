@@ -29,6 +29,10 @@ namespace Daiv_OA.Web
             userEntity.Position = this.txtPosition.Text;
             userEntity.Setting = powerEntity.Setting;
             userEntity.Upwd = Daiv_OA.Utils.MD5.Lower32(this.txtPwd.Text.Trim());
+            userEntity.UClassID = Convert.ToInt32(this.UClassID.Text);
+            userEntity.ULongName = this.ULongName.Text;
+            userEntity.UClassName = this.UClassName.Text;
+            userEntity.Mphone = this.Mphone.Text;
             if (this.txtIpaddress.Text != "")
             {
                 userEntity.Uipaddress = this.txtIpaddress.Text;

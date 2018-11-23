@@ -1,6 +1,7 @@
 using System;
 namespace Daiv_OA.Entity
 {
+
     /// <summary>
     /// 实体类User 。(属性说明自动提取数据库字段的描述信息)
     /// </summary>
@@ -17,6 +18,11 @@ namespace Daiv_OA.Entity
         private string _uipaddress;
         private string _position;
         private string _setting;
+        private int _uclassid;
+        private string _uclassname;
+        private string _mphone;
+        private int _isdeleted;
+        private string _ulongname;
         /// <summary>
         /// 用户ID
         /// </summary>
@@ -80,6 +86,46 @@ namespace Daiv_OA.Entity
         {
             set { _setting = value; }
             get { return _setting; }
+        }
+        /// <summary>
+        /// 班级ID
+        /// </summary>
+        public int UClassID
+        {
+            set { _uclassid = value; }
+            get { return _uclassid; }
+        }
+        /// <summary>
+        /// 班级名称
+        /// </summary>
+        public string UClassName
+        {
+            set { _uclassname = value; }
+            get { return _uclassname; }
+        }
+        /// <summary>
+        /// 设备电话号码
+        /// </summary>
+        public string Mphone
+        {
+            set { _mphone = value; }
+            get { return _mphone; }
+        }
+        /// <summary>
+        /// 用户名字
+        /// </summary>
+        public string ULongName
+        {
+            set { _ulongname = value; }
+            get { return _ulongname; }
+        }
+        /// <summary>
+        /// 删除标志
+        /// </summary>
+        public int IsDeleted
+        {
+            set { _isdeleted = value; }
+            get { return _isdeleted; }
         }
         #endregion Model
 

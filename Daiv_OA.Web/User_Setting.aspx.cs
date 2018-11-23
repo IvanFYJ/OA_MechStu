@@ -35,6 +35,10 @@ namespace Daiv_OA.Web
             this.txtUname.ReadOnly = true;
            // this.txtPosition.Text = model.Position; //职位
             this.txtIpaddress.Text = model.Uipaddress;
+            this.UClassID.Text = model.UClassID.ToString();
+            this.ULongName.Text = model.ULongName ;
+            this.UClassName.Text = model.UClassName ;
+            this.Mphone.Text = model.Mphone;
             string user_setting = ""; 
             string[,] menu = null;
             if (pidtxt.Text != "")
@@ -111,6 +115,10 @@ namespace Daiv_OA.Web
             model.Pid = Convert.ToInt32(DropDownList2.SelectedValue.ToString());
             model.Did = Convert.ToInt32(DropDownList1.SelectedValue.ToString());
             model.Uipaddress = this.txtIpaddress.Text;
+            model.UClassID = Convert.ToInt32(this.UClassID.Text);
+            model.ULongName = this.ULongName.Text;
+            model.UClassName = this.UClassName.Text;
+            model.Mphone = this.Mphone.Text;
             new Daiv_OA.BLL.UserBLL().Update(model);
             Addadminlog("修改用户权限");
         }

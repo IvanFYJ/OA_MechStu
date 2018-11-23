@@ -48,15 +48,14 @@
                                     <li>基本信息</li>
                                 </ul>
                             </div>
-                            <div id="myTab1_Content0" class="cntut">
+                             <div id="myTab1_Content0" class="cntut">
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
-                                            <span class="bvjto styp">用户名字：</span>
+                                            <span class="bvjto styp">用户账号：</span>
                                             <asp:TextBox ID="txtUname" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtUname"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
-                                            （采用实名制，汉字）
                                         </td>
                                     </tr>
                                     <tr>
@@ -88,6 +87,39 @@
                                             <span class="bvjto styp">IP地址：</span><span id="Span1"></span>
                                             <asp:TextBox ID="txtIpaddress" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （最好限制其IP地址）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">用户名称：</span>
+                                            <asp:TextBox ID="ULongName" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="ULongName"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                            （采用实名制，汉字）
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">班级ID：</span>
+                                            <asp:TextBox ID="UClassID" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="UClassID"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">班级名称：</span>
+                                            <asp:TextBox ID="UClassName" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="UClassName"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">设备电话号码：</span>
+                                            <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="Mphone"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                 </table>

@@ -58,6 +58,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Daiv_OA.Web\commdll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -81,6 +84,7 @@
     <Compile Include="HtmlPager.cs" />
     <Compile Include="ImageHelp.cs" />
     <Compile Include="Int.cs" />
+    <Compile Include="logHelper.cs" />
     <Compile Include="Mail.cs" />
     <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
