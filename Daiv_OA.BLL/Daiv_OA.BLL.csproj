@@ -66,6 +66,7 @@
     <Compile Include="CoutomTimr.cs" />
     <Compile Include="DepartmentBLL.cs" />
     <Compile Include="Eemail.cs" />
+    <Compile Include="GradeBLL.cs" />
     <Compile Include="GridviewRowsCell.cs" />
     <Compile Include="MessageBLL.cs" />
     <Compile Include="OA_SysMessageIn.cs" />

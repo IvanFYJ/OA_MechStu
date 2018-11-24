@@ -28,9 +28,9 @@
                             </td>--%>
                             <td><a href="User_List.aspx">人员列表</a></td>
                             <td class="active">添加管理员</td>
-                            <td><a href="User_Add2.aspx">添加主管</a></td>
+<%--                            <td><a href="User_Add2.aspx">添加主管</a></td>
                             <td><a href="User_Add3.aspx">添加副主管</a></td>
-                            <td><a href="User_Add4.aspx">添加员工</a></td>
+                            <td><a href="User_Add4.aspx">添加员工</a></td>--%>
                         </tr>
                     </table>
                 </td>

@@ -92,6 +92,9 @@
     <Content Include="Callinfo_List.aspx" />
     <Content Include="Callinfo_Show.aspx" />
     <Content Include="commdll\log4net.dll" />
+    <Content Include="Grade_Add.aspx" />
+    <Content Include="Grade_Edit.aspx" />
+    <Content Include="Grade_List.aspx" />
     <Content Include="images\arrow_left.png" />
     <Content Include="images\btn_bg.gif" />
     <Content Include="images\folder.gif" />
@@ -820,6 +823,27 @@
     </Compile>
     <Compile Include="Callinfo_Show.aspx.designer.cs">
       <DependentUpon>Callinfo_Show.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Grade_Add.aspx.cs">
+      <DependentUpon>Grade_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grade_Add.aspx.designer.cs">
+      <DependentUpon>Grade_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Grade_Edit.aspx.cs">
+      <DependentUpon>Grade_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grade_Edit.aspx.designer.cs">
+      <DependentUpon>Grade_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Grade_List.aspx.cs">
+      <DependentUpon>Grade_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grade_List.aspx.designer.cs">
+      <DependentUpon>Grade_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>

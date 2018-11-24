@@ -387,44 +387,44 @@ function space(flag) {
     }
 };
 
-//var Popup = new Class();
-//Popup.prototype = {
-//    iframeIdName: 'ifr_popup',
-//    initialize: function(config) {
-//        this.config = Object.extend({
-//            contentType: 1,
-//            isHaveTitle: true,
-//            scrollType: 'no',
-//            isBackgroundCanClick: false,
-//            isSupportDraging: true,
-//            isShowShadow: true,
-//            isReloadOnClose: true,
-//            width: 400,
-//            height: 250,
-//            lwidth: 400,
-//            lheight: 150,
-//            canclose: "true",
-//            okaction:"",
-//            closeaction:"",
-//            urltransfer: '' // Alpha修改：URL跳转地址 08-12-15
-//        },
-//        config || {});
-//        this.info = {
-//            shadowWidth: 4,
-//            title: "",
-//            contentUrl: "",
-//            contentHtml: "",
-//            callBack: null,
-//            parameter: null,
-//            confirmCon: "",
-//            alertCon: "",
-//            someHiddenTag: "select,object,embed",
-//            someDisabledBtn: "",
-//            someHiddenEle: "",
-//            overlay: 0,
-//            coverOpacity: 40
-//        
-//        };
+var Popup = new Class();
+Popup.prototype = {
+    iframeIdName: 'ifr_popup',
+    initialize: function(config) {
+        this.config = Object.extend({
+            contentType: 1,
+            isHaveTitle: true,
+            scrollType: 'no',
+            isBackgroundCanClick: false,
+            isSupportDraging: true,
+            isShowShadow: true,
+            isReloadOnClose: true,
+            width: 400,
+            height: 250,
+            lwidth: 400,
+            lheight: 150,
+            canclose: "true",
+            okaction:"",
+            closeaction:"",
+            urltransfer: '' // Alpha修改：URL跳转地址 08-12-15
+        },
+        config || {});
+        this.info = {
+            shadowWidth: 4,
+            title: "",
+            contentUrl: "",
+            contentHtml: "",
+            callBack: null,
+            parameter: null,
+            confirmCon: "",
+            alertCon: "",
+            someHiddenTag: "select,object,embed",
+            someDisabledBtn: "",
+            someHiddenEle: "",
+            overlay: 0,
+            coverOpacity: 40
+        
+        };
         this.color = {
             cColor: "#CCCCCC",
             bColor: "#FFFFFF",

@@ -10,7 +10,7 @@
 namespace Daiv_OA.Web {
     
     
-    public partial class User_List {
+    public partial class Grade_List {
         
         /// <summary>
         /// Head1 控件。

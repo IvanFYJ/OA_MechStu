@@ -29,7 +29,11 @@
 //            success: function (lable) {
 //                lable.ligerHideTip();
 //            }
-//        });
+        //        });
+        if (document.location.href.indexOf('localhost') > -1) {
+            $('#txtUserName').val('51aspx');
+            $('#txtUserPwd').val('111111');
+        }
     });
 
     function ToggleCode(obj, codeurl) {

@@ -67,6 +67,7 @@
     <Compile Include="AllWorklogEntity.cs" />
     <Compile Include="CallinfoEntity.cs" />
     <Compile Include="DepartmentEntity.cs" />
+    <Compile Include="GradeEntity.cs" />
     <Compile Include="MessageEntity.cs" />
     <Compile Include="OperatelogEntity.cs" />
     <Compile Include="PageListModel.cs" />

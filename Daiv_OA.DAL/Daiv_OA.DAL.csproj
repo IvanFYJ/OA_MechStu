@@ -75,6 +75,7 @@
     <Compile Include="CallinfoDAL.cs" />
     <Compile Include="DepartmentDAL.cs" />
     <Compile Include="FilenameDAL.cs" />
+    <Compile Include="GradeDAL.cs" />
     <Compile Include="Itemsql.cs" />
     <Compile Include="MessageDAL.cs" />
     <Compile Include="OperatelogDAL.cs" />
