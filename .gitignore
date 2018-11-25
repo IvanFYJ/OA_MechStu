@@ -54,3 +54,16 @@ obj
 /Daiv_OA.Utils/bin/*.pdb
 /Daiv_OA.Web/_log/*.txt
 /Daiv_OA.Web/bin/*.dll
+/Daiv_OA.Web/upload/201811
+/Daiv_OA.BLL/bin/Debug/NPOI.OOXML.xml
+/Daiv_OA.BLL/bin/Debug/NPOI.OpenXml4Net.xml
+/Daiv_OA.BLL/bin/Debug/NPOI.xml
+/Daiv_OA.UI/bin/NPOI.OOXML.xml
+/Daiv_OA.UI/bin/NPOI.OpenXml4Net.xml
+/Daiv_OA.UI/bin/NPOI.xml
+/Daiv_OA.Utils/bin/NPOI.OOXML.xml
+/Daiv_OA.Utils/bin/NPOI.OpenXml4Net.xml
+/Daiv_OA.Utils/bin/NPOI.xml
+/Daiv_OA.Web/bin/NPOI.OOXML.xml
+/Daiv_OA.Web/bin/NPOI.OpenXml4Net.xml
+/Daiv_OA.Web/bin/NPOI.xml

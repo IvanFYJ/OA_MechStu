@@ -19,26 +19,32 @@ namespace Daiv_OA.Web
         //添加
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Entity.GradeEntity GradeEntity = new Entity.GradeEntity();
-            GradeEntity.Gname = this.Gname.Text;
+            Entity.GradeEntity gradeEntity = new Entity.GradeEntity();
+            gradeEntity.Gname = this.Gname.Text;
+            gradeEntity.GgradeName = this.GgradeName.Text;
+            gradeEntity.Mphone = this.Mphone.Text;
             try
             {
-                GradeEntity.Gsnumber = int.Parse(this.Gsnumber.Text);
+                gradeEntity.Gsnumber = int.Parse(this.Gsnumber.Text);
             }
             catch (Exception) { }
             if (this.Gdescription.Text != "")
             {
-                GradeEntity.Gdescription = this.Gdescription.Text;
+                gradeEntity.Gdescription = this.Gdescription.Text;
             }
-            int i = new Daiv_OA.BLL.GradeBLL().Add(GradeEntity);
+            gradeEntity.MechID = UserId;
+            int i = new Daiv_OA.BLL.GradeBLL().Add(gradeEntity);
             if (i > 0)
             {
                 logHelper.logInfo("添加班级成功！");
                 FinalMessage("操作成功", "Grade_List.aspx", 0);
             }
-            else
+            else if(i == 0)
             {
                 FinalMessage("相同的班级已经存在", "", 1);
+            }else if(i == -1)
+            {
+                FinalMessage("相同的年级已经存在", "", 1);
             }
         }
         //重置

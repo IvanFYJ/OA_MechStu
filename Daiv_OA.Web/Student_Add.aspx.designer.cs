@@ -10,7 +10,7 @@
 namespace Daiv_OA.Web {
     
     
-    public partial class Grade_Add {
+    public partial class Student_Add {
         
         /// <summary>
         /// form1 控件。
@@ -22,13 +22,22 @@ namespace Daiv_OA.Web {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// GgradeName 控件。
+        /// ddlGid 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox GgradeName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlGid;
+        
+        /// <summary>
+        /// Snumber 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Snumber;
         
         /// <summary>
         /// RequiredFieldValidator2 控件。
@@ -40,13 +49,13 @@ namespace Daiv_OA.Web {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
-        /// Gname 控件。
+        /// Sname 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Gname;
+        protected global::System.Web.UI.WebControls.TextBox Sname;
         
         /// <summary>
         /// RequiredFieldValidator1 控件。
@@ -58,49 +67,58 @@ namespace Daiv_OA.Web {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// Mphone 控件。
+        /// Sbirthday 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Mphone;
+        protected global::System.Web.UI.WebControls.TextBox Sbirthday;
         
         /// <summary>
-        /// RequiredFieldValidator4 控件。
+        /// RequiredFieldValidator7 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator7;
         
         /// <summary>
-        /// Gdescription 控件。
+        /// Cphone 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Gdescription;
+        protected global::System.Web.UI.WebControls.TextBox Cphone;
         
         /// <summary>
-        /// RequiredFieldValidator3 控件。
+        /// Cphone2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        protected global::System.Web.UI.WebControls.TextBox Cphone2;
         
         /// <summary>
-        /// Gsnumber 控件。
+        /// Cphone3 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Gsnumber;
+        protected global::System.Web.UI.WebControls.TextBox Cphone3;
+        
+        /// <summary>
+        /// Cphone4 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Cphone4;
         
         /// <summary>
         /// ImageButton1 控件。

@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daiv_OA.BLL</RootNamespace>
     <AssemblyName>Daiv_OA.BLL</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -32,6 +32,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,6 +64,7 @@
     <Compile Include="CallinfoBLL.cs" />
     <Compile Include="COMDLL.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="ContactBLL.cs" />
     <Compile Include="CoutomTimr.cs" />
     <Compile Include="DepartmentBLL.cs" />
     <Compile Include="Eemail.cs" />
@@ -82,6 +84,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StudentBLL.cs" />
     <Compile Include="SummarizeBLL.cs" />
     <Compile Include="TaskBLL.cs" />
     <Compile Include="TimeBLL.cs" />

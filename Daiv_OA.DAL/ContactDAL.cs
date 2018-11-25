@@ -7,11 +7,12 @@ using System.Text;
 
 namespace Daiv_OA.DAL
 {
-    public class GradeDAL
+    public class ContactDAL
     {
-        private static log4net.ILog log = log4net.LogManager.GetLogger("GradeDAL");
 
-        public GradeDAL()
+        private static log4net.ILog log = log4net.LogManager.GetLogger("ContactDAL");
+
+        public ContactDAL()
         { }
         #region  成员方法
 
@@ -20,20 +21,20 @@ namespace Daiv_OA.DAL
         /// </summary>
         public int GetMaxId()
         {
-            return DbHelperSQL.GetMaxID("Gid", "[OA_Grade]");
+            return DbHelperSQL.GetMaxID("Cid", "[OA_Contact]");
         }
 
         /// <summary>
-        /// 是否存在该记录
+        /// 是否存在该记录(根据学生ID来添加)
         /// </summary>
-        public bool Exists(int Gid)
+        public bool Exists(int Sid)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM [OA_Grade]");
-            strSql.Append(" where Gid=@Gid ");
+            strSql.Append("select count(1) FROM [OA_Contact]");
+            strSql.Append(" where Sid=@Sid ");
             SqlParameter[] parameters = {
-                    new SqlParameter("@Gid", SqlDbType.Int,4)};
-            parameters[0].Value = Gid;
+                    new SqlParameter("@Sid", SqlDbType.Int,4)};
+            parameters[0].Value = Sid;
 
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
@@ -41,81 +42,64 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string Gname)
+        public bool Exists(string Cphone)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM [OA_Grade]");
-            strSql.Append(" where Gname=@Gname");
+            strSql.Append("select count(1) FROM [OA_Contact]");
+            strSql.Append(" where Cphone=@Cphone");
             SqlParameter[] parameters = {
-                    new SqlParameter("@Gname", SqlDbType.VarChar,50)};
-            parameters[0].Value = Gname;
-            return DbHelperSQL.Exists(strSql.ToString(), parameters);
-        }
-
-
-        /// <summary>
-        /// 是否存在年级该记录
-        /// </summary>
-        public bool ExistsGrade(string GgradeName)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM [OA_Grade]");
-            strSql.Append(" where GgradeName=@GgradeName");
-            SqlParameter[] parameters = {
-                    new SqlParameter("@GgradeName", SqlDbType.VarChar,50)};
-            parameters[0].Value = GgradeName;
+                    new SqlParameter("@Cphone", SqlDbType.VarChar,50)};
+            parameters[0].Value = Cphone;
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(Daiv_OA.Entity.GradeEntity model)
+        public int Add(Daiv_OA.Entity.ContactEntity model)
         {
-            if (ExistsGrade(model.GgradeName))
-                return -1;
-            if (Exists(model.Gname))//已经存在该用户
+            if (model.Cid > 0 && Exists(model.Sid))//已经存在该用户
                 return 0;
             StringBuilder strSql = new StringBuilder();
             StringBuilder strSql1 = new StringBuilder();
             StringBuilder strSql2 = new StringBuilder();
 
-            if (model.Gname != null)
+            if (model.Sid > 0)
             {
-                strSql1.Append("Gname,");
-                strSql2.Append("'" + model.Gname + "',");
+                strSql1.Append("Sid,");
+                strSql2.Append("" + model.Sid + ",");
             }
-            if (model.Gdescription != null)
+            if (model.Cphone != null)
             {
-                strSql1.Append("Gdescription,");
-                strSql2.Append("'" + model.Gdescription + "',");
+                strSql1.Append("Cphone,");
+                strSql2.Append("'" + model.Cphone + "',");
             }
-            if (model.Gsnumber > 0)
+            if (model.Cphone2 != null)
             {
-                strSql1.Append("Gsnumber,");
-                strSql2.Append("" + model.Gsnumber + ",");
+                strSql1.Append("Cphone2,");
+                strSql2.Append("'" + model.Cphone2 + "',");
             }
-            if (model.MechID >= 0)
+            if (model.Cphone3 != null)
             {
-                strSql1.Append("MechID,");
-                strSql2.Append("" + model.MechID + ",");
+                strSql1.Append("Cphone3,");
+                strSql2.Append("'" + model.Cphone3 + "',");
             }
-            if (model.GgradeName != null)
+            if (model.Cphone4 != null)
             {
-                strSql1.Append("GgradeName,");
-                strSql2.Append("'" + model.GgradeName + "',");
+                strSql1.Append("Cphone4,");
+                strSql2.Append("'" + model.Cphone4 + "',");
             }
-            if (model.Mphone != null)
+            if (model.Cblacklistflag >= 0)
             {
-                strSql1.Append("Mphone,");
-                strSql2.Append("'" + model.Mphone + "',");
+                strSql1.Append("Cblacklistflag,");
+                strSql2.Append("" + model.Cblacklistflag + ",");
             }
             if (model.IsDeleted >= 0)
             {
                 strSql1.Append("IsDeleted,");
                 strSql2.Append("" + model.IsDeleted + ",");
             }
-            strSql.Append("insert into [OA_Grade](");
+            strSql.Append("insert into [OA_Contact](");
             strSql.Append(strSql1.ToString().Remove(strSql1.Length - 1));
             strSql.Append(")");
             strSql.Append(" values (");
@@ -135,17 +119,15 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public void Update(Daiv_OA.Entity.GradeEntity model)
+        public void Update(Daiv_OA.Entity.ContactEntity model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [OA_Grade] set ");
-            strSql.Append("Gname='" + model.Gname + "',");
-            strSql.Append("Gdescription='" + model.Gdescription + "',");
-            strSql.Append("GgradeName='" + model.GgradeName + "',");
-            strSql.Append("MechID=" + model.MechID + ",");
-            strSql.Append("Gsnumber=" + model.Gsnumber + ",");
-            strSql.Append("Mphone=" + model.Mphone + "");
-            strSql.Append(" where Gid=" + model.Gid + " ");
+            strSql.Append("update [OA_Contact] set ");
+            strSql.Append("Cphone='" + model.Cphone + "',");
+            strSql.Append("Cphone2='" + model.Cphone2 + "',");
+            strSql.Append("Cphone3='" + model.Cphone3 + "',");
+            strSql.Append("Cphone4='" + model.Cphone4 + "'");//注意： 最后不需要加逗号
+            strSql.Append(" where Cid=" + model.Cid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
         }
 
@@ -153,15 +135,15 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public void Delete(int Gid)
+        public void Delete(int Cid)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete FROM [OA_Grade] ");
-            strSql.Append(" where Gid=@Gid ");
+            strSql.Append("delete FROM [OA_Contact] ");
+            strSql.Append(" where Cid=@Cid ");
             SqlParameter[] parameters = {
-                    new SqlParameter("@Gid", SqlDbType.Int,4)};
-            parameters[0].Value = Gid;
+                    new SqlParameter("@Cid", SqlDbType.Int,4)};
+            parameters[0].Value = Cid;
 
             DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
         }
@@ -169,14 +151,36 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Daiv_OA.Entity.GradeEntity GetEntity(int Gid)
+        public Daiv_OA.Entity.ContactEntity GetEntity(int Cid)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Gid ,Gname ,Gsnumber ,Gdescription,MechID ,GgradeName,Mphone ,IsDeleted  ");
-            strSql.Append(" FROM [OA_Grade] ");
-            strSql.Append(" where Gid=" + Gid + " ");
-            Daiv_OA.Entity.GradeEntity model = new Daiv_OA.Entity.GradeEntity();
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" FROM [OA_Contact] ");
+            strSql.Append(" where Cid=" + Cid + " ");
+            Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString());
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return ConvertModel(ds.Tables[0], 0);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public Daiv_OA.Entity.ContactEntity GetEntityBySid(int Sid)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" FROM [OA_Contact] ");
+            strSql.Append(" where Sid=" + Sid + " ");
+            Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
             DataSet ds = DbHelperSQL.Query(strSql.ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -195,27 +199,23 @@ namespace Daiv_OA.DAL
         /// <param name="dt"></param>
         /// <param name="rowindex"></param>
         /// <returns></returns>
-        public Daiv_OA.Entity.GradeEntity ConvertModel(DataTable dt, int rowindex)
+        public Daiv_OA.Entity.ContactEntity ConvertModel(DataTable dt, int rowindex)
         {
-            Daiv_OA.Entity.GradeEntity model = new Daiv_OA.Entity.GradeEntity();
+            Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
             try
             {
-                if (dt.Rows[rowindex]["Gid"].ToString() != "")
+                if (dt.Rows[rowindex]["Cid"].ToString() != "")
                 {
-                    model.Gid = int.Parse(dt.Rows[rowindex]["Gid"].ToString());
+                    model.Cid = int.Parse(dt.Rows[rowindex]["Cid"].ToString());
                 }
-                if (dt.Rows[rowindex]["Gsnumber"].ToString() != "")
+                if (dt.Rows[rowindex]["Cblacklistflag"].ToString() != "")
                 {
-                    model.Gsnumber = int.Parse(dt.Rows[rowindex]["Gsnumber"].ToString());
+                    model.Cblacklistflag = int.Parse(dt.Rows[rowindex]["Cblacklistflag"].ToString());
                 }
-                if (dt.Rows[rowindex]["MechID"].ToString() != "")
-                {
-                    model.MechID = int.Parse(dt.Rows[rowindex]["MechID"].ToString());
-                }
-                model.Gdescription = dt.Rows[rowindex]["Gdescription"].ToString();
-                model.GgradeName = dt.Rows[rowindex]["GgradeName"].ToString();
-                model.Gname = dt.Rows[rowindex]["Gname"].ToString();
-                model.Mphone = dt.Rows[rowindex]["Mphone"].ToString();
+                model.Cphone = dt.Rows[rowindex]["Cphone"].ToString();
+                model.Cphone2 = dt.Rows[rowindex]["Cphone2"].ToString();
+                model.Cphone3 = dt.Rows[rowindex]["Cphone3"].ToString();
+                model.Cphone4 = dt.Rows[rowindex]["Cphone4"].ToString();
                 if (dt.Rows[rowindex]["IsDeleted"].ToString() != "")
                 {
                     model.IsDeleted = int.Parse(dt.Rows[rowindex]["IsDeleted"].ToString());
@@ -224,7 +224,7 @@ namespace Daiv_OA.DAL
             catch (Exception ex)
             {
                 log.Info("转换成用户对象失败！原因：" + ex.Message);
-                return new Entity.GradeEntity();
+                return new Entity.ContactEntity();
             }
             return model;
         }
@@ -236,8 +236,8 @@ namespace Daiv_OA.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select Gid ,Gname ,Gsnumber ,Gdescription,MechID ,Mphone,GgradeName  ,IsDeleted  ");
-            strSql.Append(" FROM [OA_Grade] ");
+            strSql.Append("select Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted   ");
+            strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -256,8 +256,8 @@ namespace Daiv_OA.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" Gid ,Gname ,Gsnumber ,Gdescription ,MechID,Mphone ,GgradeName ,IsDeleted ");
-            strSql.Append(" FROM [OA_Grade] ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -265,12 +265,12 @@ namespace Daiv_OA.DAL
             strSql.Append(" order by " + filedOrder);
             return DbHelperSQL.Query(strSql.ToString());
         }
-        
+
 
         /// <summary>
         /// 多表连接查询
         /// </summary>
-        /// <param name="kls_Gid"></param>
+        /// <param name="kls_Cid"></param>
         /// <param name="kls_pwd"></param>
         /// <param name="kls_num"></param>
         /// <returns></returns>
@@ -283,7 +283,7 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 工作状态
         /// </summary>
-        /// <param name="kls_Gid"></param>
+        /// <param name="kls_Cid"></param>
         /// <param name="kls_pwd"></param>
         /// <param name="kls_num"></param>
         /// <returns></returns>

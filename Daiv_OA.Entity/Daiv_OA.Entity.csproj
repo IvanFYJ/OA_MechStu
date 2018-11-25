@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daiv_OA.Entity</RootNamespace>
     <AssemblyName>Daiv_OA.Entity</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -32,6 +32,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,6 +67,7 @@
     <Compile Include="AllTimeEntity.cs" />
     <Compile Include="AllWorklogEntity.cs" />
     <Compile Include="CallinfoEntity.cs" />
+    <Compile Include="ContactEntity.cs" />
     <Compile Include="DepartmentEntity.cs" />
     <Compile Include="GradeEntity.cs" />
     <Compile Include="MessageEntity.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="PowerEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LearningEntity.cs" />
+    <Compile Include="StudentEntity.cs" />
     <Compile Include="SummarizeEntity.cs" />
     <Compile Include="TaskEntity.cs" />
     <Compile Include="TimeEntity.cs" />

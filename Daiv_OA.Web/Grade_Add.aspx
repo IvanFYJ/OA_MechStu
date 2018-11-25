@@ -26,11 +26,11 @@
                             <td>
                                 <a href="role.aspx?roleid=0">角色列表</a>
                             </td>--%>
-                            <td><a href="User_List.aspx">班级列表</a></td>
+                            <td><a href="Grade_List.aspx">班级列表</a></td>
                             <td class="active">添加班级</td>
-<%--                            <td><a href="User_Add2.aspx">添加主管</a></td>
-                            <td><a href="User_Add3.aspx">添加副主管</a></td>
-                            <td><a href="User_Add4.aspx">添加员工</a></td>--%>
+<%--                            <td><a href="Grade_Add2.aspx">添加主管</a></td>
+                            <td><a href="Grade_Add3.aspx">添加副主管</a></td>
+                            <td><a href="Grade_Add4.aspx">添加员工</a></td>--%>
                         </tr>
                     </table>
                 </td>
@@ -52,16 +52,32 @@
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">年级名称：</span>
+                                            <asp:TextBox ID="GgradeName" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="GgradeName"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">班级名称：</span>
                                             <asp:TextBox ID="Gname" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="Gname"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">设备电话号码：</span>
+                                            <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="Mphone"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
                                      <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
-                                            <span class="bvjto styp">班级描述：</span>
-                                            <asp:TextBox ID="Gdescription" runat="server" Width="220px" Height="100px" CssClass="ipt"></asp:TextBox>
+                                            <span class="bvjto styp">地址：</span>
+                                            <asp:TextBox ID="Gdescription" runat="server"  Width="400px" Height="24px" CssClass="ipt"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Gdescription"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>

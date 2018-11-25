@@ -41,9 +41,8 @@ namespace Daiv_OA.Web
         //数据绑定
         void Bind()
         {
-            
-            string sql = "SELECT Gid ,Gname ,Gsnumber ,Gdescription ,IsDeleted FROM Daiv_OA..OA_Grade(NOLOCK) WHERE IsDeleted = 0 ";
-            this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
+            //string sql = "SELECT Gid ,Gname ,Gsnumber ,Gdescription ,IsDeleted FROM Daiv_OA..OA_Grade(NOLOCK) WHERE IsDeleted = 0 ";
+            this.user_repeater.DataSource = new Daiv_OA.BLL.GradeBLL().GetList(0, " MechID="+UserId, " Gname asc");
             this.user_repeater.DataBind();
         }
         void Adminlogadd(string name)

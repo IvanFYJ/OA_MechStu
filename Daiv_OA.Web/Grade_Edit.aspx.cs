@@ -18,6 +18,7 @@ namespace Daiv_OA.Web
             {
                 Bind();
                 this.Gname.ReadOnly = true;
+                this.GgradeName.ReadOnly = true;
             }
         }
 
@@ -30,6 +31,8 @@ namespace Daiv_OA.Web
             this.Gname.Text = model.Gname;
             this.Gsnumber.Text = model.Gsnumber.ToString();
             this.Gdescription.Text = model.Gdescription;
+            this.GgradeName.Text = model.GgradeName;
+            this.Mphone.Text = model.Mphone;
         }
 
 
@@ -39,9 +42,10 @@ namespace Daiv_OA.Web
             Entity.GradeEntity model = new Entity.GradeEntity();
             model = new Daiv_OA.BLL.GradeBLL().GetEntity(Str2Int(q("id"), 0));
             model.Gdescription = this.Gdescription.Text;
+            model.Mphone = this.Mphone.Text;
             try
             {
-                model.Gsnumber = Convert.ToInt32(this.Gsnumber);
+                model.Gsnumber = Convert.ToInt32(this.Gsnumber.Text);
             }
             catch (Exception)
             {

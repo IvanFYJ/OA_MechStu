@@ -86,10 +86,8 @@ namespace Daiv_OA.UI
         /// <param name="s"></param>
         protected void chkPower(string s, string go2Url, int BackStep)
         {
-            logHelper.logInfo("1: s:" + s + " go2Url:" + go2Url + " BackStep:" + BackStep + " UserIsLogin" + this.UserIsLogin + " UserSetting" + this.UserSetting);
             if (!IsPower(s, go2Url, BackStep))
             {
-                logHelper.logInfo("2: s:" + s + " go2Url:" + go2Url + " BackStep:" + BackStep + " UserIsLogin" + this.UserIsLogin + " UserSetting" + this.UserSetting);
                 showErrMsg("权限不足或未登录", go2Url, BackStep);
             }
         }

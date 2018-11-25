@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daiv_OA.Web</RootNamespace>
     <AssemblyName>Daiv_OA.Web</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -24,6 +24,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>commdll\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>commdll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RadUpload.Net2, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\NOVEL 2011\Out_Novel_20111116\CGWNetNovel111116\CGWNetNovel_src\CGWNetNovel.WebFile\bin\RadUpload.Net2.dll</HintPath>
@@ -72,12 +77,18 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Telerik.QuickStart, Version=1.0.2668.29472, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\NOVEL 2011\Out_Novel_20111116\CGWNetNovel111116\CGWNetNovel_src\CGWNetNovel.WebFile\bin\Telerik.QuickStart.dll</HintPath>
@@ -92,6 +103,15 @@
     <Content Include="Callinfo_List.aspx" />
     <Content Include="Callinfo_Show.aspx" />
     <Content Include="commdll\log4net.dll" />
+    <Content Include="commdll\Newtonsoft.Json.dll" />
+    <Content Include="commdll\NPOI\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="commdll\NPOI\NPOI.dll" />
+    <Content Include="commdll\NPOI\NPOI.OOXML.dll" />
+    <Content Include="commdll\NPOI\NPOI.OOXML.XML" />
+    <Content Include="commdll\NPOI\NPOI.OpenXml4Net.dll" />
+    <Content Include="commdll\NPOI\NPOI.OpenXml4Net.XML" />
+    <Content Include="commdll\NPOI\NPOI.OpenXmlFormats.dll" />
+    <Content Include="commdll\NPOI\NPOI.XML" />
     <Content Include="Grade_Add.aspx" />
     <Content Include="Grade_Edit.aspx" />
     <Content Include="Grade_List.aspx" />
@@ -674,6 +694,10 @@
     <Content Include="scripts\ui\skins\icons\true.gif" />
     <Content Include="scripts\ui\skins\icons\up.gif" />
     <Content Include="scripts\ui\skins\ligerui-icons.css" />
+    <Content Include="Student_Add.aspx" />
+    <Content Include="Student_Edit.aspx" />
+    <Content Include="Student_Import.aspx" />
+    <Content Include="Student_List.aspx" />
     <Content Include="Summarize_Show.aspx" />
     <Content Include="Task_Add.aspx" />
     <Content Include="Task_List.aspx" />
@@ -1082,6 +1106,34 @@
     </Compile>
     <Compile Include="Scorlist2.aspx.designer.cs">
       <DependentUpon>Scorlist2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Add.aspx.cs">
+      <DependentUpon>Student_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Add.aspx.designer.cs">
+      <DependentUpon>Student_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Edit.aspx.cs">
+      <DependentUpon>Student_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Edit.aspx.designer.cs">
+      <DependentUpon>Student_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_Import.aspx.cs">
+      <DependentUpon>Student_Import.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_Import.aspx.designer.cs">
+      <DependentUpon>Student_Import.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_List.aspx.cs">
+      <DependentUpon>Student_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_List.aspx.designer.cs">
+      <DependentUpon>Student_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="webcontrol\Perdetail.aspx.cs">
       <DependentUpon>Perdetail.aspx</DependentUpon>
@@ -1759,8 +1811,10 @@
     <None Include="scripts\ui\skins\Aqua\images\tree\tree.psd" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="download\" />
     <Folder Include="kindeditor\attached\" />
     <Folder Include="obj\" />
+    <Folder Include="upload\" />
     <Folder Include="Worddoc\" />
     <Folder Include="workfile\" />
     <Folder Include="_log\" />
