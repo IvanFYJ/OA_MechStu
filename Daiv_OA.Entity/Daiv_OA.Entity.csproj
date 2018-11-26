@@ -73,6 +73,7 @@
     <Compile Include="MessageEntity.cs" />
     <Compile Include="OperatelogEntity.cs" />
     <Compile Include="PageListModel.cs" />
+    <Compile Include="ParentMessageEntity.cs" />
     <Compile Include="PlacardEntity.cs" />
     <Compile Include="PlanEntity.cs" />
     <Compile Include="PowerEntity.cs" />

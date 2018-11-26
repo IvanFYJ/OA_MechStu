@@ -73,6 +73,7 @@
     <Compile Include="MessageBLL.cs" />
     <Compile Include="OA_SysMessageIn.cs" />
     <Compile Include="OperatelogBLL.cs" />
+    <Compile Include="ParentMessageBLL.cs" />
     <Compile Include="PersonalBLL.cs" />
     <Compile Include="PlacardBLL.cs" />
     <Compile Include="PlanBLL.cs" />

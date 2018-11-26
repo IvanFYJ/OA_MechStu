@@ -53,7 +53,7 @@
                                         <tr>
                                             <td height="25" valign="top" style="padding-top: 2px; padding-left: 6px; padding-right: 6px;
                                                 padding- tom: 2px;">
-                                                <asp:Repeater ID="user_repeater" runat="server">
+                                                <asp:Repeater ID="user_repeater" runat="server"   OnItemDataBound="user_repeater_ItemDataBound">
                                                     <HeaderTemplate>
                                                         <table width="100%" cellpadding="2" cellspacing="0" class="dataTable" align="center">
                                                             <tr class="dataTableHead" align="center">
@@ -125,7 +125,26 @@
                                                             </td>
                                                         </tr>
                                                     </ItemTemplate>
+                                                    <SeparatorTemplate><%--这是分隔线模板--%>
+                                                    <tr>
+                                                    <td colspan="8">
+                                                    <hr style="border-top:1pt;"/>
+                                                    </td>
+                                                    </tr>
+                                                    </SeparatorTemplate>
                                                     <FooterTemplate>
+                                                        <tr>
+                                                            <td colspan="8" style="font-size: 12pt; color: #0099ff; background-color: #e6feda;">共<asp:Label ID="lblpc" runat="server" Text="Label"></asp:Label>页 当前为第
+                                                                <asp:Label ID="lblp" runat="server" Text="Label"></asp:Label>页
+                                                                <asp:HyperLink ID="hlfir" runat="server" Text="首页"></asp:HyperLink>
+                                                                <asp:HyperLink ID="hlp" runat="server" Text="上一页"></asp:HyperLink>
+                                                                <asp:HyperLink ID="hln" runat="server" Text="下一页"></asp:HyperLink>
+                                                                <asp:HyperLink ID="hlla" runat="server" Text="尾页"></asp:HyperLink>
+                                                                跳至第
+                                                                <asp:DropDownList ID="ddlp" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlp_SelectedIndexChanged">
+                                                                </asp:DropDownList>页
+                                                            </td>
+                                                        </tr>
                                                         </table>
                                                     </FooterTemplate>
                                                 </asp:Repeater>

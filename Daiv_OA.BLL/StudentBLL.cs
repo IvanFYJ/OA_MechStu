@@ -138,6 +138,15 @@ namespace Daiv_OA.BLL
             return dal.GetEntity(Gid);
         }
 
+        /// <summary>
+        /// 根据学号获取学生信息
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public Daiv_OA.Entity.StudentEntity GetEntityByNumber(string number)
+        {
+            return dal.GetEntityByNumber(number);
+        }
 
         /// <summary>
         /// 获得数据列表

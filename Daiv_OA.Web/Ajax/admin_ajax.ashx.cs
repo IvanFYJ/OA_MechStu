@@ -55,7 +55,7 @@ namespace DTcms.Web.tools
                          foreach (string rol in rols ){
                              if (!string.IsNullOrEmpty(rol))
                              {
-                                 string sqltitle = "SELECT title,url FROM  OA_Url WHERE rol LIKE '%" + rol + "%' and Rol NOT IN ('learning-edit','placard-edit','task-edit','user-edit','user-edit','grade-edit','grade-add','student-add','student-edit') ";
+                                 string sqltitle = "SELECT title,url FROM  OA_Url WHERE rol LIKE '%" + rol + "%' and Rol NOT IN ('learning-edit','placard-edit','task-edit','user-edit','user-edit','grade-edit','grade-add','student-add','student-edit','pm-add','pm-edit') ";
                                  DataSet dstitle = DbHelperSQL.Query(sqltitle);
                                  if (dstitle.Tables[0].Rows.Count>0) { 
                                  string title = dstitle.Tables[0].Rows[0]["title"].ToString().Trim();

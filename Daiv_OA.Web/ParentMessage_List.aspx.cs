@@ -2,21 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Daiv_OA.Web
 {
-    public partial class Student_List : Daiv_OA.UI.BasicPage
+    public partial class ParentMessage_List1 : Daiv_OA.UI.BasicPage
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            User_Load("student-list");
+            User_Load("pm-list");
             if (!this.Page.IsPostBack)
             {
                 this.user_repeater.DataSource = pds();
                 this.user_repeater.DataBind();
+                //Bind();
             }
         }
 
@@ -24,51 +27,12 @@ namespace Daiv_OA.Web
         //删除数据
         protected void lbDel_Click(object sender, CommandEventArgs e)
         {
-            User_Load("student-list");
+            User_Load("pm-list");
             string oname = Getoname();
-            Daiv_OA.BLL.StudentBLL studentBll = new Daiv_OA.BLL.StudentBLL();
-            Daiv_OA.BLL.UserBLL userBll = new BLL.UserBLL();
-            int sid = Convert.ToInt32(e.CommandArgument);
-            Entity.StudentEntity studentEntity = studentBll.GetEntity(sid);
-            studentBll.Delete(sid);
-            Entity.UserEntity userEntity = userBll.GetEntity(studentEntity.Uid);
-            userBll.Delete(studentEntity.Uid);//连同家长的账号也一起删除
-            logHelper.logInfo("删除学生成功！操作人：" + oname);
-            string stuStr = Newtonsoft.Json.JsonConvert.SerializeObject(studentEntity);
-            string userStr = Newtonsoft.Json.JsonConvert.SerializeObject(studentEntity);
-            logHelper.logInfo("删除学生：" + stuStr);
-            logHelper.logInfo("删除家长：" + userStr);
+            new Daiv_OA.BLL.ParentMessageBLL().Delete(Convert.ToInt32(e.CommandArgument));
+            logHelper.logInfo("删除留言成功！操作人：" + oname);
             Adminlogadd(oname);
             Bind();
-        }
-
-        //数据绑定
-        void Bind()
-        {
-            string sql = string.Format(@"SELECT 
-st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
-g.Gdescription,g.GgradeName,g.Gname,
-cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
-FROM Daiv_OA..OA_Student(NOLOCK) st 
-JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
-LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
-WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
-            this.user_repeater.DataSource = new Daiv_OA.BLL.GradeBLL().Getall(sql);
-            this.user_repeater.DataBind();
-        }
-
-        void Adminlogadd(string name)
-        {
-            Entity.AdminlogEntity model = new Entity.AdminlogEntity();
-            model.Uid = UserId;
-            model.Updatetitle = name;
-            model.Updatetime = DateTime.Now;
-            model.Updatetype = "删除学生";
-            int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
-            if (i > 0)
-                FinalMessage("学生删除成功", "Student_List.aspx", 0);
-            else
-                FinalMessage("学生删除失败", "Student_List.aspx", 0);
         }
 
         //通过参数获取被更改的用户名
@@ -79,18 +43,30 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             return model.Uname;
         }
 
+        //数据绑定
+        void Bind()
+        {
+            //string sql = "SELECT Gid ,Gname ,Gsnumber ,Gdescription ,IsDeleted FROM Daiv_OA..OA_Grade(NOLOCK) WHERE IsDeleted = 0 ";
+            this.user_repeater.DataSource = new Daiv_OA.BLL.ParentMessageBLL().GetList(0, " FromUid=" + UserId, " Addtime desc");
+            this.user_repeater.DataBind();
+        }
+        void Adminlogadd(string name)
+        {
+            Entity.AdminlogEntity model = new Entity.AdminlogEntity();
+            model.Uid = UserId;
+            model.Updatetitle = name;
+            model.Updatetime = DateTime.Now;
+            model.Updatetype = "删除留言";
+            int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
+            if (i > 0)
+                FinalMessage("留言删除成功", "ParentMessage_List.aspx", 0);
+            else
+                FinalMessage("留言删除失败", "ParentMessage_List.aspx", 0);
+        }
 
         private PagedDataSource pds()
         {
-            string sql = string.Format(@"SELECT 
-st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
-g.Gdescription,g.GgradeName,g.Gname,
-cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
-FROM Daiv_OA..OA_Student(NOLOCK) st 
-JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
-LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
-WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
-            DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);
+            DataSet ds = new Daiv_OA.BLL.ParentMessageBLL().GetList(0, " FromUid=" + UserId, " Addtime desc");
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
             //this.user_repeater.DataBind();
@@ -166,7 +142,7 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
         protected void ddlp_SelectedIndexChanged(object sender, EventArgs e)
         {//脚模板中的下拉列表框更改时激发
             string pg = Convert.ToString((Convert.ToInt32(((DropDownList)sender).SelectedValue) - 1));//获取列表框当前选中项
-            Response.Redirect("Student_List.aspx?page=" + pg);//页面转向
+            Response.Redirect("ParentMessage_List.aspx?page=" + pg);//页面转向
         }
     }
 }

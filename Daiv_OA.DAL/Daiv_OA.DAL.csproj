@@ -81,6 +81,7 @@
     <Compile Include="Itemsql.cs" />
     <Compile Include="MessageDAL.cs" />
     <Compile Include="OperatelogDAL.cs" />
+    <Compile Include="ParentMessageDAL.cs" />
     <Compile Include="PlacardDAL.cs" />
     <Compile Include="PlanDAL.cs" />
     <Compile Include="PowerDAL.cs" />

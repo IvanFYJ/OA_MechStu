@@ -436,6 +436,9 @@
     <Content Include="My_Worklog_Show.aspx" />
     <Content Include="My_Task_List.aspx" />
     <Content Include="My_Work_Show.aspx" />
+    <Content Include="ParentMessage_Add.aspx" />
+    <Content Include="ParentMessage_Edit.aspx" />
+    <Content Include="ParentMessage_List.aspx" />
     <Content Include="Placard_Add.aspx" />
     <Content Include="Placard_Edit.aspx" />
     <Content Include="Placard_Show.aspx" />
@@ -1092,6 +1095,27 @@
     </Compile>
     <Compile Include="My_Work_Show.aspx.designer.cs">
       <DependentUpon>My_Work_Show.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ParentMessage_Add.aspx.cs">
+      <DependentUpon>ParentMessage_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ParentMessage_Add.aspx.designer.cs">
+      <DependentUpon>ParentMessage_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ParentMessage_Edit.aspx.cs">
+      <DependentUpon>ParentMessage_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ParentMessage_Edit.aspx.designer.cs">
+      <DependentUpon>ParentMessage_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ParentMessage_List.aspx.cs">
+      <DependentUpon>ParentMessage_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ParentMessage_List.aspx.designer.cs">
+      <DependentUpon>ParentMessage_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="role.aspx.cs">
       <DependentUpon>role.aspx</DependentUpon>

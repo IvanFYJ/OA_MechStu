@@ -182,6 +182,30 @@ namespace Daiv_OA.DAL
             }
         }
 
+        /// <summary>
+        /// 根据学号获取学生信息
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public Daiv_OA.Entity.StudentEntity GetEntityByNumber(string number)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1  ");
+            strSql.Append(" Sid ,Snumber ,Gid ,Uid ,Sbirthday ,IsDeleted,MechID ,Sname,Gname  ");
+            strSql.Append(" FROM [OA_Student] ");
+            strSql.Append(" where Snumber='" + number + "' ");
+            Daiv_OA.Entity.StudentEntity model = new Daiv_OA.Entity.StudentEntity();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString());
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return ConvertModel(ds.Tables[0], 0);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// 构造实体对象
