@@ -879,6 +879,9 @@
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="interfaces\studentdata.ashx.cs">
+      <DependentUpon>studentdata.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Item.aspx.cs">
       <DependentUpon>Item.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1823,6 +1826,7 @@
     <Content Include="_data\config\qqro.config" />
     <Content Include="kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="kindeditor\asp.net\upload_json.ashx" />
+    <Content Include="interfaces\studentdata.ashx" />
     <None Include="kindeditor\jsp\demo.jsp" />
     <None Include="kindeditor\jsp\file_manager_json.jsp" />
     <None Include="kindeditor\jsp\upload_json.jsp" />
