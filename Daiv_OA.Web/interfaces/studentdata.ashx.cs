@@ -19,6 +19,8 @@ namespace Daiv_OA.Web.interfaces
             string user = Convert.ToString(context.Session["UserName"]);
             string pagesize = HttpContext.Current.Request.QueryString["pagesize"];
             string pageindex = HttpContext.Current.Request.QueryString["pageindex"];
+            string mPhone = HttpContext.Current.Request.QueryString["mPhone"];
+
             context.Response.ContentType = "text/plain";
 
             context.Response.Write("Hello World");

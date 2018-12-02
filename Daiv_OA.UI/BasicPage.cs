@@ -88,7 +88,13 @@ namespace Daiv_OA.UI
         {
             if (!IsPower(s, go2Url, BackStep))
             {
-                showErrMsg("权限不足或未登录", go2Url, BackStep);
+                if(UserId > 0)
+                {
+                    showErrMsg("权限不足", go2Url, BackStep);
+                }else
+                {
+                    showErrMsg("未登录", "Login.aspx", BackStep);
+                }
             }
         }
         /// <summary>
