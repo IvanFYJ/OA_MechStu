@@ -79,6 +79,7 @@
     <Compile Include="PowerEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LearningEntity.cs" />
+    <Compile Include="ResponeData.cs" />
     <Compile Include="StudentEntity.cs" />
     <Compile Include="SummarizeEntity.cs" />
     <Compile Include="TaskEntity.cs" />
