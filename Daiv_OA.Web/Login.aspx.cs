@@ -106,14 +106,16 @@ namespace Daiv_OA.Web
                 }
                 int iExpires = 0;
                 //设置Cookies
-                System.Collections.Specialized.NameValueCollection myCol = new System.Collections.Specialized.NameValueCollection();
-                myCol.Add("id", uid.ToString());
-                myCol.Add("name", uname);
-                myCol.Add("ip", Request.UserHostAddress);
-                new BLL.UserBLL().UpdateTime(model.Uid);
+                //System.Collections.Specialized.NameValueCollection myCol = new System.Collections.Specialized.NameValueCollection();
+                //myCol.Add("id", uid.ToString());
+                //myCol.Add("name", uname);
+                //myCol.Add("ip", Request.UserHostAddress);
+                //new BLL.UserBLL().UpdateTime(model.Uid);
                 int pid = model.Pid;
-                myCol.Add("Powerid", pid.ToString());
-                Daiv_OA.Utils.Cookie.SetObj("oa_user", 60 * 60 * 15 * iExpires, myCol, "", "/");
+                //myCol.Add("Powerid", pid.ToString());
+                //Daiv_OA.Utils.Cookie.SetObj("oa_user", 60 * 60 * 15 * iExpires, myCol, "", "/");
+
+                new BLL.UserBLL().SetUserCookies(model, Request.UserHostAddress, iExpires);
 
                 switch (pid)
                 {

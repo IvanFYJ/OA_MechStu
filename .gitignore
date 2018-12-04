@@ -67,3 +67,11 @@ obj
 /Daiv_OA.Web/bin/NPOI.OOXML.xml
 /Daiv_OA.Web/bin/NPOI.OpenXml4Net.xml
 /Daiv_OA.Web/bin/NPOI.xml
+/Daiv_OA.BLL/bin/Release/*.dll
+/Daiv_OA.BLL/bin/Release/*.pdb
+/Daiv_OA.BLL/bin/Release/*.xml
+/Daiv_OA.DAL/bin/Release/*.dll
+/Daiv_OA.DBUtility/bin/Release/*.dll
+/Daiv_OA.Entity/bin/Release/*.dll
+/Daiv_OA.Web/Properties/PublishProfiles/*.pubxml
+/Daiv_OA.Web/Properties/PublishProfiles/*.user

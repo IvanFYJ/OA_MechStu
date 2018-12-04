@@ -15,6 +15,26 @@ namespace Daiv_OA.BLL
         #region  成员方法
 
         /// <summary>
+        /// 设置Cookies
+        /// </summary>
+        /// <param name="user">用户对象</param>
+        /// <param name="userhAddress">用户登录地址</param>
+        /// <param name="iExpires">服务器持久化时间</param>
+        public void SetUserCookies(UserEntity user,string userhAddress,int iExpires)
+        {
+
+            //设置Cookies
+            System.Collections.Specialized.NameValueCollection myCol = new System.Collections.Specialized.NameValueCollection();
+            myCol.Add("id", user.Uid.ToString());
+            myCol.Add("name", user.Uname);
+            myCol.Add("ip", userhAddress);
+            new BLL.UserBLL().UpdateTime(user.Uid);
+            int pid = user.Pid;
+            myCol.Add("Powerid", pid.ToString());
+            Daiv_OA.Utils.Cookie.SetObj("oa_user", 60 * 60 * 15 * iExpires, myCol, "", "/");
+        }
+
+        /// <summary>
         /// 得到最大ID
         /// </summary>
         public int GetMaxId()
