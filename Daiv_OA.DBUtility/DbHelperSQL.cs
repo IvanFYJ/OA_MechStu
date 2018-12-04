@@ -832,6 +832,56 @@ namespace Daiv_OA.DBUtility
         }
 
         /// <summary>
+        /// 执行查询语句，返回SqlDataReader ( 注意：调用该方法后，一定要对SqlDataReader进行Close )
+        /// </summary>
+        /// <param name="SQLString"></param>
+        /// <param name="cmdParms"></param>
+        /// <returns></returns>
+        public static IList<Hashtable> ExecuteReaderHashtable(string SQLString, params SqlParameter[] cmdParms)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            IList<Hashtable> list = null;
+            try
+            {
+                PrepareCommand(cmd, connection, null, SQLString, cmdParms);
+                SqlDataReader sqlreader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                cmd.Parameters.Clear();
+                if (!Equals(sqlreader, null))
+                {
+                    if (sqlreader.HasRows)
+                    {
+                        int fieldCount = sqlreader.FieldCount;
+                        while (sqlreader.Read())
+                        {
+                            if (Equals(list, null)) list = new List<Hashtable>();
+                            Hashtable table = new Hashtable();
+                            for (int index = 0; index < fieldCount; index++)
+                            {
+                                string columnName = sqlreader.GetName(index);
+                                object value = (Convert.IsDBNull(sqlreader[index]) ? null : sqlreader[index]);
+                                table.Add(columnName, value);
+                            }
+                            list.Add(table);
+                        }
+                    }
+                }
+                //return myReader;
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                throw e;
+            }
+            finally
+            {
+                connection.Dispose();
+                connection.Close();
+                connection = null;
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 执行查询语句，返回DataSet
         /// </summary>
         /// <param name="SQLString">查询语句</param>

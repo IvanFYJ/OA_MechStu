@@ -834,6 +834,9 @@
     <Compile Include="Ajax\admin_ajax.ashx.cs">
       <DependentUpon>admin_ajax.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Ajax\mechanical_manager.ashx.cs">
+      <DependentUpon>mechanical_manager.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Ajax\verify_code.ashx.cs">
       <DependentUpon>verify_code.ashx</DependentUpon>
     </Compile>
@@ -878,9 +881,6 @@
     </Compile>
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="interfaces\studentdata.ashx.cs">
-      <DependentUpon>studentdata.ashx</DependentUpon>
     </Compile>
     <Compile Include="Item.aspx.cs">
       <DependentUpon>Item.aspx</DependentUpon>
@@ -1803,7 +1803,7 @@
     <Content Include="_data\config\qqro.config" />
     <Content Include="kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="kindeditor\asp.net\upload_json.ashx" />
-    <Content Include="interfaces\studentdata.ashx" />
+    <Content Include="Ajax\mechanical_manager.ashx" />
     <None Include="kindeditor\jsp\demo.jsp" />
     <None Include="kindeditor\jsp\file_manager_json.jsp" />
     <None Include="kindeditor\jsp\upload_json.jsp" />

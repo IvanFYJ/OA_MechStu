@@ -1,5 +1,6 @@
 ﻿using Daiv_OA.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -146,6 +147,18 @@ namespace Daiv_OA.BLL
         public Daiv_OA.Entity.StudentEntity GetEntityByNumber(string number)
         {
             return dal.GetEntityByNumber(number);
+        }
+
+        /// <summary>
+        /// 分页查询学生数据
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mPhone"></param>
+        /// <returns></returns>
+        public IList<Hashtable> List(int pageIndex, int pageSize, string mPhone)
+        {
+            return dal.List(pageIndex, pageSize, mPhone);
         }
 
         /// <summary>

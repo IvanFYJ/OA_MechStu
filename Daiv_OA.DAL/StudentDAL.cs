@@ -1,5 +1,6 @@
 ﻿using Daiv_OA.DBUtility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -252,6 +253,36 @@ namespace Daiv_OA.DAL
                 return new Entity.StudentEntity();
             }
             return model;
+        }
+
+        /// <summary>
+        /// 分页查询学生数据
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mPhone"></param>
+        /// <returns></returns>
+        public IList<Hashtable> List(int pageIndex,int pageSize,string mPhone)
+        {
+            string sql = @"WITH listtab AS (
+SELECT g.Gid,s.Sname,s.Snumber,c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
+ROW_NUMBER() OVER (ORDER BY g.Gid ASC, s.Snumber ASC) AS req
+FROM dbo.OA_Grade(NOLOCK) g
+JOIN dbo.OA_Student(NOLOCK) s ON s.Gid = g.Gid
+JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
+WHERE g.Mphone = @mPhone
+)
+SELECT Gid,Sname,Snumber,Cphone,Cphone2,Cphone3,Cphone4 FROM listtab
+WHERE req BETWEEN @begin AND @end";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@mPhone", SqlDbType.VarChar,50),
+                    new SqlParameter("@begin", SqlDbType.Int,4),
+                    new SqlParameter("@end", SqlDbType.Int,4)};
+            parameters[0].Value = mPhone;
+            parameters[1].Value = (pageIndex-1)*pageSize;
+            parameters[2].Value = pageIndex*pageSize;
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
         }
 
 

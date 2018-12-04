@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Daiv_OA.Entity
 {
-    public class ResponeData
+    public class ResponeDataEntity
     {
         /// <summary>
         /// 数据状态
