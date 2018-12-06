@@ -1,4 +1,5 @@
 ﻿using Daiv_OA.Entity;
+using Daiv_OA.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,6 +44,9 @@ namespace Daiv_OA.Web.Ajax
                 case "login":
                     entity = LoginIn(context);
                     break;
+                case "getcontact":
+                    entity = getContactBySnum(context);
+                    break;
             }
 
             ResponseData(context, entity);
@@ -67,6 +71,7 @@ namespace Daiv_OA.Web.Ajax
             entity.Status = 1;
             try
             {
+                logHelper.logInfo(" GetStudentData params：pagesize：" + pagesize+ " pageindex:"+pageindex+" mPhone:"+mPhone);
                 IList<Hashtable> list = stubll.List(Convert.ToInt32(pageindex), Convert.ToInt32(pagesize), mPhone);
                 entity.Data = list;
             }
@@ -95,6 +100,7 @@ namespace Daiv_OA.Web.Ajax
             entity.Status = 1;
             try
             {
+                logHelper.logInfo(" GetGradeData params：pagesize：" + pagesize + " pageindex:" + pageindex );
                 IList<Hashtable> list = gradebll.List(Convert.ToInt32(pageindex), Convert.ToInt32(pagesize));
                 entity.Data = list;
             }
@@ -119,6 +125,8 @@ namespace Daiv_OA.Web.Ajax
             string userID = HttpContext.Current.Request.Form["userID"];
             string oldPwd = HttpContext.Current.Request.Form["oldPwd"];
             string newPwd = HttpContext.Current.Request.Form["newPwd"];
+
+            logHelper.logInfo(" SetPwd params：userID：" + userID + " oldPwd:" + oldPwd+ " newPwd:"+ newPwd);
             if (string.IsNullOrEmpty(userID))
                 return new ResponeDataEntity() { Status = 0, Msg = "请传入用户ID!" };
             //获取用户对象
@@ -157,6 +165,8 @@ namespace Daiv_OA.Web.Ajax
             string cPhone2 = HttpContext.Current.Request.Form["cPhone2"];
             string cPhone3 = HttpContext.Current.Request.Form["cPhone3"];
             string cPhone4 = HttpContext.Current.Request.Form["cPhone4"];
+
+            logHelper.logInfo(" SetContact params：sNumber：" + snumber + " cPhone:" + cPhone + " cPhone2:" + cPhone2+ "cPhone3:" + cPhone3+ " cPhone4:" + cPhone4);
             //获取学生对象
             Daiv_OA.Entity.StudentEntity stuEntity =  stubll.GetEntityByNumber(snumber);
             if(stuEntity == null)
@@ -192,6 +202,7 @@ namespace Daiv_OA.Web.Ajax
             string pwd = HttpContext.Current.Request.Form["pwd"];
             int iExpires = 0;
 
+            logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd );
             string uid = new Daiv_OA.BLL.UserBLL().Existslongin(uname, Daiv_OA.Utils.MD5.Lower32(pwd));
             if(uid != "")
             {
@@ -202,6 +213,23 @@ namespace Daiv_OA.Web.Ajax
                 return new ResponeDataEntity() { Status = 1, Msg = "登录成功！",Data = model};
             }
             return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
+        }
+        
+        /// <summary>
+        /// 根据学生序号获取联系电话
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private ResponeDataEntity getContactBySnum(HttpContext context)
+        {
+            string snumber = HttpContext.Current.Request.Form["sNumber"];
+            logHelper.logInfo(" getContactBySnum params中文：sNumber：" + snumber);
+            //获取学生对象
+            Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(snumber);
+            if (stuEntity == null)
+                return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
+            Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
+            return new ResponeDataEntity() { Status = 1, Data = ctEntity };
         }
 
         public void ResponseData(HttpContext context, object entity)
