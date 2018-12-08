@@ -63,8 +63,8 @@ namespace Daiv_OA.Web.Ajax
         public ResponeDataEntity GetStudentData(HttpContext context)
         {
             string user = Convert.ToString(context.Session["UserName"]);
-            string pagesize = HttpContext.Current.Request.Form["pagesize"];
-            string pageindex = HttpContext.Current.Request.Form["pageindex"];
+            string pagesize = HttpContext.Current.Request.Form["pageSize"];
+            string pageindex = HttpContext.Current.Request.Form["pageIndex"];
             string mPhone = HttpContext.Current.Request.Form["mPhone"];
 
             ResponeDataEntity entity = new ResponeDataEntity();
@@ -93,8 +93,8 @@ namespace Daiv_OA.Web.Ajax
         public ResponeDataEntity GetGradeData(HttpContext context)
         {
             string user = Convert.ToString(context.Session["UserName"]);
-            string pagesize = HttpContext.Current.Request.Form["pagesize"];
-            string pageindex = HttpContext.Current.Request.Form["pageindex"];
+            string pagesize = HttpContext.Current.Request.Form["pageSize"];
+            string pageindex = HttpContext.Current.Request.Form["pageIndex"];
 
             ResponeDataEntity entity = new ResponeDataEntity();
             entity.Status = 1;
