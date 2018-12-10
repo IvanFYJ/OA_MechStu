@@ -24,7 +24,7 @@
               <uc1:WebDate ID="WebDate1" runat="server" />
             </td>
         </tr>
-        <tr>
+        <tr  style="display:none;" >
             <td width="40%" valign="top">
                 <table cellspacing="1" cellpadding="6" width="100%" align="center" border="0">
                     <tr>
@@ -105,7 +105,7 @@
                 </table>
             </td>
         </tr>
-       <tr>
+       <tr  style="display:none;" >
             <td valign="top" colspan="2">
                 <uc2:address ID="address1" runat="server" />
             </td>

@@ -1,10 +1,13 @@
 ﻿using Daiv_OA.Entity;
 using Daiv_OA.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.SessionState;
 
 namespace Daiv_OA.Web.Ajax
@@ -25,31 +28,91 @@ namespace Daiv_OA.Web.Ajax
         public void ProcessRequest(HttpContext context)
         {
             //取得处事类型
-            string action = HttpContext.Current.Request.Form["action"];  // .QueryString("action");
+            string action = HttpContext.Current.Request["action"];  // .QueryString("action");
             ResponeDataEntity entity = new ResponeDataEntity();
+            JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
+            action = ob["action"].ToString();
             switch (action)
             {
                 case "student": //加载频道管理菜单
-                    entity = GetStudentData(context);
+                    entity = GetStudentData(context, ob);
                     break;
                 case "grade":
-                    entity = GetGradeData(context);
+                    entity = GetGradeData(context, ob);
                     break;
                 case "pwd":
-                    entity = SetPwd(context);
+                    entity = SetPwd(context, ob);
                     break;
                 case "setcontact":
-                    entity = SetContact(context);
+                    entity = SetContact(context, ob);
                     break;
                 case "login":
-                    entity = LoginIn(context);
+                    entity = LoginIn(context, ob);
                     break;
                 case "getcontact":
-                    entity = getContactBySnum(context);
+                    entity = getContactBySnum(context, ob);
+                    break;
+                case "addstudent":
+                    entity = AddStudent(context, ob);
                     break;
             }
 
             ResponseData(context, entity);
+        }
+
+        /// <summary>
+        /// 添加学生
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private ResponeDataEntity AddStudent(HttpContext context, JObject ob)
+        {
+            //Entity.StudentEntity studentEntity = new Entity.StudentEntity();
+            //Entity.UserEntity parent = new Entity.UserEntity();
+            //Entity.ContactEntity contactEnitty = new Entity.ContactEntity();
+            ////请求参数
+            //string gname = "";
+            //string 
+            ////学生实体相关信息保存
+            //studentEntity.Gname = this.ddlGid.SelectedItem.Text;
+            //studentEntity.Gid = int.Parse(this.ddlGid.SelectedValue);
+            //studentEntity.Snumber = this.Snumber.Text;
+            //studentEntity.Sname = this.Sname.Text;
+            //studentEntity.Sbirthday = Convert.ToDateTime(this.Sbirthday.Text);
+            ////家长实体相关信息保存
+            //parent.Uname = studentEntity.Snumber;
+            //string pwd = studentEntity.Sbirthday.ToString("yy") + studentEntity.Sbirthday.ToString("MM") + studentEntity.Sbirthday.ToString("dd");
+            //parent.Upwd = Daiv_OA.Utils.MD5.Lower32(pwd);
+            //parent.Pid = 4;
+            //parent.Did = 0;
+            //parent.Position = "家长";
+            //parent.Mphone = "";
+            //Entity.PowerEntity powerEntity = new BLL.PowerBLL().GetEntity(parent.Pid);
+            //parent.Setting = powerEntity.Setting;
+            ////联系电话实体相关信息保存
+            //contactEnitty.Cphone = this.Cphone.Text;
+            //contactEnitty.Cphone2 = this.Cphone2.Text;
+            //contactEnitty.Cphone3 = this.Cphone3.Text;
+            //contactEnitty.Cphone4 = this.Cphone4.Text;
+            ////当前操作人对象
+            //Entity.UserEntity opera = new Daiv_OA.BLL.UserBLL().GetEntity(UserId);
+            //保存数据
+            try
+            {
+                int results = 0;// new Daiv_OA.BLL.StudentBLL().Add(studentEntity, parent, contactEnitty, opera);
+                if(results > 0)
+                {
+                    return new ResponeDataEntity() { Status = 1, Msg = "添加成功！" };
+                }
+                else
+                {
+                    return new ResponeDataEntity() { Status = 0, Msg = "添加失败，请重新添加!" };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponeDataEntity() { Status = 0, Msg = ex.Message };
+            }
         }
 
 
@@ -60,12 +123,12 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public ResponeDataEntity GetStudentData(HttpContext context)
+        public ResponeDataEntity GetStudentData(HttpContext context, JObject ob)
         {
             string user = Convert.ToString(context.Session["UserName"]);
-            string pagesize = HttpContext.Current.Request.Form["pageSize"];
-            string pageindex = HttpContext.Current.Request.Form["pageIndex"];
-            string mPhone = HttpContext.Current.Request.Form["mPhone"];
+            string pagesize = ob["pageSize"].ToString();
+            string pageindex = ob["pageIndex"].ToString();
+            string mPhone = ob["mPhone"].ToString();
 
             ResponeDataEntity entity = new ResponeDataEntity();
             entity.Status = 1;
@@ -90,11 +153,11 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public ResponeDataEntity GetGradeData(HttpContext context)
+        public ResponeDataEntity GetGradeData(HttpContext context, JObject ob)
         {
             string user = Convert.ToString(context.Session["UserName"]);
-            string pagesize = HttpContext.Current.Request.Form["pageSize"];
-            string pageindex = HttpContext.Current.Request.Form["pageIndex"];
+            string pagesize = ob["pageSize"].ToString();
+            string pageindex = ob["pageIndex"].ToString();
 
             ResponeDataEntity entity = new ResponeDataEntity();
             entity.Status = 1;
@@ -119,12 +182,12 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public ResponeDataEntity SetPwd(HttpContext context)
+        public ResponeDataEntity SetPwd(HttpContext context, JObject ob)
         {
             string user = Convert.ToString(context.Session["UserName"]);
-            string userID = HttpContext.Current.Request.Form["userID"];
-            string oldPwd = HttpContext.Current.Request.Form["oldPwd"];
-            string newPwd = HttpContext.Current.Request.Form["newPwd"];
+            string userID = ob["userID"].ToString();
+            string oldPwd = ob["oldPwd"].ToString();
+            string newPwd = ob["newPwd"].ToString();
 
             logHelper.logInfo(" SetPwd params：userID：" + userID + " oldPwd:" + oldPwd+ " newPwd:"+ newPwd);
             if (string.IsNullOrEmpty(userID))
@@ -158,13 +221,13 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private ResponeDataEntity SetContact(HttpContext context)
+        private ResponeDataEntity SetContact(HttpContext context, JObject ob)
         {
-            string snumber = HttpContext.Current.Request.Form["sNumber"];
-            string cPhone = HttpContext.Current.Request.Form["cPhone"];
-            string cPhone2 = HttpContext.Current.Request.Form["cPhone2"];
-            string cPhone3 = HttpContext.Current.Request.Form["cPhone3"];
-            string cPhone4 = HttpContext.Current.Request.Form["cPhone4"];
+            string snumber = ob["sNumber"].ToString();
+            string cPhone = ob["cPhone"].ToString();
+            string cPhone2 = ob["cPhone2"].ToString();
+            string cPhone3 = ob["cPhone3"].ToString();
+            string cPhone4 = ob["cPhone4"].ToString();
 
             logHelper.logInfo(" SetContact params：sNumber：" + snumber + " cPhone:" + cPhone + " cPhone2:" + cPhone2+ "cPhone3:" + cPhone3+ " cPhone4:" + cPhone4);
             //获取学生对象
@@ -196,10 +259,10 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private ResponeDataEntity LoginIn(HttpContext context)
+        private ResponeDataEntity LoginIn(HttpContext context, JObject ob)
         {
-            string uname = HttpContext.Current.Request.Form["uname"];
-            string pwd = HttpContext.Current.Request.Form["pwd"];
+            string uname = ob["uname"].ToString();
+            string pwd = ob["pwd"].ToString();
             int iExpires = 0;
 
             logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd );
@@ -220,9 +283,9 @@ namespace Daiv_OA.Web.Ajax
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private ResponeDataEntity getContactBySnum(HttpContext context)
+        private ResponeDataEntity getContactBySnum(HttpContext context, JObject ob)
         {
-            string snumber = HttpContext.Current.Request.Form["sNumber"];
+            string snumber = ob["sNumber"].ToString();
             logHelper.logInfo(" getContactBySnum params中文：sNumber：" + snumber);
             //获取学生对象
             Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(snumber);
@@ -235,9 +298,36 @@ namespace Daiv_OA.Web.Ajax
         public void ResponseData(HttpContext context, object entity)
         {
             context.Response.ContentType = "application/json";
-
+           //context.Response.AddHeader("Access-Control-Allow-Origin", "*");
             context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(entity));
         }
+
+
+        /// <summary>
+        /// 字符流转换成Jsno对象
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static JObject StreamToString(Stream s)
+        {
+            //创建流的对象
+            var sr = new StreamReader(s);
+            //读取request的流：Json字符
+            var stream = sr.ReadToEnd().ToString();
+            //讲读取到的字符用字典存储
+            Dictionary<string, object> str = (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(stream);
+
+            JObject jo = new JObject();
+
+            foreach (var item in str)
+            {
+                //把字典转换成Json对象
+                jo.Add(item.Key, item.Value.ToString());
+
+            }
+            return jo;
+        }
+
 
         public bool IsReusable
         {

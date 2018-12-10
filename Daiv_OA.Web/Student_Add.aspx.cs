@@ -45,7 +45,8 @@ namespace Daiv_OA.Web
             studentEntity.Sbirthday =Convert.ToDateTime(this.Sbirthday.Text);
             //家长实体相关信息保存
             parent.Uname = studentEntity.Snumber;
-            parent.Upwd = Daiv_OA.Utils.MD5.Lower32(studentEntity.Sbirthday.ToString("yyyy-MM-dd"));
+            string pwd = studentEntity.Sbirthday.ToString("yy") + studentEntity.Sbirthday.ToString("MM") + studentEntity.Sbirthday.ToString("dd");
+            parent.Upwd = Daiv_OA.Utils.MD5.Lower32(pwd);
             parent.Pid = 4;
             parent.Did = 0;
             parent.Position = "家长";

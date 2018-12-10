@@ -65,7 +65,6 @@ namespace Daiv_OA.Web
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
