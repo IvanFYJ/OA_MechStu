@@ -63,6 +63,24 @@ namespace Daiv_OA.Web
             model.Gid = int.Parse(this.ddlGid.SelectedValue);
             model.Sname = this.Sname.Text;
             model.Sbirthday = Convert.ToDateTime(this.Sbirthday.Text);
+            //检查电话号码
+            if (!string.IsNullOrEmpty(Cphone.Text) && !Validator.IsMobileNum(Cphone.Text)) {
+                FinalMessage(Cphone.Text + "电话号码无效!", "Student_Edit.aspx?id="+ q("id"), 0);
+                return;
+            }
+            if (!string.IsNullOrEmpty(Cphone2.Text) && !Validator.IsMobileNum(Cphone2.Text)) {
+                FinalMessage(Cphone2.Text + "电话号码无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
+            if (!string.IsNullOrEmpty(Cphone3.Text) && !Validator.IsMobileNum(Cphone3.Text)) {
+                FinalMessage(Cphone3.Text + "电话号码无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
+            if (!string.IsNullOrEmpty(Cphone4.Text) && !Validator.IsMobileNum(Cphone4.Text))
+            {
+                FinalMessage(Cphone4.Text + "电话号码无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
             studentBll.Update(model);
             //修改联系电话
             Entity.ContactEntity cModel = contactBll.GetEntityBySid(model.Sid);

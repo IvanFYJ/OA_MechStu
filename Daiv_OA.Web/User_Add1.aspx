@@ -98,18 +98,18 @@
                                             （采用实名制，汉字）
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">班级ID：</span>
-                                            <asp:TextBox ID="UClassID" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:TextBox ID="UClassID" runat="server" Width="220px" Height="24px" CssClass="ipt" Text="-1"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="UClassID"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">班级名称：</span>
-                                            <asp:TextBox ID="UClassName" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:TextBox ID="UClassName" runat="server" Width="220px" Height="24px" CssClass="ipt" Text="1111"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="UClassName"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>

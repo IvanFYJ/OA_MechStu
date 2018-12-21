@@ -68,6 +68,11 @@ namespace Daiv_OA.BLL
             int sid = 0;
             try
             {
+                //验证电话号码
+                if (!string.IsNullOrEmpty(contactEnitty.Cphone) && !Validator.IsMobileNum(contactEnitty.Cphone)) { throw new Exception(contactEnitty.Cphone+"电话号码无效!"); }
+                if (!string.IsNullOrEmpty(contactEnitty.Cphone2) && !Validator.IsMobileNum(contactEnitty.Cphone2)) { throw new Exception(contactEnitty.Cphone2 + "电话号码无效!"); }
+                if (!string.IsNullOrEmpty(contactEnitty.Cphone3) && !Validator.IsMobileNum(contactEnitty.Cphone3)) { throw new Exception(contactEnitty.Cphone3 + "电话号码无效!"); }
+                if (!string.IsNullOrEmpty(contactEnitty.Cphone4) && !Validator.IsMobileNum(contactEnitty.Cphone4)) { throw new Exception(contactEnitty.Cphone4 + "电话号码无效!"); }
                 //添加家长信息
                 pId = new Daiv_OA.BLL.UserBLL().Add(parent);
                 if (pId > 0)
@@ -158,6 +163,11 @@ namespace Daiv_OA.BLL
         /// <returns></returns>
         public IList<Hashtable> List(int pageIndex, int pageSize, string mPhone)
         {
+            #region 如果页容量等于-1，表示根据mPhone获取所有的数据 add by fanyongjian date:20181221
+            //如果页容量等于-1，表示根据mPhone获取所有的数据
+            if (pageSize == -1)
+                return dal.List(mPhone); 
+            #endregion
             return dal.List(pageIndex, pageSize, mPhone);
         }
 

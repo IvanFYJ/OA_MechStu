@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Daiv_OA.Utils;
+using System;
 using System.Collections;
 using System.Configuration;
 using System.Data;
@@ -33,6 +34,12 @@ namespace Daiv_OA.Web
             userEntity.ULongName = this.ULongName.Text;
             userEntity.UClassName = this.UClassName.Text;
             userEntity.Mphone = this.Mphone.Text;
+            //检查电话号码
+            if (!string.IsNullOrEmpty(Mphone.Text) && !Validator.IsMobileNum(Mphone.Text))
+            {
+                FinalMessage(Mphone.Text + "电话号码无效!", "" , 1);
+                return;
+            }
             if (this.txtIpaddress.Text != "")
             {
                 userEntity.Uipaddress = this.txtIpaddress.Text;

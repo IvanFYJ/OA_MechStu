@@ -285,6 +285,30 @@ WHERE req BETWEEN @begin AND @end";
             return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
         }
 
+        /// <summary>
+        /// 根据电话号码查询学生数据
+        /// </summary>
+        /// <param name="mPhone"></param>
+        /// <returns></returns>
+        public IList<Hashtable> List(string mPhone)
+        {
+            string sql = @"WITH listtab AS (
+SELECT g.Gid,s.Sname,s.Snumber,c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
+ROW_NUMBER() OVER (ORDER BY g.Gid ASC, s.Snumber ASC) AS req
+FROM dbo.OA_Grade(NOLOCK) g
+JOIN dbo.OA_Student(NOLOCK) s ON s.Gid = g.Gid
+JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
+WHERE g.Mphone = @mPhone
+)
+SELECT Gid,Sname,Snumber,Cphone,Cphone2,Cphone3,Cphone4 FROM listtab
+";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@mPhone", SqlDbType.VarChar,50)};
+            parameters[0].Value = mPhone;
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+        }
+
 
         /// <summary>
         /// 获得数据列表

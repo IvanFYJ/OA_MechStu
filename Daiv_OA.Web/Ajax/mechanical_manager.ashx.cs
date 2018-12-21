@@ -32,6 +32,19 @@ namespace Daiv_OA.Web.Ajax
             ResponeDataEntity entity = new ResponeDataEntity();
             JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
             action = ob["action"].ToString();
+
+            #region 验证token
+            //验证token
+            if ("login" != action && !HasToken(context))
+            {
+                entity.Msg = "您未授权，请联系相关负责人!";
+                ResponseData(context, entity);
+                return;
+            } 
+            #endregion
+
+            #region 业务流转
+            //业务流转
             switch (action)
             {
                 case "student": //加载频道管理菜单
@@ -55,10 +68,25 @@ namespace Daiv_OA.Web.Ajax
                 case "addstudent":
                     entity = AddStudent(context, ob);
                     break;
-            }
+            } 
+            #endregion
 
             ResponseData(context, entity);
         }
+
+        #region 判断请求头是否有token
+        /// <summary>
+        /// 判断请求头是否有token
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private bool HasToken(HttpContext context)
+        {
+            string token = "3fe686907939d07097f6c87f08025422";
+            string retoken = context.Request.Headers["api-token"];
+            return token == retoken;
+        } 
+        #endregion
 
         /// <summary>
         /// 添加学生
@@ -228,6 +256,7 @@ namespace Daiv_OA.Web.Ajax
             string cPhone2 = ob["cPhone2"].ToString();
             string cPhone3 = ob["cPhone3"].ToString();
             string cPhone4 = ob["cPhone4"].ToString();
+            ResponeDataEntity resultEntity = new ResponeDataEntity();
 
             logHelper.logInfo(" SetContact params：sNumber：" + snumber + " cPhone:" + cPhone + " cPhone2:" + cPhone2+ "cPhone3:" + cPhone3+ " cPhone4:" + cPhone4);
             //获取学生对象
@@ -235,6 +264,13 @@ namespace Daiv_OA.Web.Ajax
             if(stuEntity == null)
                 return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
             Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
+
+            //电话号码验证
+            if (!string.IsNullOrEmpty(cPhone) && !Validator.IsMobileNum(cPhone)) { resultEntity.Msg = cPhone+"电话号码无效！"; return resultEntity; };
+            if (!string.IsNullOrEmpty(cPhone2) && !Validator.IsMobileNum(cPhone2)) { resultEntity.Msg = cPhone2 + "电话号码无效！"; return resultEntity; };
+            if (!string.IsNullOrEmpty(cPhone3) && !Validator.IsMobileNum(cPhone3)) { resultEntity.Msg = cPhone3 + "电话号码无效！"; return resultEntity; };
+            if (!string.IsNullOrEmpty(cPhone4) && !Validator.IsMobileNum(cPhone4)) { resultEntity.Msg = cPhone4 + "电话号码无效！"; return resultEntity; };
+            //保存数据
             if (ctEntity == null)
             {
                 ctEntity = new ContactEntity() { Sid = stuEntity.Sid };
@@ -327,7 +363,7 @@ namespace Daiv_OA.Web.Ajax
             }
             return jo;
         }
-
+        
 
         public bool IsReusable
         {
