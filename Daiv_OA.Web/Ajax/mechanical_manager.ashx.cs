@@ -35,7 +35,7 @@ namespace Daiv_OA.Web.Ajax
 
             #region 验证token
             //验证token
-            if ("login" != action && !HasToken(context))
+            if ("login" != action && "checklogin" != action && !HasToken(context))
             {
                 entity.Msg = "您未授权，请联系相关负责人!";
                 ResponseData(context, entity);
@@ -67,6 +67,9 @@ namespace Daiv_OA.Web.Ajax
                     break;
                 case "addstudent":
                     entity = AddStudent(context, ob);
+                    break;
+                case "checklogin":
+                    entity = CheckLogin(context, ob);
                     break;
             } 
             #endregion
@@ -312,6 +315,26 @@ namespace Daiv_OA.Web.Ajax
                 return new ResponeDataEntity() { Status = 1, Msg = "登录成功！",Data = model};
             }
             return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
+        }
+
+        /// <summary>
+        /// 检查登录情况(用于自动登录)
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity CheckLogin(HttpContext context, JObject ob)
+        {
+            if (Daiv_OA.Utils.Cookie.GetValue("oa_user") != null)
+            {
+                if (Daiv_OA.Utils.Cookie.GetValue("oa_user", "ip") == context.Request.UserHostAddress)
+                {
+                    Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
+                    model = new Daiv_OA.BLL.UserBLL().GetEntity(Convert.ToInt32(Daiv_OA.Utils.Cookie.GetValue("oa_user", "id")));
+                    return new ResponeDataEntity() { Status = 1, Msg = "登录成功！", Data = model };
+                }
+            }
+            return new ResponeDataEntity() { Status = 0, Msg = "未成功！", Data = null };
         }
         
         /// <summary>
