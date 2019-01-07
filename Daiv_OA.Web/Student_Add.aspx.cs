@@ -54,16 +54,25 @@ namespace Daiv_OA.Web
             Entity.PowerEntity powerEntity = new BLL.PowerBLL().GetEntity(parent.Pid);
             parent.Setting = powerEntity.Setting;
             //联系电话实体相关信息保存
-            contactEnitty.Cphone = this.Cphone.Text;
-            contactEnitty.Cphone2 = this.Cphone2.Text;
-            contactEnitty.Cphone3 = this.Cphone3.Text;
-            contactEnitty.Cphone4 = this.Cphone4.Text;
+            //contactEnitty.Cphone = this.Cphone.Text;
+            //contactEnitty.Cphone2 = this.Cphone2.Text;
+            //contactEnitty.Cphone3 = this.Cphone3.Text;
+            //contactEnitty.Cphone4 = this.Cphone4.Text;
+            List<Entity.ContactEntity> contactList = new List<Entity.ContactEntity>();
+            string[] contactpArr = Request.Form["contactPhone"].Split(',');
+            string[] contactnArr = Request.Form["contactName"].Split(',');
+            for (int i = 0; i < contactpArr.Length; i++)
+            {
+                if (string.IsNullOrEmpty(contactpArr[i]) || string.IsNullOrEmpty(contactnArr[i]))
+                    continue;
+                contactList.Add(new Entity.ContactEntity() { Cphone=contactpArr[i], CPhoneName=contactnArr[i] });
+            }
             //当前操作人对象
             Entity.UserEntity opera = new Daiv_OA.BLL.UserBLL().GetEntity(UserId);
             //保存数据
             try
             {
-                new Daiv_OA.BLL.StudentBLL().Add(studentEntity, parent, contactEnitty, opera);
+                new Daiv_OA.BLL.StudentBLL().Add(studentEntity, parent, contactList, opera);
             }
             catch (Exception ex)
             {

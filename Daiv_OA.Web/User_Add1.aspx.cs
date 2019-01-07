@@ -30,16 +30,16 @@ namespace Daiv_OA.Web
             userEntity.Position = this.txtPosition.Text;
             userEntity.Setting = powerEntity.Setting;
             userEntity.Upwd = Daiv_OA.Utils.MD5.Lower32(this.txtPwd.Text.Trim());
-            userEntity.UClassID = Convert.ToInt32(this.UClassID.Text);
+            userEntity.UClassID = Convert.ToInt32(this.ddlGid.SelectedItem.Value);
             userEntity.ULongName = this.ULongName.Text;
-            userEntity.UClassName = this.UClassName.Text;
+            userEntity.UClassName = this.ddlGid.SelectedItem.Text;
             userEntity.Mphone = this.Mphone.Text;
             //检查电话号码
-            if (!string.IsNullOrEmpty(Mphone.Text) && !Validator.IsMobileNum(Mphone.Text))
-            {
-                FinalMessage(Mphone.Text + "电话号码无效!", "" , 1);
-                return;
-            }
+            //if (!string.IsNullOrEmpty(Mphone.Text) && !Validator.IsMobileNum(Mphone.Text))
+            //{
+            //    FinalMessage(Mphone.Text + "电话号码无效!", "" , 1);
+            //    return;
+            //}
             if (this.txtIpaddress.Text != "")
             {
                 userEntity.Uipaddress = this.txtIpaddress.Text;

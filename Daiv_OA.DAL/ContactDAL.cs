@@ -63,6 +63,7 @@ namespace Daiv_OA.DAL
             StringBuilder strSql = new StringBuilder();
             StringBuilder strSql1 = new StringBuilder();
             StringBuilder strSql2 = new StringBuilder();
+            model.IsDeleted = 0;
 
             if (model.Sid > 0)
             {
@@ -84,10 +85,15 @@ namespace Daiv_OA.DAL
                 strSql1.Append("Cphone3,");
                 strSql2.Append("'" + model.Cphone3 + "',");
             }
-            if (model.Cphone4 != null)
+            if (model.Cphone4 != null) 
             {
                 strSql1.Append("Cphone4,");
                 strSql2.Append("'" + model.Cphone4 + "',");
+            }
+            if (model.CPhoneName != null)
+            {
+                strSql1.Append("CPhoneName,");
+                strSql2.Append("'" + model.CPhoneName + "',");
             }
             if (model.Cblacklistflag >= 0)
             {
@@ -97,7 +103,7 @@ namespace Daiv_OA.DAL
             if (model.IsDeleted >= 0)
             {
                 strSql1.Append("IsDeleted,");
-                strSql2.Append("" + model.IsDeleted + ",");
+                strSql2.Append("0,");
             }
             strSql.Append("insert into [OA_Contact](");
             strSql.Append(strSql1.ToString().Remove(strSql1.Length - 1));
@@ -124,8 +130,9 @@ namespace Daiv_OA.DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [OA_Contact] set ");
             strSql.Append("Cphone='" + model.Cphone + "',");
-            strSql.Append("Cphone2='" + model.Cphone2 + "',");
+            strSql.Append("Cphone2='" + model.Cphone2 + "',"); 
             strSql.Append("Cphone3='" + model.Cphone3 + "',");
+            strSql.Append("CPhoneName='" + model.CPhoneName + "',");
             strSql.Append("Cphone4='" + model.Cphone4 + "'");//注意： 最后不需要加逗号
             strSql.Append(" where Cid=" + model.Cid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
@@ -149,13 +156,32 @@ namespace Daiv_OA.DAL
         }
 
         /// <summary>
+        /// 删除一条数据
+        /// </summary>
+        public void DeleteBySid(int Sid)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("Update [OA_Contact] ");
+            strSql.Append(" set IsDeleted=@IsDeleted ");
+            strSql.Append(" where Sid=@Sid ");
+            SqlParameter[] parameters = {
+                    new SqlParameter("@IsDeleted", SqlDbType.Int,4),
+                    new SqlParameter("@Sid", SqlDbType.Int,4)
+            };
+            parameters[0].Value = 1;
+            parameters[1].Value = Sid;
+
+            DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
+        }
+
+        /// <summary>
         /// 得到一个对象实体
         /// </summary>
         public Daiv_OA.Entity.ContactEntity GetEntity(int Cid)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag,CPhoneName ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             strSql.Append(" where Cid=" + Cid + " ");
             Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
@@ -177,14 +203,49 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
-            strSql.Append(" where Sid=" + Sid + " ");
+            strSql.Append(" where IsDeleted = 0 and Sid=" + Sid + " ");
             Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
             DataSet ds = DbHelperSQL.Query(strSql.ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
                 return ConvertModel(ds.Tables[0], 0);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 得到多个联系电话
+        /// </summary>
+        public List<Daiv_OA.Entity.ContactEntity> GetEntitysBySid(int Sid)
+        {
+            return GetEntitysBySid(new int[] { Sid });
+        }
+
+        /// <summary>
+        /// 得到多个联系电话
+        /// </summary>
+        public List<Daiv_OA.Entity.ContactEntity> GetEntitysBySid(int[] Sid)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
+            strSql.Append(" FROM [OA_Contact] ");
+            strSql.Append(" where IsDeleted = 0 and Sid in(" +string.Join(",", Sid) + ") ");
+            Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
+            DataSet ds = DbHelperSQL.Query(strSql.ToString());
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                List<Daiv_OA.Entity.ContactEntity> list = new List<Entity.ContactEntity>();
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    list.Add(ConvertModel(ds.Tables[0], i));
+                }
+                return list;
             }
             else
             {
@@ -208,6 +269,10 @@ namespace Daiv_OA.DAL
                 {
                     model.Cid = int.Parse(dt.Rows[rowindex]["Cid"].ToString());
                 }
+                if (dt.Rows[rowindex]["Sid"].ToString() != "")
+                {
+                    model.Sid = int.Parse(dt.Rows[rowindex]["Sid"].ToString());
+                }
                 if (dt.Rows[rowindex]["Cblacklistflag"].ToString() != "")
                 {
                     model.Cblacklistflag = int.Parse(dt.Rows[rowindex]["Cblacklistflag"].ToString());
@@ -216,6 +281,7 @@ namespace Daiv_OA.DAL
                 model.Cphone2 = dt.Rows[rowindex]["Cphone2"].ToString();
                 model.Cphone3 = dt.Rows[rowindex]["Cphone3"].ToString();
                 model.Cphone4 = dt.Rows[rowindex]["Cphone4"].ToString();
+                model.CPhoneName = dt.Rows[rowindex]["CPhoneName"].ToString();
                 if (dt.Rows[rowindex]["IsDeleted"].ToString() != "")
                 {
                     model.IsDeleted = int.Parse(dt.Rows[rowindex]["IsDeleted"].ToString());
@@ -236,7 +302,7 @@ namespace Daiv_OA.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted   ");
+            strSql.Append("select Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted   ");
             strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {
@@ -256,7 +322,7 @@ namespace Daiv_OA.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {

@@ -87,22 +87,29 @@
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码：</span>
-                                            <asp:TextBox ID="Cphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <table id="contactTable"  class="ipt" width="280px;"  >
+                                                <thead><tr><td>名称</td><td>电话号码</td><td>操作<input type="button" id="contactAdd" value="添加" /></td></tr></thead>
+                                                <tr class="contactTr">
+                                                    <td><input type="text" name="contactName" value="" style="width:60px;" /></td>
+                                                    <td ><input type="text" name="contactPhone" value="" style="width:120px;" /></td>
+                                                    <td><input type="button" class="contactDelete" value="删除"  style="display:none;"  /></td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码2：</span>
                                             <asp:TextBox ID="Cphone2" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码3：</span>
                                             <asp:TextBox ID="Cphone3" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码4：</span>
                                             <asp:TextBox ID="Cphone4" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
@@ -127,7 +134,20 @@
     <asp:Image ID="Image2" runat="server" Width="1px" Height="1px" />
     </form>
 <script type="text/javascript"> 
-	 
+    $(function () {
+        $('#contactTable').find('tbody tr:eq(0)').find('.contactDelete').click(removeTr);
+        $('#contactAdd').click(function () {
+            $newTr = $($('#contactTable').find('tbody tr:eq(0)')[0].outerHTML);
+            $('#contactTable tbody').append($newTr);
+            $newTr.find('input[name="contactName"]').val("");
+            $newTr.find('input[name="contactPhone"]').val("");
+            $newTr.find('.contactDelete').click(removeTr).show();
+        });
+    });
+
+    function removeTr($delbtn) {
+        $(this).parent().parent().remove();
+    }
 </script>
 
 </body>

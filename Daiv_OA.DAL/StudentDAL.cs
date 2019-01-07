@@ -264,16 +264,18 @@ namespace Daiv_OA.DAL
         /// <returns></returns>
         public IList<Hashtable> List(int pageIndex,int pageSize,string mPhone)
         {
-            string sql = @"WITH listtab AS (
-SELECT g.Gid,s.Sname,s.Snumber,c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
+            StringBuilder sql = new StringBuilder(@"WITH listtab AS (
+SELECT g.Gid,s.Sname,s.Snumber,s.Sid,
+--c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
 ROW_NUMBER() OVER (ORDER BY g.Gid ASC, s.Snumber ASC) AS req
-FROM dbo.OA_Grade(NOLOCK) g
+FROM dbo.OA_User(NOLOCK) u
+JOIN dbo.OA_Grade(NOLOCK) g on u.UClassID = g.Gid
 JOIN dbo.OA_Student(NOLOCK) s ON s.Gid = g.Gid
-JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
-WHERE g.Mphone = @mPhone
+--JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
+WHERE u.Mphone = @mPhone
 )
-SELECT Gid,Sname,Snumber,Cphone,Cphone2,Cphone3,Cphone4 FROM listtab
-WHERE req BETWEEN @begin AND @end";
+SELECT Gid,Sname,Snumber,Sid FROM listtab
+");
             SqlParameter[] parameters = {
                     new SqlParameter("@mPhone", SqlDbType.VarChar,50),
                     new SqlParameter("@begin", SqlDbType.Int,4),
@@ -281,12 +283,16 @@ WHERE req BETWEEN @begin AND @end";
             parameters[0].Value = mPhone;
             parameters[1].Value = (pageIndex-1)*pageSize;
             parameters[2].Value = pageIndex*pageSize;
+            if(pageIndex > 0 && pageSize > 0)
+            {
+                sql.AppendLine("WHERE req BETWEEN @begin AND @end");
+            }
             //分页查询
-            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+            return DbHelperSQL.ExecuteReaderHashtable(sql.ToString(), parameters);
         }
 
         /// <summary>
-        /// 根据电话号码查询学生数据
+        /// 根据电话号码查询学生数据(弃用)
         /// </summary>
         /// <param name="mPhone"></param>
         /// <returns></returns>
@@ -295,10 +301,11 @@ WHERE req BETWEEN @begin AND @end";
             string sql = @"WITH listtab AS (
 SELECT g.Gid,s.Sname,s.Snumber,c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
 ROW_NUMBER() OVER (ORDER BY g.Gid ASC, s.Snumber ASC) AS req
-FROM dbo.OA_Grade(NOLOCK) g
+FROM dbo.OA_User(NOLOCK) u
+JOIN dbo.OA_Grade(NOLOCK) g on u.UClassID = g.Gid
 JOIN dbo.OA_Student(NOLOCK) s ON s.Gid = g.Gid
 JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
-WHERE g.Mphone = @mPhone
+WHERE u.Mphone = @mPhone
 )
 SELECT Gid,Sname,Snumber,Cphone,Cphone2,Cphone3,Cphone4 FROM listtab
 ";

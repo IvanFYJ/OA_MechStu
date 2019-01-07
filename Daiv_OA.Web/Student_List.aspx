@@ -69,18 +69,6 @@
                                                                 <td width="*">
                                                                     班级名称
                                                                 </td>
-                                                                <td style="width: 100px">
-                                                                    家长联系电话1
-                                                                </td>
-                                                                <td style="width: 100px">
-                                                                    家长联系电话2
-                                                                </td>
-                                                                <td style="width: 100px">
-                                                                    家长联系电话3
-                                                                </td>
-                                                                <td style="width: 100px">
-                                                                    家长联系电话4
-                                                                </td>
                                                              <%--   <td style="width: 130px">
                                                                     职位名称
                                                                 </td>--%>
@@ -102,18 +90,6 @@
                                                             </td>
                                                             <td align="center">
                                                                 <%# Eval("Gname")%>
-                                                            </td>
-                                                            <td align="center">
-                                                                <%# Eval("Cphone")%>
-                                                            </td>
-                                                           <td align="center">
-                                                                <%# Eval("Cphone2")%>
-                                                            </td>
-                                                            <td align="center">
-                                                                <%# Eval("Cphone3")%>
-                                                            </td>
-                                                           <td align="center">
-                                                                <%# Eval("Cphone4")%>
                                                             </td>
                                                             <%--<td align="center">
                                                                 <%# Eval("Position")%>

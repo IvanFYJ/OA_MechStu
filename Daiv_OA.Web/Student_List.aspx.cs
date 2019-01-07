@@ -47,11 +47,12 @@ namespace Daiv_OA.Web
         {
             string sql = string.Format(@"SELECT 
 st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
-g.Gdescription,g.GgradeName,g.Gname,
-cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
+g.Gdescription,g.GgradeName,g.Gname
+--,
+--cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
 FROM Daiv_OA..OA_Student(NOLOCK) st 
 JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
-LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
+--LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
 WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             this.user_repeater.DataSource = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             this.user_repeater.DataBind();
@@ -84,11 +85,12 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
         {
             string sql = string.Format(@"SELECT 
 st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
-g.Gdescription,g.GgradeName,g.Gname,
-cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
+g.Gdescription,g.GgradeName,g.Gname
+--,
+--cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
 FROM Daiv_OA..OA_Student(NOLOCK) st 
 JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
-LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
+--LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
 WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             //this.user_repeater.DataBind();

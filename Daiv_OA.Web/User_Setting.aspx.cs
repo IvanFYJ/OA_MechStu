@@ -35,9 +35,9 @@ namespace Daiv_OA.Web
             this.txtUname.ReadOnly = true;
            // this.txtPosition.Text = model.Position; //职位
             this.txtIpaddress.Text = model.Uipaddress;
-            this.UClassID.Text = model.UClassID.ToString();
+            //this.UClassID.Text = model.UClassID.ToString();
             this.ULongName.Text = model.ULongName ;
-            this.UClassName.Text = model.UClassName ;
+            //this.UClassName.Text = model.UClassName ;
             this.Mphone.Text = model.Mphone;
             string user_setting = ""; 
             string[,] menu = null;
@@ -76,7 +76,20 @@ namespace Daiv_OA.Web
                 else if (model.Pid == 4)
                     menu = powerMenu4();
             }
-           
+
+            //绑定班级
+            Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
+            DataSet ds = dp.GetList("");
+            for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+            {
+                ListItem listItem = new ListItem();
+                listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
+                listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
+                this.ddlGid.Items.Add(listItem);
+            }
+            this.ddlGid.SelectedValue = model.UClassID.ToString();
+            ds.Clear();
+
             StringBuilder sb = new StringBuilder();
             sb.Append("<table cellspacing=\"0\" width=\"100%\" cellpadding=\"0\" align=\"center\">");
             for (int i = 0; i < menu.GetLength(0); i++)
@@ -115,9 +128,9 @@ namespace Daiv_OA.Web
             model.Pid = Convert.ToInt32(DropDownList2.SelectedValue.ToString());
             model.Did = Convert.ToInt32(DropDownList1.SelectedValue.ToString());
             model.Uipaddress = this.txtIpaddress.Text;
-            model.UClassID = Convert.ToInt32(this.UClassID.Text);
+            model.UClassID = Convert.ToInt32(this.ddlGid.SelectedItem.Value);
             model.ULongName = this.ULongName.Text;
-            model.UClassName = this.UClassName.Text;
+            model.UClassName = this.ddlGid.SelectedItem.Text;
             model.Mphone = this.Mphone.Text;
             new Daiv_OA.BLL.UserBLL().Update(model);
             Addadminlog("修改用户权限");

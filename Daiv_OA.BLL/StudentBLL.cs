@@ -56,10 +56,11 @@ namespace Daiv_OA.BLL
         /// <param name="contactEnitty"></param>
         /// <param name="operatModel"></param>
         /// <returns></returns>
-        public int Add(Entity.StudentEntity studentEntity, Entity.UserEntity parent, Entity.ContactEntity contactEnitty, Entity.UserEntity operatModel)
+        public int Add(Entity.StudentEntity studentEntity, Entity.UserEntity parent, List<Entity.ContactEntity> contactList, Entity.UserEntity operatModel)
         {
             //验证学生序号是否存在
             bool exixt = new Daiv_OA.BLL.StudentBLL().Exists(studentEntity.Snumber);
+            Daiv_OA.BLL.ContactBLL ctBll = new Daiv_OA.BLL.ContactBLL();
             if (exixt)
             {
                 throw new Exception("相同的学生学号已经存在");
@@ -69,10 +70,11 @@ namespace Daiv_OA.BLL
             try
             {
                 //验证电话号码
-                if (!string.IsNullOrEmpty(contactEnitty.Cphone) && !Validator.IsMobileNum(contactEnitty.Cphone)) { throw new Exception(contactEnitty.Cphone+"电话号码无效!"); }
-                if (!string.IsNullOrEmpty(contactEnitty.Cphone2) && !Validator.IsMobileNum(contactEnitty.Cphone2)) { throw new Exception(contactEnitty.Cphone2 + "电话号码无效!"); }
-                if (!string.IsNullOrEmpty(contactEnitty.Cphone3) && !Validator.IsMobileNum(contactEnitty.Cphone3)) { throw new Exception(contactEnitty.Cphone3 + "电话号码无效!"); }
-                if (!string.IsNullOrEmpty(contactEnitty.Cphone4) && !Validator.IsMobileNum(contactEnitty.Cphone4)) { throw new Exception(contactEnitty.Cphone4 + "电话号码无效!"); }
+                foreach (var item in contactList)
+                {
+                    if (!string.IsNullOrEmpty(item.Cphone) && !Validator.IsMobileNum(item.Cphone))
+                    { throw new Exception(item.Cphone + "电话号码无效!"); }
+                }
                 //添加家长信息
                 pId = new Daiv_OA.BLL.UserBLL().Add(parent);
                 if (pId > 0)
@@ -88,9 +90,14 @@ namespace Daiv_OA.BLL
                 sid = new Daiv_OA.BLL.StudentBLL().Add(studentEntity);
                 if (sid > 0)
                 {
+                    //删除情亲好
+                    ctBll.DeleteBySid(sid);
                     //联系电话实体添加
-                    contactEnitty.Sid = sid;
-                    new Daiv_OA.BLL.ContactBLL().Add(contactEnitty);
+                    foreach (var item in contactList)
+                    {
+                        item.Sid = sid;
+                        new Daiv_OA.BLL.ContactBLL().Add(item);
+                    }
                 }
                 else if (sid == 0)
                 {
@@ -165,8 +172,8 @@ namespace Daiv_OA.BLL
         {
             #region 如果页容量等于-1，表示根据mPhone获取所有的数据 add by fanyongjian date:20181221
             //如果页容量等于-1，表示根据mPhone获取所有的数据
-            if (pageSize == -1)
-                return dal.List(mPhone); 
+            //if (pageSize == -1)
+                //return dal.List(mPhone); 
             #endregion
             return dal.List(pageIndex, pageSize, mPhone);
         }

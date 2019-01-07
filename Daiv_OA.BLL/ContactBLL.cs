@@ -51,8 +51,16 @@ namespace Daiv_OA.BLL
         /// </summary>
         public void Delete(int Gid)
         {
-
             dal.Delete(Gid);
+        }
+        
+        /// <summary>
+        /// 根据学生ID删除情亲好
+        /// </summary>
+        /// <param name="Sid"></param>
+        public void DeleteBySid(int Sid)
+        {
+            dal.DeleteBySid(Sid);
         }
 
         /// <summary>
@@ -71,6 +79,22 @@ namespace Daiv_OA.BLL
         {
 
             return dal.GetEntityBySid(Sid);
+        }
+
+        /// <summary>
+        /// 得到多个联系电话
+        /// </summary>
+        public List<Daiv_OA.Entity.ContactEntity> GetEntitysBySid(int Sid)
+        {
+            return dal.GetEntitysBySid(Sid);
+        }
+
+        /// <summary>
+        /// 得到多个联系电话
+        /// </summary>
+        public List<Daiv_OA.Entity.ContactEntity> GetEntitysBySids(int[] Sid)
+        {
+            return dal.GetEntitysBySid(Sid);
         }
 
         /// <summary>

@@ -167,7 +167,27 @@ namespace Daiv_OA.Web.Ajax
             {
                 logHelper.logInfo(" GetStudentData params：pagesize：" + pagesize+ " pageindex:"+pageindex+" mPhone:"+mPhone);
                 IList<Hashtable> list = stubll.List(Convert.ToInt32(pageindex), Convert.ToInt32(pagesize), mPhone);
-                entity.Data = list;
+                List<Entity.ContactEntity> contactList = null;
+                if(list != null && list.Count > 0)
+                {
+                    contactList = new BLL.ContactBLL().GetEntitysBySids(list.Select(l => Convert.ToInt32(l["Sid"])).ToArray());
+                    List<object> reuslts = new List<object>();
+                    List<Entity.ContactEntity> temp = null;
+                    foreach (var item in list)
+                    {
+                        temp = contactList.Where(c => c.Sid == Convert.ToInt32(item["Sid"])).ToList();
+                        if (temp == null)
+                            temp = new List<ContactEntity>();
+                        reuslts.Add(
+                            new {
+                                Sname = item["Sname"].ToString(),
+                                Snumber =item["Snumber"].ToString(),
+                                Gid =item["Gid"].ToString(),
+                                Cphone = temp.Select(t=>new { name=t.CPhoneName, phone=t.Cphone })
+                            });
+                    }
+                    entity.Data = reuslts;
+                }
             }
             catch (Exception ex)
             {
@@ -256,6 +276,7 @@ namespace Daiv_OA.Web.Ajax
         {
             string snumber = ob["sNumber"].ToString();
             string cPhone = ob["cPhone"].ToString();
+            string cPhoneName = ob["cPhoneName"].ToString();
             string cPhone2 = ob["cPhone2"].ToString();
             string cPhone3 = ob["cPhone3"].ToString();
             string cPhone4 = ob["cPhone4"].ToString();
@@ -266,29 +287,48 @@ namespace Daiv_OA.Web.Ajax
             Daiv_OA.Entity.StudentEntity stuEntity =  stubll.GetEntityByNumber(snumber);
             if(stuEntity == null)
                 return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
-            Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
+            //Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
 
             //电话号码验证
-            if (!string.IsNullOrEmpty(cPhone) && !Validator.IsMobileNum(cPhone)) { resultEntity.Msg = cPhone+"电话号码无效！"; return resultEntity; };
-            if (!string.IsNullOrEmpty(cPhone2) && !Validator.IsMobileNum(cPhone2)) { resultEntity.Msg = cPhone2 + "电话号码无效！"; return resultEntity; };
-            if (!string.IsNullOrEmpty(cPhone3) && !Validator.IsMobileNum(cPhone3)) { resultEntity.Msg = cPhone3 + "电话号码无效！"; return resultEntity; };
-            if (!string.IsNullOrEmpty(cPhone4) && !Validator.IsMobileNum(cPhone4)) { resultEntity.Msg = cPhone4 + "电话号码无效！"; return resultEntity; };
-            //保存数据
-            if (ctEntity == null)
+            //if (!string.IsNullOrEmpty(cPhone) && !Validator.IsMobileNum(cPhone)) { resultEntity.Msg = cPhone+"电话号码无效！"; return resultEntity; };
+            //if (!string.IsNullOrEmpty(cPhone2) && !Validator.IsMobileNum(cPhone2)) { resultEntity.Msg = cPhone2 + "电话号码无效！"; return resultEntity; };
+            //if (!string.IsNullOrEmpty(cPhone3) && !Validator.IsMobileNum(cPhone3)) { resultEntity.Msg = cPhone3 + "电话号码无效！"; return resultEntity; };
+            //if (!string.IsNullOrEmpty(cPhone4) && !Validator.IsMobileNum(cPhone4)) { resultEntity.Msg = cPhone4 + "电话号码无效！"; return resultEntity; };
+            ////保存数据
+            //if (ctEntity == null)
+            //{
+            //    ctEntity = new ContactEntity() { Sid = stuEntity.Sid };
+            //    ctEntity.Cphone = cPhone;
+            //    ctEntity.Cphone2 = cPhone2;
+            //    ctEntity.Cphone3 = cPhone3;
+            //    ctEntity.Cphone4 = cPhone4;
+            //    ctbll.Add(ctEntity);
+            //    return new ResponeDataEntity() { Status = 1, Msg = snumber + "修改成功!" };
+            //}
+            //ctEntity.Cphone = cPhone;
+            //ctEntity.Cphone2 = cPhone2;
+            //ctEntity.Cphone3 = cPhone3;
+            //ctEntity.Cphone4 = cPhone4;
+            //ctbll.Update(ctEntity);
+            string[] cPhoneArr = cPhone.Split(',');
+            string[] cPhonenArr = cPhoneName.Split(',');
+            List<Entity.ContactEntity> contactList = new List<Entity.ContactEntity>();
+            for (int i = 0; i < cPhoneArr.Length; i++)
             {
-                ctEntity = new ContactEntity() { Sid = stuEntity.Sid };
-                ctEntity.Cphone = cPhone;
-                ctEntity.Cphone2 = cPhone2;
-                ctEntity.Cphone3 = cPhone3;
-                ctEntity.Cphone4 = cPhone4;
-                ctbll.Add(ctEntity);
-                return new ResponeDataEntity() { Status = 1, Msg = snumber + "修改成功!" };
+                if (string.IsNullOrEmpty(cPhoneArr[i]) || string.IsNullOrEmpty(cPhoneArr[i]))
+                    continue;
+                //验证电话号码
+                if (!string.IsNullOrEmpty(cPhoneArr[i]) && !Validator.IsMobileNum(cPhoneArr[i]))
+                { resultEntity.Msg = cPhoneArr[i] + "电话号码无效！"; return resultEntity; };
+                contactList.Add(new Entity.ContactEntity() { Cphone = cPhoneArr[i], CPhoneName = cPhonenArr[i] });
             }
-            ctEntity.Cphone = cPhone;
-            ctEntity.Cphone2 = cPhone2;
-            ctEntity.Cphone3 = cPhone3;
-            ctEntity.Cphone4 = cPhone4;
-            ctbll.Update(ctEntity);
+            ctbll.DeleteBySid(stuEntity.Sid);
+            //联系电话实体添加
+            foreach (var item in contactList)
+            {
+                item.Sid = stuEntity.Sid;
+                ctbll.Add(item);
+            }
             return new ResponeDataEntity() { Status = 1, Msg = snumber + "修改成功!" };
         }
 
@@ -350,8 +390,8 @@ namespace Daiv_OA.Web.Ajax
             Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(snumber);
             if (stuEntity == null)
                 return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
-            Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
-            return new ResponeDataEntity() { Status = 1, Data = ctEntity };
+            List<Daiv_OA.Entity.ContactEntity> ctEntitys = ctbll.GetEntitysBySid(stuEntity.Sid);
+            return new ResponeDataEntity() { Status = 1, Data = ctEntitys };
         }
 
         public void ResponseData(HttpContext context, object entity)

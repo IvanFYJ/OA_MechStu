@@ -99,22 +99,22 @@
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码：</span>
-                                            <asp:TextBox ID="Cphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:Literal ID="ltMasterSetting" runat="server"></asp:Literal>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;" >
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码2：</span>
                                             <asp:TextBox ID="Cphone2" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码3：</span>
                                             <asp:TextBox ID="Cphone3" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">家长电话号码4：</span>
                                             <asp:TextBox ID="Cphone4" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
@@ -139,6 +139,20 @@
     <asp:Image ID="Image2" runat="server" Width="1px" Height="1px" />
     </form>
 <script type="text/javascript"> 
+    $(function () {
+        $('#contactTable').find('tbody tr').find('.contactDelete').click(removeTr);
+        $('#contactAdd').click(function () {
+            $newTr = $($('#contactTable').find('tbody tr:eq(0)')[0].outerHTML);
+            $('#contactTable tbody').append($newTr);
+            $newTr.find('input[name="contactName"]').val("");
+            $newTr.find('input[name="contactPhone"]').val("");
+            $newTr.find('.contactDelete').click(removeTr).show();
+        });
+    });
+
+    function removeTr($delbtn) {
+        $(this).parent().parent().remove();
+    }
 </script>
 
 </body>

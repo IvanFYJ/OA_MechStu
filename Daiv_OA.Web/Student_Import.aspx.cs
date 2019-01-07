@@ -126,10 +126,16 @@ namespace Daiv_OA.Web
                     contactEnitty.Cphone2 = Convert.ToString(dataTable.Rows[i][colmun[5]]);//家长联系电话2 列索引：5
                     contactEnitty.Cphone3 = Convert.ToString(dataTable.Rows[i][colmun[6]]);//家长联系电话3 列索引：6
                     contactEnitty.Cphone4 = Convert.ToString(dataTable.Rows[i][colmun[7]]);//家长联系电话4 列索引：7
-                    
+
+                    List<Entity.ContactEntity> contactList = new List<Entity.ContactEntity>();
+                    contactList.Add(new Entity.ContactEntity() { CPhoneName = "家长1", Cphone = contactEnitty.Cphone });
+                    contactList.Add(new Entity.ContactEntity() { CPhoneName = "家长2", Cphone = contactEnitty.Cphone2 });
+                    contactList.Add(new Entity.ContactEntity() { CPhoneName = "家长3", Cphone = contactEnitty.Cphone3 });
+                    contactList.Add(new Entity.ContactEntity() { CPhoneName = "家长4", Cphone = contactEnitty.Cphone4 });
+
                     //当前操作人对象
                     Entity.UserEntity opera = new Daiv_OA.BLL.UserBLL().GetEntity(UserId);
-                    new Daiv_OA.BLL.StudentBLL().Add(studentEntity, parent, contactEnitty, opera);
+                    new Daiv_OA.BLL.StudentBLL().Add(studentEntity, parent, contactList, opera);
                 }
                 catch (Exception ex)
                 {

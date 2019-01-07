@@ -41,5 +41,10 @@ namespace Daiv_OA.Entity
         /// 删除标志
         /// </summary>
         public System.Int32? IsDeleted { set; get; }
+
+        /// <summary>
+        /// 联系人名称
+        /// </summary>
+        public System.String CPhoneName { get; set; }
     }
 }
