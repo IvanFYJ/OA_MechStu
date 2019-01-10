@@ -98,19 +98,17 @@
                                             （采用实名制，汉字）
                                         </td>
                                     </tr>
-                                    <tr style="">
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">班级：</span>
                                             <asp:DropDownList ID="ddlGid" runat="server" Enabled="true">
                                             </asp:DropDownList>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">设备号码：</span>
                                             <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="Mphone"
-                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
                                 </table>

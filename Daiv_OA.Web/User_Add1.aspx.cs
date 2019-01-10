@@ -30,9 +30,9 @@ namespace Daiv_OA.Web
             userEntity.Position = this.txtPosition.Text;
             userEntity.Setting = powerEntity.Setting;
             userEntity.Upwd = Daiv_OA.Utils.MD5.Lower32(this.txtPwd.Text.Trim());
-            userEntity.UClassID = Convert.ToInt32(this.ddlGid.SelectedItem.Value);
+            userEntity.UClassID = 0;
             userEntity.ULongName = this.ULongName.Text;
-            userEntity.UClassName = this.ddlGid.SelectedItem.Text;
+            userEntity.UClassName = "";
             userEntity.Mphone = this.Mphone.Text;
             //检查电话号码
             //if (!string.IsNullOrEmpty(Mphone.Text) && !Validator.IsMobileNum(Mphone.Text))

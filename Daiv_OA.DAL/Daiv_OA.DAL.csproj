@@ -79,6 +79,7 @@
     <Compile Include="FilenameDAL.cs" />
     <Compile Include="GradeDAL.cs" />
     <Compile Include="Itemsql.cs" />
+    <Compile Include="MechanicalDAL.cs" />
     <Compile Include="MessageDAL.cs" />
     <Compile Include="OperatelogDAL.cs" />
     <Compile Include="ParentMessageDAL.cs" />

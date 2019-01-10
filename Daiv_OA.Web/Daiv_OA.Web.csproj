@@ -420,6 +420,9 @@
     <Content Include="Learning_List.aspx" />
     <Content Include="Learning_Show.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Mechanical_Add.aspx" />
+    <Content Include="Mechanical_Edit.aspx" />
+    <Content Include="Mechanical_List.aspx" />
     <Content Include="Message_Add.aspx" />
     <Content Include="Message_List.aspx" />
     <Content Include="Message_MySend.aspx" />
@@ -944,6 +947,27 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mechanical_Add.aspx.cs">
+      <DependentUpon>Mechanical_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mechanical_Add.aspx.designer.cs">
+      <DependentUpon>Mechanical_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mechanical_Edit.aspx.cs">
+      <DependentUpon>Mechanical_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mechanical_Edit.aspx.designer.cs">
+      <DependentUpon>Mechanical_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Mechanical_List.aspx.cs">
+      <DependentUpon>Mechanical_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mechanical_List.aspx.designer.cs">
+      <DependentUpon>Mechanical_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Message_Add.aspx.cs">
       <DependentUpon>Message_Add.aspx</DependentUpon>

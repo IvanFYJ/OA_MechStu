@@ -268,16 +268,16 @@ namespace Daiv_OA.DAL
 SELECT g.Gid,s.Sname,s.Snumber,s.Sid,
 --c.Cphone,c.Cphone2,c.Cphone3,c.Cphone4,
 ROW_NUMBER() OVER (ORDER BY g.Gid ASC, s.Snumber ASC) AS req
-FROM dbo.OA_User(NOLOCK) u
-JOIN dbo.OA_Grade(NOLOCK) g on u.UClassID = g.Gid
+FROM dbo.OA_Mechanical(NOLOCK) u
+JOIN dbo.OA_Grade(NOLOCK) g on u.Gid = g.Gid
 JOIN dbo.OA_Student(NOLOCK) s ON s.Gid = g.Gid
 --JOIN dbo.OA_Contact(NOLOCK) c ON c.Sid = s.Sid
-WHERE u.Mphone = @mPhone
+WHERE u.MechIMEI = @imei
 )
 SELECT Gid,Sname,Snumber,Sid FROM listtab
 ");
             SqlParameter[] parameters = {
-                    new SqlParameter("@mPhone", SqlDbType.VarChar,50),
+                    new SqlParameter("@imei", SqlDbType.NVarChar,512),
                     new SqlParameter("@begin", SqlDbType.Int,4),
                     new SqlParameter("@end", SqlDbType.Int,4)};
             parameters[0].Value = mPhone;

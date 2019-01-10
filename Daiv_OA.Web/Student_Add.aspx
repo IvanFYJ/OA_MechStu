@@ -90,8 +90,8 @@
                                             <table id="contactTable"  class="ipt" width="280px;"  >
                                                 <thead><tr><td>名称</td><td>电话号码</td><td>操作<input type="button" id="contactAdd" value="添加" /></td></tr></thead>
                                                 <tr class="contactTr">
-                                                    <td><input type="text" name="contactName" value="" style="width:60px;" /></td>
-                                                    <td ><input type="text" name="contactPhone" value="" style="width:120px;" /></td>
+                                                    <td><input type="text" name="contactName" value="" maxlength="32" style="width:60px;" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" onpaste="return false" oncontextmenu="return false;" /></td>
+                                                    <td ><input type="text" name="contactPhone" value="" maxlength="11" style="width:120px;" onkeyup="value=value.replace(/[^0-9]/g,'')" onpaste="return false" oncontextmenu="return false;"/></td>
                                                     <td><input type="button" class="contactDelete" value="删除"  style="display:none;"  /></td>
                                                 </tr>
                                             </table>

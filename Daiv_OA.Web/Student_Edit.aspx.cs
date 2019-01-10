@@ -41,8 +41,8 @@ namespace Daiv_OA.Web
                 foreach (var item in cModels)
                 {
                     sbuilder.AppendLine("<tr class=\"contactTr\">");
-                    sbuilder.AppendLine("<td><input type = \"text\" name =\"contactName\" value =\""+ item.CPhoneName + "\" style =\"width:60px;\" /></td>");
-                    sbuilder.AppendLine("<td ><input type = \"text\" name =\"contactPhone\" value =\"" + item.Cphone + "\" style =\"width:120px;\" /></td>");
+                    sbuilder.AppendLine("<td><input type = \"text\" name =\"contactName\" value =\""+ item.CPhoneName + "\" maxlength=\"32\"  onkeyup =\"value = value.replace(/[^\\a-\\z\\-\\Z0-9\\u4E00-\\u9FA5]/g, '')\" onpaste =\"return false\" oncontextmenu =\"return false; \" /></td>");
+                    sbuilder.AppendLine("<td ><input type = \"text\" name =\"contactPhone\" value =\"" + item.Cphone + "\" style =\"width:120px;\" onkeyup=\"value = value.replace(/[^0-9]/g,'')\" onpaste=\"return false\" oncontextmenu=\"return false; \" /></td>");
                     sbuilder.AppendLine("<td><input type = \"button\" class=\"contactDelete\" value =\"删除\"  style =\""+(index==0? "display:none;" : "") +"\" /></td>");
                     sbuilder.AppendLine("</tr>");
                     index++;

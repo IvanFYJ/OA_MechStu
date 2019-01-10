@@ -70,6 +70,7 @@
     <Compile Include="Eemail.cs" />
     <Compile Include="GradeBLL.cs" />
     <Compile Include="GridviewRowsCell.cs" />
+    <Compile Include="MechanicalBLL.cs" />
     <Compile Include="MessageBLL.cs" />
     <Compile Include="OA_SysMessageIn.cs" />
     <Compile Include="OperatelogBLL.cs" />

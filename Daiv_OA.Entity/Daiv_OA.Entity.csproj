@@ -70,6 +70,7 @@
     <Compile Include="ContactEntity.cs" />
     <Compile Include="DepartmentEntity.cs" />
     <Compile Include="GradeEntity.cs" />
+    <Compile Include="MechanicalEntity.cs" />
     <Compile Include="MessageEntity.cs" />
     <Compile Include="OperatelogEntity.cs" />
     <Compile Include="PageListModel.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="TimeEntity.cs" />
     <Compile Include="UserEntity.cs" />
     <Compile Include="DiaryEntity.cs" />
+    <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="WorklogEntity.cs" />
     <Compile Include="Workplaninfo.cs" />
   </ItemGroup>
