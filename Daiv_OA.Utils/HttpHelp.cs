@@ -5,6 +5,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;//包含必要的库
+using System.Collections.Generic;
+
 namespace Daiv_OA.Utils
 {
     /// <summary>
@@ -37,6 +39,34 @@ namespace Daiv_OA.Utils
             }
             return strResult;
         }
+
+
+        //以GET方式抓取远程页面内容
+        public static string Get_HttpUTF8(string tUrl)
+        {
+            string strResult;
+            try
+            {
+                HttpWebRequest hwr = (HttpWebRequest)HttpWebRequest.Create(tUrl);
+                hwr.Timeout = 19600;
+                HttpWebResponse hwrs = (HttpWebResponse)hwr.GetResponse();
+                Stream myStream = hwrs.GetResponseStream();
+                StreamReader sr = new StreamReader(myStream, Encoding.UTF8);
+                StringBuilder sb = new StringBuilder();
+                //while (-1 != sr.Peek())
+                //{
+                    sb.Append(sr.ReadLine());
+                //}
+                strResult = sb.ToString();
+                hwrs.Close();
+            }
+            catch (Exception ee)
+            {
+                strResult = ee.Message;
+            }
+            return strResult;
+        }
+
         //以POST方式抓取远程页面内容
         //postData为参数列表
         public static string Post_Http(string url, string postData, string encodeType)

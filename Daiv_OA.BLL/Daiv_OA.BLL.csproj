@@ -95,6 +95,7 @@
     <Compile Include="DiaryBLL.cs" />
     <Compile Include="WorklogBLL.cs" />
     <Compile Include="Workplaninfo.cs" />
+    <Compile Include="WXUserBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

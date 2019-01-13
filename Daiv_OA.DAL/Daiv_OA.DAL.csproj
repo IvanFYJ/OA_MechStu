@@ -96,6 +96,7 @@
     <Compile Include="DiaryDAL.cs" />
     <Compile Include="WorklogDAL.cs" />
     <Compile Include="Workplaninfo.cs" />
+    <Compile Include="WXUserDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

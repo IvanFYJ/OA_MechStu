@@ -36,46 +36,155 @@ namespace Daiv_OA.Web.Ajax
 
             #region 验证token
             //验证token
-            if ("login" != action && "checklogin" != action && !HasToken(context))
+            if ("login" != action  && "checklogin" != action && !HasToken(context))
             {
                 entity.Msg = "您未授权，请联系相关负责人!";
                 ResponseData(context, entity);
                 return;
-            } 
+            }
             #endregion
 
-            #region 业务流转
-            //业务流转
-            switch (action)
+            try
             {
-                case "student": //加载频道管理菜单
-                    entity = GetStudentData(context, ob);
-                    break;
-                case "grade":
-                    entity = GetGradeData(context, ob);
-                    break;
-                case "pwd":
-                    entity = SetPwd(context, ob);
-                    break;
-                case "setcontact":
-                    entity = SetContact(context, ob);
-                    break;
-                case "login":
-                    entity = LoginIn(context, ob);
-                    break;
-                case "getcontact":
-                    entity = getContactBySnum(context, ob);
-                    break;
-                case "addstudent":
-                    entity = AddStudent(context, ob);
-                    break;
-                case "checklogin":
-                    entity = CheckLogin(context, ob);
-                    break;
-            } 
-            #endregion
+                #region 业务流转
+                //业务流转
+                switch (action)
+                {
+                    case "student": //加载频道管理菜单
+                        entity = GetStudentData(context, ob);
+                        break;
+                    case "grade":
+                        entity = GetGradeData(context, ob);
+                        break;
+                    case "pwd":
+                        entity = SetPwd(context, ob);
+                        break;
+                    case "setcontact":
+                        entity = SetContact(context, ob);
+                        break;
+                    case "login":
+                        entity = LoginIn(context, ob);
+                        break;
+                    case "wxlogin":
+                        entity = WXLoginIn(context, ob);
+                        break;
+                    case "wxgetuser":
+                        entity = WXGetUser(context, ob);
+                        break;
+                    case "getcontact":
+                        entity = getContactBySnum(context, ob);
+                        break;
+                    case "addstudent":
+                        entity = AddStudent(context, ob);
+                        break;
+                    case "checklogin":
+                        entity = CheckLogin(context, ob);
+                        break;
+                    case "setmsg":
+                        entity = SetMsg(context, ob);
+                        break;
+                    case "unionid":
+                        entity = GetSessionKey(context, ob);
+                        break;
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                entity.Msg = ex.Message;
+                entity.Status = 0;
+            }
 
             ResponseData(context, entity);
+        }
+        
+        
+        /// <summary>
+        /// 根据微信OpenID 获取用户信息
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity WXGetUser(HttpContext context, JObject ob)
+        {
+            string openId = ob["openId"].ToString();
+            WXUserEntity wxModel = new BLL.WXUserBLL().GetEntityByOpenId(openId);
+            List<Daiv_OA.Entity.ContactEntity> ctEntitys = null;
+            if (wxModel == null)
+                return new ResponeDataEntity() { Data = new { wxphone = "", stunumber = "", uid = 0,contacts = ctEntitys} };
+            //获取OA用户信息
+            UserEntity umodel = new BLL.UserBLL().GetEntity(wxModel.OAUserID);
+            ResponeDataEntity resultModel = new ResponeDataEntity();
+            //获取亲情号
+            Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(umodel.Uname);
+            ctEntitys = ctbll.GetEntitysBySid(stuEntity.Sid);
+            resultModel.Status = 1;
+            resultModel.Data = new { wxphone=wxModel.WXUserPhone,stunumber = umodel.Uname,uid= umodel.Uid, contacts = ctEntitys };
+            return resultModel;
+        }
+
+        private const string JsCode2SessionUrl = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
+
+        /// <summary>
+        /// 获取微信SessionKey
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity GetSessionKey(HttpContext context, JObject ob)
+        {
+            string js_code = ob["js_code"].ToString();
+            string url = string.Format(JsCode2SessionUrl, "wx347afc0cbbed78a1", "18aeefc8eaf3025db14281f5a44f29f4", js_code);
+            string result  = HttpHelp.Get_HttpUTF8(url);
+            logHelper.logInfo(result);
+            ResponeDataEntity entity = new ResponeDataEntity();
+            entity.Data = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
+            return entity;
+        }
+
+        /// <summary>
+        /// 留言
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity SetMsg(HttpContext context, JObject ob)
+        {
+            string snumber = ob["student"].ToString();
+            string message = ob["message"].ToString();
+            string phonenumber = ob["phonenumber"].ToString();
+            string unionid = ob["unionid"].ToString();
+            bool hasRelationShipe = false;
+            ResponeDataEntity entity = new ResponeDataEntity();
+            entity.Status = 1;
+            logHelper.logInfo(" SetMsg params：student：" + snumber + " message:" + message + " phonenumber:" + phonenumber + " unionid:" + unionid);
+            //获取学生对象
+            Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(snumber);
+            if (stuEntity == null)
+                return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
+            //验证学号和电话号码是否关联
+            List<Daiv_OA.Entity.ContactEntity> ctEntitys = ctbll.GetEntitysBySid(stuEntity.Sid);
+            if(ctEntitys == null || ctEntitys.Count <= 0)
+                return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无情亲号!" };
+
+            foreach (var item in ctEntitys)
+            {
+                if (item.Cphone == phonenumber)
+                    hasRelationShipe = true;
+            }
+            if(!hasRelationShipe)
+                return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号的情亲号不存在："+phonenumber+"！" };
+            //保存用户留言
+            MessageEntity mentity = new MessageEntity();
+            mentity.ToUid = stuEntity.Sid;
+            mentity.ToUname = stuEntity.Sname;
+            mentity.FromUid = 0;
+            mentity.Mtitle = phonenumber;//作为电话号码
+            mentity.Content = message;
+            mentity.Addtime = DateTime.Now;
+            new Daiv_OA.BLL.MessageBLL().Add(mentity);
+            return entity;
+
         }
 
         #region 判断请求头是否有token
@@ -360,6 +469,39 @@ namespace Daiv_OA.Web.Ajax
                 new BLL.UserBLL().SetUserCookies(model, HttpContext.Current.Request.UserHostAddress, iExpires);
                 HttpContext.Current.Session["UserName"] = uname;
                 return new ResponeDataEntity() { Status = 1, Msg = "登录成功！",Data = model};
+            }
+            return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
+        }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private ResponeDataEntity WXLoginIn(HttpContext context, JObject ob)
+        {
+            string uname = ob["uname"].ToString();
+            string pwd = ob["pwd"].ToString();
+            string phone = ob["phone"].ToString();
+            string openId = ob["openId"].ToString();
+            int iExpires = 0;
+
+            logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd+ " phone:"+phone+ " openId:"+openId);
+            string uid = new Daiv_OA.BLL.UserBLL().Existslongin(uname, Daiv_OA.Utils.MD5.Lower32(pwd));
+            if (uid != "")
+            {
+                Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
+                model = new Daiv_OA.BLL.UserBLL().GetEntity(int.Parse(uid));
+                new BLL.UserBLL().SetUserCookies(model, HttpContext.Current.Request.UserHostAddress, iExpires);
+                HttpContext.Current.Session["UserName"] = uname;
+                //保存微信信息
+                WXUserEntity wxUModel = new WXUserEntity();
+                wxUModel.OpenId = openId;
+                wxUModel.WXUserPhone = phone;
+                wxUModel.OAUserID = model.Uid;
+                wxUModel.CreateTime = DateTime.Now;
+                new BLL.WXUserBLL().Add(wxUModel);
+                return new ResponeDataEntity() { Status = 1, Msg = "登录成功！", Data = model };
             }
             return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
         }

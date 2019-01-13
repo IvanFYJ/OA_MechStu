@@ -110,6 +110,7 @@ namespace Daiv_OA.DAL
             DbHelperSQL.ExecuteSql(strSql.ToString(), parameters);
         }
 
+
         public bool Delete(int Mid, int Uid)
         {
 
