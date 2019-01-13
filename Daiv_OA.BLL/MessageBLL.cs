@@ -2,6 +2,8 @@
 using System.Data;
 using System.Collections.Generic;
 using Daiv_OA.Entity;
+using System.Collections;
+
 namespace Daiv_OA.BLL
 {
     /// <summary>
@@ -74,6 +76,19 @@ namespace Daiv_OA.BLL
         {
             return dal.GetList(Top, strWhere, filedOrder);
         }
+
+        /// <summary>
+        /// 查询微信留言
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mPhone"></param>
+        /// <returns></returns>
+        public IList<Hashtable> WXList(string imei, string datetime)
+        {
+            return dal.WXList(imei, datetime);
+        }
+
         /// <summary>
         /// 获得数据列表
         /// </summary>

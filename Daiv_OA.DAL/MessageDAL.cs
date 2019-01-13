@@ -4,6 +4,8 @@ using System.Text;
 using System.Data.SqlClient;
 using Daiv_OA.DBUtility;
 using System.Collections.Generic;//请先添加引用
+using System.Collections;
+
 namespace Daiv_OA.DAL
 {
     /// <summary>
@@ -206,6 +208,36 @@ namespace Daiv_OA.DAL
             }
             strSql.Append(" order by " + filedOrder);
             return DbHelperSQL.Query(strSql.ToString());
+        }
+
+
+        /// <summary>
+        /// 查询微信留言
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="mPhone"></param>
+        /// <returns></returns>
+        public IList<Hashtable> WXList( string imei,string datetime)
+        {
+            StringBuilder sql = new StringBuilder(@"
+select om.Mtitle as 'phone' ,om.Content as 'contact', 1 as 'wxmsg' 
+from Daiv_OA..OA_message om
+join Daiv_OA..oa_student os on om.ToUid = os.Sid
+join Daiv_OA..OA_Mechanical ome on ome.Gid = os.Gid
+where ome.MechIMEI =  @imei and om.AddTime >@begin
+");
+            SqlParameter[] parameters = {
+                    new SqlParameter("@imei", SqlDbType.NVarChar,512),
+                    new SqlParameter("@begin", SqlDbType.DateTime)};
+            parameters[0].Value = imei;
+            parameters[1].Value = datetime;
+            if (string.IsNullOrEmpty(datetime))
+            {
+                parameters[1].Value = "2019-01-01 00:00:00";
+            }
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql.ToString(), parameters);
         }
 
         public List<Entity.MessageEntity> getpage(int pageSize, int pageNum, out int count, string str)

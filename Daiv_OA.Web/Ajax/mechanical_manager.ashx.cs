@@ -31,21 +31,22 @@ namespace Daiv_OA.Web.Ajax
             //取得处事类型
             string action = HttpContext.Current.Request["action"];  // .QueryString("action");
             ResponeDataEntity entity = new ResponeDataEntity();
-            JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
-            action = ob["action"].ToString();
-
-            #region 验证token
-            //验证token
-            if ("login" != action  && "checklogin" != action && !HasToken(context))
-            {
-                entity.Msg = "您未授权，请联系相关负责人!";
-                ResponseData(context, entity);
-                return;
-            }
-            #endregion
 
             try
             {
+                JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
+                action = ob["action"].ToString();
+
+                #region 验证token
+                //验证token
+                if ("login" != action && "checklogin" != action && !HasToken(context))
+                {
+                    entity.Msg = "您未授权，请联系相关负责人!";
+                    ResponseData(context, entity);
+                    return;
+                }
+                #endregion
+
                 #region 业务流转
                 //业务流转
                 switch (action)
@@ -70,6 +71,9 @@ namespace Daiv_OA.Web.Ajax
                         break;
                     case "wxgetuser":
                         entity = WXGetUser(context, ob);
+                        break;
+                    case "wxmsg":
+                        entity = WXGetMsg(context, ob);
                         break;
                     case "getcontact":
                         entity = getContactBySnum(context, ob);
@@ -97,8 +101,26 @@ namespace Daiv_OA.Web.Ajax
 
             ResponseData(context, entity);
         }
-        
-        
+
+
+        /// <summary>
+        /// 获取微信留言
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity WXGetMsg(HttpContext context, JObject ob)
+        {
+            string imei = ob["imei"].ToString();
+            string dt = ob["asynctime"].ToString();
+            ResponeDataEntity resultRep = new ResponeDataEntity();
+            IList<Hashtable> hsList= new BLL.MessageBLL().WXList(imei, dt);
+            resultRep.Data = hsList;
+            resultRep.Status = 1;
+            return resultRep;
+        }
+
+
         /// <summary>
         /// 根据微信OpenID 获取用户信息
         /// </summary>
