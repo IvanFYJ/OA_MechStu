@@ -118,6 +118,27 @@ namespace Daiv_OA.BLL
             return GetList("");
         }
 
+        public List<Daiv_OA.Entity.GradeEntity> GetAllListByScId(string shid)
+        {
+            StringBuilder sqlBuiler = new StringBuilder();
+            sqlBuiler.Append(" IsDeleted = 0");
+            if(!string.IsNullOrEmpty(shid))
+            {
+
+            }
+            DataSet ds = GetList(sqlBuiler.ToString());
+            List<Daiv_OA.Entity.GradeEntity> modelList = new List<Daiv_OA.Entity.GradeEntity>();
+            int rowsCount = ds.Tables[0].Rows.Count;
+            if (rowsCount > 0)
+            {
+                for (int n = 0; n < rowsCount; n++)
+                {
+                    modelList.Add(dal.ConvertModel(ds.Tables[0], n));
+                }
+            }
+            return modelList;
+        }
+
         /// <summary>
         /// 获得数据列表
         /// </summary>

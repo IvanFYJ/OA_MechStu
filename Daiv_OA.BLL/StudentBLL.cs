@@ -211,6 +211,28 @@ namespace Daiv_OA.BLL
             return modelList;
         }
 
+
+        public List<Daiv_OA.Entity.StudentEntity> GetAllListByGid(string gid)
+        {
+            StringBuilder sqlBuiler = new StringBuilder();
+            sqlBuiler.Append(" IsDeleted = 0");
+            if (!string.IsNullOrEmpty(gid))
+            {
+                sqlBuiler.Append("  and Gid = "+Convert.ToInt32(gid));
+            }
+            DataSet ds = GetList(sqlBuiler.ToString());
+            List<Daiv_OA.Entity.StudentEntity> modelList = new List<Daiv_OA.Entity.StudentEntity>();
+            int rowsCount = ds.Tables[0].Rows.Count;
+            if (rowsCount > 0)
+            {
+                for (int n = 0; n < rowsCount; n++)
+                {
+                    modelList.Add(dal.ConvertModel(ds.Tables[0], n));
+                }
+            }
+            return modelList;
+        }
+
         /// <summary>
         /// 获得数据列表
         /// </summary>

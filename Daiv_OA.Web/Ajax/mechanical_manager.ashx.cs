@@ -54,6 +54,9 @@ namespace Daiv_OA.Web.Ajax
                     case "student": //加载频道管理菜单
                         entity = GetStudentData(context, ob);
                         break;
+                    case "getstudentbygid":
+                        entity = GetStudentsByGid(context, ob);
+                        break;
                     case "grade":
                         entity = GetGradeData(context, ob);
                         break;
@@ -90,6 +93,9 @@ namespace Daiv_OA.Web.Ajax
                     case "unionid":
                         entity = GetSessionKey(context, ob);
                         break;
+                    case "getclass":
+                        entity = GetClass(context, ob);
+                        break;
                 }
                 #endregion
             }
@@ -102,7 +108,39 @@ namespace Daiv_OA.Web.Ajax
             ResponseData(context, entity);
         }
 
+        /// <summary>
+        /// 获取班级数据
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity GetClass(HttpContext context, JObject ob)
+        {
+            string shid = ob["shid"].ToString();
+            ResponeDataEntity resultModel = new ResponeDataEntity();
+            List<GradeEntity> list = gradebll.GetAllListByScId(shid);
+            resultModel.Status = 1;
+            resultModel.Data = list;
+            return resultModel;
+        }
 
+        /// <summary>
+        /// 根据班级
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity GetStudentsByGid(HttpContext context, JObject ob)
+        {
+            string shid = ob["gid"].ToString();
+            ResponeDataEntity resultModel = new ResponeDataEntity();
+            List<StudentEntity> list = stubll.GetAllListByGid(shid);
+            resultModel.Status = 1;
+            resultModel.Data = list;
+            return resultModel;
+        }
+
+        
         /// <summary>
         /// 获取微信留言
         /// </summary>
