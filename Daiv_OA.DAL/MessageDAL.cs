@@ -221,7 +221,7 @@ namespace Daiv_OA.DAL
         public IList<Hashtable> WXList( string imei,string datetime)
         {
             StringBuilder sql = new StringBuilder(@"
-select om.Mtitle as 'phone' ,om.Content as 'contact', 1 as 'wxmsg' 
+select om.Mtitle as 'phone' ,om.Content as 'contact', 1 as 'wxmsg'  ,os.Snumber as snumber,CONVERT(varchar(100), GETDATE(), 120) as asynctime
 from Daiv_OA..OA_message om
 join Daiv_OA..oa_student os on om.ToUid = os.Sid
 join Daiv_OA..OA_Mechanical ome on ome.Gid = os.Gid
