@@ -194,7 +194,7 @@ namespace Daiv_OA.Web.Ajax
         private ResponeDataEntity GetSessionKey(HttpContext context, JObject ob)
         {
             string js_code = ob["js_code"].ToString();
-            string url = string.Format(JsCode2SessionUrl, "wx347afc0cbbed78a1", "18aeefc8eaf3025db14281f5a44f29f4", js_code);
+            string url = string.Format(JsCode2SessionUrl, "wx466c0417b7717fcd", "7351c79ffa24f6d706b1fd962ababc8d", js_code);
             string result  = HttpHelp.Get_HttpUTF8(url);
             logHelper.logInfo(result);
             ResponeDataEntity entity = new ResponeDataEntity();
