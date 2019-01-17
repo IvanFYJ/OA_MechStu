@@ -445,6 +445,9 @@
     <Content Include="Placard_Add.aspx" />
     <Content Include="Placard_Edit.aspx" />
     <Content Include="Placard_Show.aspx" />
+    <Content Include="School_Add.aspx" />
+    <Content Include="School_Edit.aspx" />
+    <Content Include="School_List.aspx" />
     <Content Include="scripts\calendar.js" />
     <Content Include="scripts\function.js" />
     <Content Include="scripts\jquery\jquery-1.3.2.min.js" />
@@ -1150,6 +1153,27 @@
     </Compile>
     <Compile Include="role.aspx.designer.cs">
       <DependentUpon>role.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="School_Add.aspx.cs">
+      <DependentUpon>School_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="School_Add.aspx.designer.cs">
+      <DependentUpon>School_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="School_Edit.aspx.cs">
+      <DependentUpon>School_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="School_Edit.aspx.designer.cs">
+      <DependentUpon>School_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="School_List.aspx.cs">
+      <DependentUpon>School_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="School_List.aspx.designer.cs">
+      <DependentUpon>School_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Scorlist2.aspx.cs">
       <DependentUpon>Scorlist2.aspx</DependentUpon>
