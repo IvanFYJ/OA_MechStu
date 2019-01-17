@@ -59,7 +59,7 @@ namespace Daiv_OA.Web
             model.MechName = this.MechName.Text;
             model.MechPhone = this.MechPhone.Text;
             mechanicalBll.Update(model);
-            logHelper.logInfo("修改班级成功！操作人：" + UserId);
+            logHelper.logInfo("修改设备成功！操作人：" + UserId);
             FinalMessage("操作成功", "Mechanical_List.aspx", 0);
         }
     }

@@ -81,6 +81,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LearningEntity.cs" />
     <Compile Include="ResponeDataEntity.cs" />
+    <Compile Include="SchoolEntity.cs" />
     <Compile Include="StudentEntity.cs" />
     <Compile Include="SummarizeEntity.cs" />
     <Compile Include="TaskEntity.cs" />

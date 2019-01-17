@@ -86,6 +86,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SchoolBLL.cs" />
     <Compile Include="StudentBLL.cs" />
     <Compile Include="SummarizeBLL.cs" />
     <Compile Include="TaskBLL.cs" />
