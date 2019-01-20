@@ -17,8 +17,8 @@ namespace Daiv_OA.Web
             if (!this.Page.IsPostBack)
             {
                 Bind();
-                this.Gname.ReadOnly = true;
-                this.GgradeName.ReadOnly = true;
+                //this.Gname.ReadOnly = true;
+                //this.GgradeName.ReadOnly = true;
             }
         }
 
@@ -31,8 +31,18 @@ namespace Daiv_OA.Web
             this.Gname.Text = model.Gname;
             this.Gsnumber.Text = model.Gsnumber.ToString();
             this.Gdescription.Text = model.Gdescription;
-            this.GgradeName.Text = model.GgradeName;
+            //this.GgradeName.Text = model.GgradeName;
             this.Mphone.Text = model.Mphone;
+
+
+            //设置年级ID
+            SchGradeId = model.GgradeID;
+            //设置学校ID
+            Entity.SchoolGradeEntity scEntity = new BLL.SchoolGradeBLL().GetEntity(SchGradeId);
+            if(scEntity != null)
+            {
+                SchID = scEntity.SchoolID;
+            }
         }
 
 
@@ -43,8 +53,11 @@ namespace Daiv_OA.Web
             model = new Daiv_OA.BLL.GradeBLL().GetEntity(Str2Int(q("id"), 0));
             model.Gdescription = this.Gdescription.Text;
             model.Mphone = this.Mphone.Text;
+            model.GgradeName = "";
+            model.Gname = this.Gname.Text;
             try
             {
+                model.GgradeID = Convert.ToInt32(Request["schGradeGid"]);
                 model.Gsnumber = Convert.ToInt32(this.Gsnumber.Text);
             }
             catch (Exception)

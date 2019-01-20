@@ -65,17 +65,31 @@ namespace Daiv_OA.Web
             //验证班级数据
             int tbCount = dataTable.Rows.Count;
             string tempCName = string.Empty;
-            for (int j = 0; j < tbCount; j++)
+            if (Request["schClassgcid"] == null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()))
             {
-                tempCName = Convert.ToString(dataTable.Rows[j][colmun[2]]);
-                if (glist.Where(g=>g.Gname == tempCName).FirstOrDefault() == null)
-                {
-                    logHelper.logInfo(tempCName + " 未匹配到此班级名称!");
-                    FinalMessage(tempCName + " 未匹配到此班级名称!", "", 0);
-                    message.Visible = true;
-                    return;
-                }
+                FinalMessage("没有选择班级，请重新选择!", "", 0);
+                return;
             }
+            try
+            {
+                SchClassId = int.Parse(Request["schClassgcid"].ToString());
+            }
+            catch (Exception ex)
+            {
+                FinalMessage("班级转换失败，请重新选择!", "", 0);
+                return;
+            }
+            //for (int j = 0; j < tbCount; j++)
+            //{
+            //    tempCName = Convert.ToString(dataTable.Rows[j][colmun[2]]);
+            //    if (glist.Where(g=>g.Gname == tempCName).FirstOrDefault() == null)
+            //    {
+            //        logHelper.logInfo(tempCName + " 未匹配到此班级名称!");
+            //        FinalMessage(tempCName + " 未匹配到此班级名称!", "", 0);
+            //        message.Visible = true;
+            //        return;
+            //    }
+            //}
             //验证时间的有效性
             for (int i = 0; i < tbCount; i++)
             {
@@ -90,7 +104,21 @@ namespace Daiv_OA.Web
                     message.Visible = true;
                     return;
                 }
+
+                //验证学号
+                //验证学生序号是否存在
+                string snumbertemp = Convert.ToString(dataTable.Rows[i][colmun[0]]);
+                bool exixt = new Daiv_OA.BLL.StudentBLL().Exists(snumbertemp);
+                Daiv_OA.BLL.ContactBLL ctBll = new Daiv_OA.BLL.ContactBLL();
+                if (exixt)
+                {
+                    FinalMessage(snumbertemp + "相同的学生学号已经存在", "", 0);
+                    message.Visible = true;
+                    return;
+                }
             }
+
+
             #endregion
 
             //遍历表格
@@ -106,8 +134,8 @@ namespace Daiv_OA.Web
                 try
                 {
                     //学生实体相关信息保存
-                    studentEntity.Gname = Convert.ToString(dataTable.Rows[i][colmun[2]]);//班级名称 列索引：2
-                    studentEntity.Gid = glist.Where(g => g.Gname == studentEntity.Gname).FirstOrDefault().Gid;
+                    studentEntity.Gname = glist.Where(g => g.Gid == SchClassId).FirstOrDefault().Gname;//班级名称 列索引：2
+                    studentEntity.Gid = glist.Where(g => g.Gid == SchClassId).FirstOrDefault().Gid;
                     studentEntity.Snumber = Convert.ToString(dataTable.Rows[i][colmun[0]]);//学生学号 列索引：0
                     studentEntity.Sname = Convert.ToString(dataTable.Rows[i][colmun[1]]);//学生名称 列索引：1
                     studentEntity.Sbirthday = Convert.ToDateTime(dataTable.Rows[i][colmun[3]]);//出生年月日 列索引：3

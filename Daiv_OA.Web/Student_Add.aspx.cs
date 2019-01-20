@@ -15,17 +15,17 @@ namespace Daiv_OA.Web
             User_Load("student-add");
             if (!this.IsPostBack)
             {
-                string sql = "";
-                Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
-                DataSet ds = dp.GetList(sql);
-                for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
-                {
-                    ListItem listItem = new ListItem();
-                    listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
-                    listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
-                    this.ddlGid.Items.Add(listItem);
-                }
-                ds.Clear();
+                //string sql = "";
+                //Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
+                //DataSet ds = dp.GetList(sql);
+                //for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+                //{
+                //    ListItem listItem = new ListItem();
+                //    listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
+                //    listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
+                //    this.ddlGid.Items.Add(listItem);
+                //}
+                //ds.Clear();
             }
         }
 
@@ -37,9 +37,14 @@ namespace Daiv_OA.Web
             Entity.StudentEntity studentEntity = new Entity.StudentEntity();
             Entity.UserEntity parent = new Entity.UserEntity();
             Entity.ContactEntity contactEnitty = new Entity.ContactEntity();
+            if (Request["schClassgcid"] == null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()))
+            {
+                FinalMessage("班级无效!", "Student_Add.aspx?id=" + q("id"), 0);
+                return;
+            }
             //学生实体相关信息保存
-            studentEntity.Gname = this.ddlGid.SelectedItem.Text;
-            studentEntity.Gid = int.Parse( this.ddlGid.SelectedValue);
+            studentEntity.Gname = "";
+            studentEntity.Gid = int.Parse( Request["schClassgcid"]);
             studentEntity.Snumber = this.Snumber.Text;
             studentEntity.Sname = this.Sname.Text;
             studentEntity.Sbirthday =Convert.ToDateTime(this.Sbirthday.Text);

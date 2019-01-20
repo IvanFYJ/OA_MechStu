@@ -162,6 +162,16 @@ namespace Daiv_OA.BLL
         }
 
         /// <summary>
+        /// 根据微信openid获取情亲号学生学号
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public IList<Hashtable> GetFamilyNumberByOpenId(string openId)
+        {
+            return dal.GetFamilyNumberByOpenId(openId);
+        }
+
+        /// <summary>
         /// 分页查询学生数据
         /// </summary>
         /// <param name="pageIndex"></param>

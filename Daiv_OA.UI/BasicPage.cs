@@ -33,6 +33,21 @@ namespace Daiv_OA.UI
         /// </summary>
         protected string UserSetting = "";
         protected bool UserIsLogin = false;
+
+        /// <summary>
+        /// 学校ID
+        /// </summary>
+        protected int SchID = 0;
+        /// <summary>
+        /// 年级ID
+        /// </summary>
+        protected int SchGradeId = 0;
+
+        /// <summary>
+        /// 班级ID
+        /// </summary>
+        protected int SchClassId = 0;
+
         override protected void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -477,6 +492,25 @@ namespace Daiv_OA.UI
                     powerid = Daiv_OA.Utils.Cookie.GetValue("oa_user", "Powerid").ToString();
             }
             return powerid;
+        }
+
+        
+        /// <summary>
+        /// 获取学和年级字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetSchoolAndGradeStr()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new BLL.SchoolGradeBLL().GetSchoolAndGradeData());
+        }
+
+        /// <summary>
+        /// 获取年级和班级字符串
+        /// </summary>
+        /// <returns></returns>
+        public string GetGradeClassStr()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new BLL.SchoolGradeBLL().GetGradeAndClassData());
         }
     }
 }

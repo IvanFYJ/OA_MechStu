@@ -16,17 +16,17 @@ namespace Daiv_OA.Web
             User_Load("mech-add");
             if (!this.IsPostBack)
             {
-                string sql = "";
-                Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
-                DataSet ds = dp.GetList(sql);
-                for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
-                {
-                    ListItem listItem = new ListItem();
-                    listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
-                    listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
-                    this.ddlGid.Items.Add(listItem);
-                }
-                ds.Clear();
+                //string sql = "";
+                //Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
+                //DataSet ds = dp.GetList(sql);
+                //for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+                //{
+                //    ListItem listItem = new ListItem();
+                //    listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
+                //    listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
+                //    this.ddlGid.Items.Add(listItem);
+                //}
+                //ds.Clear();
             }
         }
 
@@ -36,9 +36,14 @@ namespace Daiv_OA.Web
             Entity.MechanicalEntity MechanicalEntity = new Entity.MechanicalEntity();
             Entity.UserEntity parent = new Entity.UserEntity();
             Entity.ContactEntity contactEnitty = new Entity.ContactEntity();
+            if (Request["schClassgcid"] == null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()))
+            {
+                FinalMessage("班级无效!", "Mechanical_Add.aspx", 0);
+                return;
+            }
             //学生实体相关信息保存
-            MechanicalEntity.ClassName = this.ddlGid.SelectedItem.Text;
-            MechanicalEntity.Gid = int.Parse(this.ddlGid.SelectedValue);
+            MechanicalEntity.ClassName = "";
+            MechanicalEntity.Gid = int.Parse(Request["schClassgcid"]);
             MechanicalEntity.MechIMEI = this.MechIMEI.Text;
             MechanicalEntity.MechName = this.MechName.Text;
             MechanicalEntity.MechPhone = this.MechPhone.Text;

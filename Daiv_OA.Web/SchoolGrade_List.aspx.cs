@@ -9,11 +9,12 @@ using System.Web.UI.WebControls;
 
 namespace Daiv_OA.Web
 {
-	public partial class School_List : Daiv_OA.UI.BasicPage
+    public partial class SchoolGrade_List : Daiv_OA.UI.BasicPage
     {
-		protected void Page_Load(object sender, EventArgs e)
-		{
-            User_Load("sch-list");
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            User_Load("schgrade-list");
             if (!this.Page.IsPostBack)
             {
                 this.user_repeater.DataSource = pds();
@@ -21,19 +22,20 @@ namespace Daiv_OA.Web
             }
         }
 
+
         //删除数据
         protected void lbDel_Click(object sender, CommandEventArgs e)
         {
             User_Load("sch-list");
             string oname = Getoname();
-            Daiv_OA.BLL.SchoolBLL SchoolBll = new Daiv_OA.BLL.SchoolBLL();
+            Daiv_OA.BLL.SchoolGradeBLL SchoolGradeBll = new Daiv_OA.BLL.SchoolGradeBLL();
             Daiv_OA.BLL.UserBLL userBll = new BLL.UserBLL();
             int sid = Convert.ToInt32(e.CommandArgument);
-            Entity.SchoolEntity SchoolEntity = SchoolBll.GetEntity(sid);
-            SchoolBll.Delete(sid);
-            logHelper.logInfo("删除学校成功！操作人：" + oname);
-            string stuStr = Newtonsoft.Json.JsonConvert.SerializeObject(SchoolEntity);
-            logHelper.logInfo("删除学校：" + stuStr);
+            Entity.SchoolGradeEntity SchoolGradeEntity = SchoolGradeBll.GetEntity(sid);
+            SchoolGradeBll.Delete(sid);
+            logHelper.logInfo("删除年级成功！操作人：" + oname);
+            string stuStr = Newtonsoft.Json.JsonConvert.SerializeObject(SchoolGradeEntity);
+            logHelper.logInfo("删除年级：" + stuStr);
             Adminlogadd(oname);
             Bind();
         }
@@ -42,8 +44,8 @@ namespace Daiv_OA.Web
         //数据绑定
         void Bind()
         {
-            string sql = string.Format(@"select * from OA_School where IsDeleted = 0", UserId);
-            this.user_repeater.DataSource = new Daiv_OA.BLL.SchoolBLL().Getall(sql);
+            string sql = string.Format(@"select * from OA_SchoolGrade where IsDeleted = 0", UserId);
+            this.user_repeater.DataSource = new Daiv_OA.BLL.SchoolGradeBLL().Getall(sql);
             this.user_repeater.DataBind();
         }
 
@@ -54,12 +56,12 @@ namespace Daiv_OA.Web
             model.Uid = UserId;
             model.Updatetitle = name;
             model.Updatetime = DateTime.Now;
-            model.Updatetype = "删除学校";
+            model.Updatetype = "删除年级";
             int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
             if (i > 0)
-                FinalMessage("学校删除成功", "School_List.aspx", 0);
+                FinalMessage("年级删除成功", "SchoolGrade_List.aspx", 0);
             else
-                FinalMessage("学校删除失败", "School_List.aspx", 0);
+                FinalMessage("年级删除失败", "SchoolGrade_List.aspx", 0);
         }
 
 
@@ -74,8 +76,8 @@ namespace Daiv_OA.Web
 
         private PagedDataSource pds()
         {
-            string sql = string.Format(@"select * from OA_School where IsDeleted = 0", UserId);
-            DataSet ds = new Daiv_OA.BLL.SchoolBLL().Getall(sql);
+            string sql = string.Format(@"select sg.*,s.Name as SchoolName from OA_SchoolGrade sg join OA_School s on sg.SchoolID=s.ID where sg.IsDeleted = 0", UserId);
+            DataSet ds = new Daiv_OA.BLL.SchoolGradeBLL().Getall(sql);
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
             //this.user_repeater.DataBind();
@@ -151,8 +153,7 @@ namespace Daiv_OA.Web
         protected void ddlp_SelectedIndexChanged(object sender, EventArgs e)
         {//脚模板中的下拉列表框更改时激发
             string pg = Convert.ToString((Convert.ToInt32(((DropDownList)sender).SelectedValue) - 1));//获取列表框当前选中项
-            Response.Redirect("School_List.aspx?page=" + pg);//页面转向
+            Response.Redirect("SchoolGrade_List.aspx?page=" + pg);//页面转向
         }
-
     }
 }

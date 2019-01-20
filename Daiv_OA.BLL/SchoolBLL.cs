@@ -75,10 +75,10 @@ namespace Daiv_OA.BLL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Entity.SchoolEntity GetEntityByImei(string imei)
+        public Entity.SchoolEntity GetEntityByName(string name)
         {
 
-            return dal.GetEntityByImei(imei);
+            return dal.GetEntityByName(name);
         }
 
 

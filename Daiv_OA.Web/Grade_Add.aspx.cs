@@ -10,6 +10,7 @@ namespace Daiv_OA.Web
 {
     public partial class Grade_Add : Daiv_OA.UI.BasicPage
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("grade-add");
@@ -21,7 +22,8 @@ namespace Daiv_OA.Web
         {
             Entity.GradeEntity gradeEntity = new Entity.GradeEntity();
             gradeEntity.Gname = this.Gname.Text;
-            gradeEntity.GgradeName = this.GgradeName.Text;
+            gradeEntity.GgradeName = "";
+            gradeEntity.GgradeID =Convert.ToInt32(Request["schGradeGid"]);
             gradeEntity.Mphone = this.Mphone.Text;
             try
             {
@@ -55,5 +57,6 @@ namespace Daiv_OA.Web
             this.Gdescription.Text = "";
             this.Gname.Focus();
         }
+
     }
 }

@@ -31,18 +31,18 @@ namespace Daiv_OA.Web
             this.MechName.Text = model.MechName;
             this.MechPhone.Text = model.MechPhone;
 
-            string sql = "";
-            Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
-            DataSet ds = dp.GetList(sql);
-            for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
-            {
-                ListItem listItem = new ListItem();
-                listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
-                listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
-                this.ddlGid.Items.Add(listItem);
-            }
-            this.ddlGid.SelectedValue = model.Gid.ToString();
-            ds.Clear();
+            //string sql = "";
+            //Daiv_OA.BLL.GradeBLL dp = new Daiv_OA.BLL.GradeBLL();
+            //DataSet ds = dp.GetList(sql);
+            //for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+            //{
+            //    ListItem listItem = new ListItem();
+            //    listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
+            //    listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
+            //    this.ddlGid.Items.Add(listItem);
+            //}
+            //this.ddlGid.SelectedValue = model.Gid.ToString();
+            //ds.Clear();
         }
 
 
@@ -52,9 +52,14 @@ namespace Daiv_OA.Web
             Entity.MechanicalEntity model = new Entity.MechanicalEntity();
             Daiv_OA.BLL.ContactBLL contactBll = new Daiv_OA.BLL.ContactBLL();
             Daiv_OA.BLL.MechanicalBLL mechanicalBll = new Daiv_OA.BLL.MechanicalBLL();
+            if (Request["schClassgcid"] == null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()))
+            {
+                FinalMessage("班级无效!", "Mechanical_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
             model = mechanicalBll.GetEntity(Str2Int(q("id"), 0));
-            model.ClassName = this.ddlGid.SelectedItem.Text;
-            model.Gid = int.Parse(this.ddlGid.SelectedValue);
+            model.ClassName = "";
+            model.Gid = int.Parse(Request["schClassgcid"]);
             model.MechIMEI = this.MechIMEI.Text;
             model.MechName = this.MechName.Text;
             model.MechPhone = this.MechPhone.Text;

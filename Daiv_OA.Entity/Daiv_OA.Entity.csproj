@@ -82,6 +82,7 @@
     <Compile Include="LearningEntity.cs" />
     <Compile Include="ResponeDataEntity.cs" />
     <Compile Include="SchoolEntity.cs" />
+    <Compile Include="SchoolGradeEntity.cs" />
     <Compile Include="StudentEntity.cs" />
     <Compile Include="SummarizeEntity.cs" />
     <Compile Include="TaskEntity.cs" />

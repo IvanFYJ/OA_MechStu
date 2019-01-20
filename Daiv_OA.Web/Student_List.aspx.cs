@@ -84,12 +84,15 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
         private PagedDataSource pds()
         {
             string sql = string.Format(@"SELECT 
-st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
-g.Gdescription,g.GgradeName,g.Gname
+st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Sname,st.MechID,st.IsDeleted,
+g.Gdescription,g.GgradeName,g.Gname,
+schg.Name as 'GradeName',sch.Name as 'SchoolName',schg.SchoolID
 --,
 --cat.Cphone,cat.Cphone2,cat.Cphone3,cat.Cphone4
 FROM Daiv_OA..OA_Student(NOLOCK) st 
 JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
+left join OA_SchoolGrade schg on g.GgradeID = schg.ID
+left join OA_School sch on sch.ID = schg.SchoolID
 --LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
 WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);

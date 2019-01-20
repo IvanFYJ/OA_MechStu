@@ -180,6 +180,7 @@
     <Content Include="images\upbtn_bg.gif" />
     <Content Include="images\upfile_bg.gif" />
     <Content Include="Index.aspx" />
+    <Content Include="js\Grade\grade.js" />
     <Content Include="js\jquery-1.5.2.min.js" />
     <Content Include="kindeditor\asp.net\bin\LitJSON.dll" />
     <Content Include="kindeditor\asp.net\demo.aspx" />
@@ -445,6 +446,9 @@
     <Content Include="Placard_Add.aspx" />
     <Content Include="Placard_Edit.aspx" />
     <Content Include="Placard_Show.aspx" />
+    <Content Include="SchoolGrade_Add.aspx" />
+    <Content Include="SchoolGrade_Edit.aspx" />
+    <Content Include="SchoolGrade_List.aspx" />
     <Content Include="School_Add.aspx" />
     <Content Include="School_Edit.aspx" />
     <Content Include="School_List.aspx" />
@@ -714,6 +718,7 @@
     <Content Include="Time_List.aspx" />
     <Content Include="Worklog_List.aspx" />
     <Content Include="Worklog_Show.aspx" />
+    <Content Include="_libs\jquery-3.1.1.js" />
     <Content Include="_libs\jquery.jtemplates.js" />
     <Content Include="_libs\jquery.timers.js" />
     <Content Include="DeskTop2.aspx" />
@@ -1153,6 +1158,27 @@
     </Compile>
     <Compile Include="role.aspx.designer.cs">
       <DependentUpon>role.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolGrade_Add.aspx.cs">
+      <DependentUpon>SchoolGrade_Add.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SchoolGrade_Add.aspx.designer.cs">
+      <DependentUpon>SchoolGrade_Add.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolGrade_Edit.aspx.cs">
+      <DependentUpon>SchoolGrade_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SchoolGrade_Edit.aspx.designer.cs">
+      <DependentUpon>SchoolGrade_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SchoolGrade_List.aspx.cs">
+      <DependentUpon>SchoolGrade_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SchoolGrade_List.aspx.designer.cs">
+      <DependentUpon>SchoolGrade_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="School_Add.aspx.cs">
       <DependentUpon>School_Add.aspx</DependentUpon>

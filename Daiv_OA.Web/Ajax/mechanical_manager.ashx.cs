@@ -93,6 +93,12 @@ namespace Daiv_OA.Web.Ajax
                     case "unionid":
                         entity = GetSessionKey(context, ob);
                         break;
+                    case "getschool":
+                        entity = GetSchool(context, ob);
+                        break;
+                    case "getgrade":
+                        entity = GetGrade(context, ob);
+                        break;
                     case "getclass":
                         entity = GetClass(context, ob);
                         break;
@@ -108,6 +114,33 @@ namespace Daiv_OA.Web.Ajax
             ResponseData(context, entity);
         }
 
+        private ResponeDataEntity GetGrade(HttpContext context, JObject ob)
+        {
+            string shid = ob["shid"].ToString();
+            ResponeDataEntity resultModel = new ResponeDataEntity();
+            BLL.SchoolGradeBLL sbgradell = new BLL.SchoolGradeBLL();
+            List<SchoolGradeEntity> list = sbgradell.GetAllListByScId(shid);
+            resultModel.Status = 1;
+            resultModel.Data = list;
+            return resultModel;
+        }
+
+        /// <summary>
+        /// 获取学校数据
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity GetSchool(HttpContext context, JObject ob)
+        {
+            ResponeDataEntity resultModel = new ResponeDataEntity();
+            BLL.SchoolBLL sbgradell = new BLL.SchoolBLL();
+            List<Entity.SchoolEntity> schList = sbgradell.GetModelList(" IsDeleted=0");
+            resultModel.Status = 1;
+            resultModel.Data = schList;
+            return resultModel;
+        }
+
         /// <summary>
         /// 获取班级数据
         /// </summary>
@@ -116,7 +149,7 @@ namespace Daiv_OA.Web.Ajax
         /// <returns></returns>
         private ResponeDataEntity GetClass(HttpContext context, JObject ob)
         {
-            string shid = ob["shid"].ToString();
+            string shid = ob["ggid"].ToString();
             ResponeDataEntity resultModel = new ResponeDataEntity();
             List<GradeEntity> list = gradebll.GetAllListByScId(shid);
             resultModel.Status = 1;
@@ -133,10 +166,16 @@ namespace Daiv_OA.Web.Ajax
         private ResponeDataEntity GetStudentsByGid(HttpContext context, JObject ob)
         {
             string shid = ob["gid"].ToString();
+            string openid = ob["openid"].ToString();
             ResponeDataEntity resultModel = new ResponeDataEntity();
             List<StudentEntity> list = stubll.GetAllListByGid(shid);
+            IList<Hashtable> fnList = new List<Hashtable>();
+            if (!string.IsNullOrEmpty(openid))
+            {
+                fnList = stubll.GetFamilyNumberByOpenId(openid);
+            }
             resultModel.Status = 1;
-            resultModel.Data = list;
+            resultModel.Data =new { stuList= list,famList = fnList };
             return resultModel;
         }
 
@@ -168,18 +207,19 @@ namespace Daiv_OA.Web.Ajax
         private ResponeDataEntity WXGetUser(HttpContext context, JObject ob)
         {
             string openId = ob["openId"].ToString();
+            string snumber = ob["snumber"].ToString();
             WXUserEntity wxModel = new BLL.WXUserBLL().GetEntityByOpenId(openId);
             List<Daiv_OA.Entity.ContactEntity> ctEntitys = null;
             if (wxModel == null)
                 return new ResponeDataEntity() { Data = new { wxphone = "", stunumber = "", uid = 0,contacts = ctEntitys} };
             //获取OA用户信息
-            UserEntity umodel = new BLL.UserBLL().GetEntity(wxModel.OAUserID);
+            //UserEntity umodel = new BLL.UserBLL().GetEntity(wxModel.OAUserID);
             ResponeDataEntity resultModel = new ResponeDataEntity();
             //获取亲情号
-            Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(umodel.Uname);
+            Daiv_OA.Entity.StudentEntity stuEntity = stubll.GetEntityByNumber(snumber);
             ctEntitys = ctbll.GetEntitysBySid(stuEntity.Sid);
             resultModel.Status = 1;
-            resultModel.Data = new { wxphone=wxModel.WXUserPhone,stunumber = umodel.Uname,uid= umodel.Uid, contacts = ctEntitys };
+            resultModel.Data = new { wxphone=wxModel.WXUserPhone,stunumber ="",uid= 0, contacts = ctEntitys };
             return resultModel;
         }
 
@@ -543,27 +583,29 @@ namespace Daiv_OA.Web.Ajax
             string uname = ob["uname"].ToString();
             string pwd = ob["pwd"].ToString();
             string phone = ob["phone"].ToString();
+            string snumber = ob["snumber"].ToString();
             string openId = ob["openId"].ToString();
             int iExpires = 0;
+            logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd + " phone:" + phone + " openId:" + openId+ " snumber:"+ snumber);
 
-            logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd+ " phone:"+phone+ " openId:"+openId);
-            string uid = new Daiv_OA.BLL.UserBLL().Existslongin(uname, Daiv_OA.Utils.MD5.Lower32(pwd));
-            if (uid != "")
-            {
-                Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
-                model = new Daiv_OA.BLL.UserBLL().GetEntity(int.Parse(uid));
-                new BLL.UserBLL().SetUserCookies(model, HttpContext.Current.Request.UserHostAddress, iExpires);
-                HttpContext.Current.Session["UserName"] = uname;
-                //保存微信信息
-                WXUserEntity wxUModel = new WXUserEntity();
-                wxUModel.OpenId = openId;
-                wxUModel.WXUserPhone = phone;
-                wxUModel.OAUserID = model.Uid;
-                wxUModel.CreateTime = DateTime.Now;
-                new BLL.WXUserBLL().Add(wxUModel);
-                return new ResponeDataEntity() { Status = 1, Msg = "登录成功！", Data = model };
-            }
-            return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
+            //保存微信信息
+            WXUserEntity wxUModel = new WXUserEntity();
+            wxUModel.OpenId = openId;
+            wxUModel.WXUserPhone = phone;
+            wxUModel.OAUserID = 0;//存在多个用户操作多学生情况，所以绑定学生不现实
+            wxUModel.CreateTime = DateTime.Now;
+            new BLL.WXUserBLL().Add(wxUModel);
+            return new ResponeDataEntity() { Status = 1, Msg = "登录成功！", Data = null };
+            //logHelper.logInfo(" LoginIn params：uname：" + uname + " pwd:" + pwd+ " phone:"+phone+ " openId:"+openId);
+            //string uid = new Daiv_OA.BLL.UserBLL().Existslongin(uname, Daiv_OA.Utils.MD5.Lower32(pwd));
+            //if (uid != "")
+            //{
+            //    Daiv_OA.Entity.UserEntity model = new Daiv_OA.Entity.UserEntity();
+            //    model = new Daiv_OA.BLL.UserBLL().GetEntity(int.Parse(uid));
+            //    new BLL.UserBLL().SetUserCookies(model, HttpContext.Current.Request.UserHostAddress, iExpires);
+            //    HttpContext.Current.Session["UserName"] = uname;
+            //}
+            //return new ResponeDataEntity() { Status = 0, Msg = "登录失败！" };
         }
 
         /// <summary>

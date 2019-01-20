@@ -10,8 +10,9 @@
     <link href="css/style1.css" rel="stylesheet" type="text/css" />
     
     <script src="_libs/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="_libs/jquery-1.2.6.js"></script>
+    
+    <script type="text/javascript" src="_libs/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="js/Grade/grade.js"></script>
 
     <script type="text/javascript" src="js/global.js"></script>
 
@@ -64,8 +65,22 @@
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">学校名称：</span>
+                                            <asp:DropDownList ID="schGid" runat="server" Enabled="true">
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">年级名称：</span>
+                                            <asp:DropDownList ID="schGradeGid" runat="server" Enabled="true">
+                                            </asp:DropDownList>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">班级名称：</span>
-                                            <asp:DropDownList ID="ddlGid" runat="server" Enabled="true">
+                                            <asp:DropDownList ID="schClassgcid" runat="server" Enabled="true">
                                             </asp:DropDownList>
                                         </td>
                                     </tr>
@@ -125,7 +140,7 @@
                         </div>
                         <div class="cntre1">
                             <ul><li>
-                                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click" /></li>
+                                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click"  /></li>
                             <li>
                                         <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Student_List.aspx'" /></li>
                                         </ul>
@@ -139,6 +154,14 @@
     <asp:Image ID="Image2" runat="server" Width="1px" Height="1px" />
     </form>
 <script type="text/javascript"> 
+        var sgjson = '<%=GetSchoolAndGradeStr()%>';
+    var gcjson = '<%=GetGradeClassStr()%>';
+    var sgObject = {};
+    var gcObject = {};
+    var shid = <%=SchID%>;
+    var gradeid =  <%=SchGradeId%>;
+    var gclassid =  <%=schClassgcid%>;
+
     $(function () {
         $('#contactTable').find('tbody tr').find('.contactDelete').click(removeTr);
         $('#contactAdd').click(function () {

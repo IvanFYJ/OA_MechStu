@@ -13,6 +13,7 @@
         private string _ggradename;
         private int _methid;
         private string _mphone;
+        private int _ggradeid;
 
         /// <summary>
         /// 班级ID
@@ -77,6 +78,14 @@
         {
             set { _methid = value; }
             get { return _methid; }
+        }
+        /// <summary>
+        /// 班级ID
+        /// </summary>
+        public int GgradeID
+        {
+            set { _ggradeid = value; }
+            get { return _ggradeid; }
         }
     }
 }

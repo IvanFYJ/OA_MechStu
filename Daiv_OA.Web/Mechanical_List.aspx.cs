@@ -75,7 +75,14 @@ namespace Daiv_OA.Web
 
         private PagedDataSource pds()
         {
-            string sql = string.Format(@"select * from OA_Mechanical where IsDeleted = 0", UserId);
+            string sql = string.Format(@"
+select om.*,g.Gname as 'GClassName',schg.Name as 'GradeName',sch.Name as 'SchoolName',schg.SchoolID
+from OA_Mechanical om
+JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = om.Gid
+left join OA_SchoolGrade schg on g.GgradeID = schg.ID
+left join OA_School sch on sch.ID = schg.SchoolID
+where om.IsDeleted = 0
+", UserId);
             DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);

@@ -42,6 +42,14 @@ namespace Daiv_OA.Web
             model = SchoolBll.GetEntity(Str2Int(q("id"), 0));
             model.Name = this.Name.Text;
             model.Address = this.Address.Text;
+            //判断该名称是否存在
+            Entity.SchoolEntity stemp = SchoolBll.GetEntityByName(model.Name);
+            if(stemp!= null && stemp.ID != model.ID)
+            {
+
+                FinalMessage("学校名称：" + model.Name+"已存在！", "School_Eidt.aspx?id="+model.ID, 1);
+                return;
+            }
             SchoolBll.Update(model);
             logHelper.logInfo("修改学校成功！操作人：" + UserId);
             FinalMessage("操作成功", "School_List.aspx", 0);

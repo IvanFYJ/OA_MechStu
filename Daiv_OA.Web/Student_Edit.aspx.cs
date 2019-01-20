@@ -17,7 +17,7 @@ namespace Daiv_OA.Web
             if (!this.Page.IsPostBack)
             {
                 Bind();
-                this.Snumber.ReadOnly = true;
+                //this.Snumber.ReadOnly = true;
             }
         }
 
@@ -59,18 +59,23 @@ namespace Daiv_OA.Web
             sbuilder.AppendLine("</table>");
             this.ltMasterSetting.Text = sbuilder.ToString();
 
-            string sql = "";
-            Daiv_OA.BLL.StudentBLL dp = new Daiv_OA.BLL.StudentBLL();
-            DataSet ds = dp.GetList(sql);
-            for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
+            //设置班级
+            SchClassId = model.Gid;
+            //设置年级
+            Entity.GradeEntity cmodel = new BLL.GradeBLL().GetEntity(SchClassId);
+            Entity.SchoolGradeEntity gmodel = null;
+            if(cmodel != null)
             {
-                ListItem listItem = new ListItem();
-                listItem.Text = ds.Tables[0].Rows[j]["Gname"].ToString();
-                listItem.Value = ds.Tables[0].Rows[j]["Gid"].ToString();
-                this.ddlGid.Items.Add(listItem);
+                SchGradeId = cmodel.GgradeID;
+                //获取学校对象
+                gmodel = new BLL.SchoolGradeBLL().GetEntity(SchGradeId);
             }
-            this.ddlGid.SelectedValue = model.Gid.ToString();
-            ds.Clear();
+            //设置学校
+            if(gmodel != null)
+            {
+                SchID = gmodel.SchoolID;
+            }
+
         }
 
 
@@ -81,9 +86,14 @@ namespace Daiv_OA.Web
             Entity.StudentEntity model = new Entity.StudentEntity();
             Daiv_OA.BLL.ContactBLL contactBll = new Daiv_OA.BLL.ContactBLL();
             Daiv_OA.BLL.StudentBLL studentBll = new Daiv_OA.BLL.StudentBLL();
+            if (Request["schClassgcid"]== null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()) )
+            {
+                FinalMessage("班级无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
             model = studentBll.GetEntity(Str2Int(q("id"), 0));
-            model.Gname = this.ddlGid.SelectedItem.Text;
-            model.Gid = int.Parse(this.ddlGid.SelectedValue);
+            model.Gname = "";
+            model.Gid = int.Parse(Request["schClassgcid"]);
             model.Sname = this.Sname.Text;
             model.Sbirthday = Convert.ToDateTime(this.Sbirthday.Text);
 

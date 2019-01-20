@@ -52,6 +52,13 @@
                                                                 <td style="width: 60px">
                                                                     序号
                                                                 </td>
+                                                                    <td width="width: 200px">学校名称
+                                                                    </td>
+                                                                    </td>
+                                                                    <td width="width: 60px">年级名称
+                                                                    </td>
+                                                                    <td width="width: 60px">班级名称
+                                                                    </td>
                                                                 <td width="width: 200px">
                                                                     设备IMEI
                                                                 </td>
@@ -60,9 +67,6 @@
                                                                 </td>
                                                                 <td width="width: 200px">
                                                                     设备电话号码
-                                                                </td>
-                                                                <td width="*">
-                                                                    班级名称
                                                                 </td>
                                                                 <td style="width: 190px">
                                                                     操作
@@ -75,6 +79,15 @@
                                                                 <%# Container.ItemIndex + 1 %>
                                                             </td>
                                                             <td align="center">
+                                                                <%# Eval("SchoolName")%>
+                                                            </td>
+                                                            <td align="center">
+                                                                <%# Eval("GradeName")%>
+                                                            </td>
+                                                            <td align="center">
+                                                                <%# Eval("GClassName")%>
+                                                            </td>
+                                                            <td align="center">
                                                                 <%# Eval("MechIMEI")%>
                                                             </td>
                                                             <td align="center">
@@ -82,9 +95,6 @@
                                                             </td>
                                                             <td align="center">
                                                                 <%# Eval("MechPhone")%>
-                                                            </td>
-                                                            <td align="center">
-                                                                <%# Eval("ClassName")%>
                                                             </td>
                                                             <td align="center">
                                                                 <a href="Mechanical_Edit.aspx?id=<%#Eval("ID") %>">修改信息</a> | 

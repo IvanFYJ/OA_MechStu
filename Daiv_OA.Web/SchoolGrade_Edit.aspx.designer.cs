@@ -10,7 +10,7 @@
 namespace Daiv_OA.Web {
     
     
-    public partial class Student_Import {
+    public partial class SchoolGrade_Edit {
         
         /// <summary>
         /// form1 控件。
@@ -22,49 +22,31 @@ namespace Daiv_OA.Web {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// schGid 控件。
+        /// ddlGid 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList schGid;
+        protected global::System.Web.UI.WebControls.DropDownList ddlGid;
         
         /// <summary>
-        /// schGradeGid 控件。
+        /// Name 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList schGradeGid;
+        protected global::System.Web.UI.WebControls.TextBox Name;
         
         /// <summary>
-        /// schClassgcid 控件。
+        /// RequiredFieldValidator1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList schClassgcid;
-        
-        /// <summary>
-        /// stuExcel 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload stuExcel;
-        
-        /// <summary>
-        /// message 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label message;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// ImageButton1 控件。

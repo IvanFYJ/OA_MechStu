@@ -118,13 +118,18 @@ namespace Daiv_OA.BLL
             return GetList("");
         }
 
+        /// <summary>
+        /// 根据年级ID获取班级数据
+        /// </summary>
+        /// <param name="shid"></param>
+        /// <returns></returns>
         public List<Daiv_OA.Entity.GradeEntity> GetAllListByScId(string shid)
         {
             StringBuilder sqlBuiler = new StringBuilder();
             sqlBuiler.Append(" IsDeleted = 0");
             if(!string.IsNullOrEmpty(shid))
             {
-
+                sqlBuiler.Append(" AND GgradeID=" + shid);
             }
             DataSet ds = GetList(sqlBuiler.ToString());
             List<Daiv_OA.Entity.GradeEntity> modelList = new List<Daiv_OA.Entity.GradeEntity>();

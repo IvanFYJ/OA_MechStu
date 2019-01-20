@@ -292,6 +292,26 @@ SELECT Gid,Sname,Snumber,Sid FROM listtab
         }
 
         /// <summary>
+        /// 根据微信openid获取情亲号学生学号
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public IList<Hashtable> GetFamilyNumberByOpenId(string openId)
+        {
+            string sql = @"select distinct os.snumber 
+from OA_WXUser u
+join OA_Contact oc on u.WXUserPhone = oc.Cphone
+join OA_Student os on os.Sid = oc.Sid
+where OpenId =@openid and oc.IsDeleted = 0
+";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@openid", SqlDbType.NVarChar,128)};
+            parameters[0].Value = openId;
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+        }
+
+        /// <summary>
         /// 根据电话号码查询学生数据(弃用)
         /// </summary>
         /// <param name="mPhone"></param>

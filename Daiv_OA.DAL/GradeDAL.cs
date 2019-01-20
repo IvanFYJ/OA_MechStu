@@ -42,14 +42,17 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string Gname)
+        public bool Exists(string Gname,int ggradeID)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) FROM [OA_Grade]");
-            strSql.Append(" where Gname=@Gname");
+            strSql.Append(" where Gname=@Gname and GgradeID=@ggradeID");
             SqlParameter[] parameters = {
-                    new SqlParameter("@Gname", SqlDbType.VarChar,50)};
+                    new SqlParameter("@Gname", SqlDbType.VarChar,50),
+                    new SqlParameter("@ggradeID", SqlDbType.Int,4)
+            };
             parameters[0].Value = Gname;
+            parameters[1].Value = ggradeID;
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
 
@@ -73,9 +76,7 @@ namespace Daiv_OA.DAL
         /// </summary>
         public int Add(Daiv_OA.Entity.GradeEntity model)
         {
-            if (ExistsGrade(model.GgradeName))
-                return -1;
-            if (Exists(model.Gname))//已经存在该用户
+            if (Exists(model.Gname,model.GgradeID))//已经存在该用户
                 return 0;
             StringBuilder strSql = new StringBuilder();
             StringBuilder strSql1 = new StringBuilder();
@@ -94,12 +95,17 @@ namespace Daiv_OA.DAL
             if (model.Gsnumber > 0)
             {
                 strSql1.Append("Gsnumber,");
-                strSql2.Append("" + model.Gsnumber + ",");
+                strSql2.Append("" + model.Gsnumber + ","); 
             }
             if (model.MechID >= 0)
             {
                 strSql1.Append("MechID,");
                 strSql2.Append("" + model.MechID + ",");
+            }
+            if (model.GgradeID >= 0)
+            {
+                strSql1.Append("GgradeID,");
+                strSql2.Append("" + model.GgradeID + ",");
             }
             if (model.GgradeName != null)
             {
@@ -141,11 +147,12 @@ namespace Daiv_OA.DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [OA_Grade] set ");
             strSql.Append("Gname='" + model.Gname + "',");
-            strSql.Append("Gdescription='" + model.Gdescription + "',");
+            strSql.Append("Gdescription='" + model.Gdescription + "',"); 
             strSql.Append("GgradeName='" + model.GgradeName + "',");
             strSql.Append("MechID=" + model.MechID + ",");
+            strSql.Append("GgradeID=" + model.GgradeID + ",");
             strSql.Append("Gsnumber=" + model.Gsnumber + ",");
-            strSql.Append("Mphone=" + model.Mphone + "");
+            strSql.Append("Mphone='" + model.Mphone + "'");
             strSql.Append(" where Gid=" + model.Gid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
         }
@@ -174,7 +181,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Gid ,Gname ,Gsnumber ,Gdescription,MechID ,GgradeName,Mphone ,IsDeleted  ");
+            strSql.Append(" Gid ,Gname ,Gsnumber ,Gdescription,MechID,GgradeID ,GgradeName,Mphone ,IsDeleted  ");
             strSql.Append(" FROM [OA_Grade] ");
             strSql.Append(" where Gid=" + Gid + " ");
             Daiv_OA.Entity.GradeEntity model = new Daiv_OA.Entity.GradeEntity();
@@ -203,7 +210,7 @@ namespace Daiv_OA.DAL
             {
                 if (dt.Rows[rowindex]["Gid"].ToString() != "")
                 {
-                    model.Gid = int.Parse(dt.Rows[rowindex]["Gid"].ToString());
+                    model.Gid = int.Parse(dt.Rows[rowindex]["Gid"].ToString()); 
                 }
                 if (dt.Rows[rowindex]["Gsnumber"].ToString() != "")
                 {
@@ -212,6 +219,10 @@ namespace Daiv_OA.DAL
                 if (dt.Rows[rowindex]["MechID"].ToString() != "")
                 {
                     model.MechID = int.Parse(dt.Rows[rowindex]["MechID"].ToString());
+                }
+                if (dt.Rows[rowindex]["GgradeID"].ToString() != "")
+                {
+                    model.GgradeID = int.Parse(dt.Rows[rowindex]["GgradeID"].ToString());
                 }
                 model.Gdescription = dt.Rows[rowindex]["Gdescription"].ToString();
                 model.GgradeName = dt.Rows[rowindex]["GgradeName"].ToString();
@@ -240,7 +251,7 @@ namespace Daiv_OA.DAL
         public IList<Hashtable> List(int pageIndex, int pageSize)
         {
             string sql = @"WITH listtab AS (
-SELECT Gid,GgradeName,Mphone,Gname,Gdescription,
+SELECT Gid,GgradeName,GgradeID,Mphone,Gname,Gdescription,
 ROW_NUMBER() OVER (ORDER BY Gid ASC) AS req
 FROM dbo.OA_Grade
 )
@@ -261,7 +272,7 @@ WHERE req BETWEEN @begin AND @end";
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select Gid ,Gname ,Gsnumber ,Gdescription,MechID ,Mphone,GgradeName  ,IsDeleted  ");
+            strSql.Append("select Gid ,Gname ,Gsnumber ,Gdescription,MechID ,Mphone,GgradeName,GgradeID  ,IsDeleted  ");
             strSql.Append(" FROM [OA_Grade] ");
             if (strWhere.Trim() != "")
             {
@@ -281,8 +292,11 @@ WHERE req BETWEEN @begin AND @end";
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" Gid ,Gname ,Gsnumber ,Gdescription ,MechID,Mphone ,GgradeName ,IsDeleted ");
-            strSql.Append(" FROM [OA_Grade] ");
+            strSql.Append("cg.Gid ,cg.Gname ,cg.Gsnumber ,cg.Gdescription ,cg.MechID,cg.Mphone ,cg.GgradeName,cg.GgradeID ,cg.IsDeleted, ");
+            strSql.Append("schg.Name as 'GradeName',sch.Name as 'SchoolName',schg.SchoolID");
+            strSql.Append(" FROM [OA_Grade]  cg ");
+            strSql.Append(" left join OA_SchoolGrade schg on cg.GgradeID = schg.ID ");
+            strSql.Append(" left join OA_School sch on sch.ID = schg.SchoolID ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);

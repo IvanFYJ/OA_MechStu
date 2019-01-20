@@ -56,6 +56,9 @@
                                                                 <tr class="dataTableHead" align="center">
                                                                     <td style="width: 60px">序号
                                                                     </td>
+                                                                    <td width="width: 200px">学校名称
+                                                                    </td>
+                                                                    </td>
                                                                     <td width="width: 200px">年级名称
                                                                     </td>
                                                                     <td width="width: 200px">班级名称
@@ -79,7 +82,10 @@
                                                                     <%# Container.ItemIndex + 1 %>
                                                                 </td>
                                                                 <td align="center">
-                                                                    <%# Eval("GgradeName")%>
+                                                                    <%# Eval("SchoolName")%>
+                                                                </td>
+                                                                <td align="center">
+                                                                    <%# Eval("GradeName")%>
                                                                 </td>
                                                                 <td align="center">
                                                                     <%# Eval("Gname")%>
