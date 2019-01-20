@@ -22,6 +22,11 @@ $(function () {
         var shid = $(this).val();
         schGradeChange(shid);
     });
+
+    $('#schGradeGid').on('change', function () {
+        var shid = $(this).val();
+        schClassChange(shid);
+    });
 });
 
 //年级列表
