@@ -24,6 +24,7 @@ namespace Daiv_OA.Web
             //学校实体相关信息保存
             SchoolEntity.Address = this.Address.Text;
             SchoolEntity.Name = this.Name.Text;
+            SchoolEntity.SchoolSerie = this.SchoolSerie.Text;
             SchoolEntity.CreateDate = DateTime.Now;
             //保存数据
             try

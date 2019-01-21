@@ -538,13 +538,14 @@ namespace Daiv_OA.Web.Ajax
                 { resultEntity.Msg = cPhoneArr[i] + "电话号码无效！"; return resultEntity; };
                 contactList.Add(new Entity.ContactEntity() { Cphone = cPhoneArr[i], CPhoneName = cPhonenArr[i] });
             }
-            ctbll.DeleteBySid(stuEntity.Sid);
-            //联系电话实体添加
-            foreach (var item in contactList)
-            {
-                item.Sid = stuEntity.Sid;
-                ctbll.Add(item);
-            }
+            //ctbll.DeleteBySid(stuEntity.Sid);
+            ////联系电话实体添加
+            //foreach (var item in contactList)
+            //{
+            //    item.Sid = stuEntity.Sid;
+            //    ctbll.Add(item);
+            //}
+            ctbll.AddBatch(contactList, stuEntity.Sid);
             return new ResponeDataEntity() { Status = 1, Msg = snumber + "修改成功!" };
         }
 

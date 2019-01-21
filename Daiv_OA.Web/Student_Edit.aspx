@@ -154,15 +154,17 @@
     <asp:Image ID="Image2" runat="server" Width="1px" Height="1px" />
     </form>
 <script type="text/javascript"> 
+    debugger;
         var sgjson = '<%=GetSchoolAndGradeStr()%>';
     var gcjson = '<%=GetGradeClassStr()%>';
     var sgObject = {};
     var gcObject = {};
     var shid = <%=SchID%>;
     var gradeid =  <%=SchGradeId%>;
-    var gclassid =  <%=schClassgcid%>;
+    var gclassid =  <%=SchClassId%>;
 
     $(function () {
+        gcObject = $.parseJSON(gcjson);
         $('#contactTable').find('tbody tr').find('.contactDelete').click(removeTr);
         $('#contactAdd').click(function () {
             $newTr = $($('#contactTable').find('tbody tr:eq(0)')[0].outerHTML);

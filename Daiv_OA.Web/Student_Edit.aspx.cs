@@ -138,14 +138,16 @@ namespace Daiv_OA.Web
             //cModel.Cphone3 = this.Cphone3.Text;
             //cModel.Cphone4 = this.Cphone4.Text;
             //contactBll.Update(cModel);
+            //获取情亲号数据
             //删除数据
-            contactBll.DeleteBySid(model.Sid);
-            //联系电话实体添加
-            foreach (var item in contactList)
-            {
-                item.Sid = model.Sid;
-                contactBll.Add(item);
-            }
+            //contactBll.DeleteBySid(model.Sid);
+            ////联系电话实体添加
+            //foreach (var item in contactList)
+            //{
+            //    item.Sid = model.Sid;
+            //    contactBll.Add(item);
+            //}
+            contactBll.AddBatch(contactList, model.Sid);
             logHelper.logInfo("修改班级成功！操作人：" + UserId);
             FinalMessage("操作成功", "Student_List.aspx", 0);
         }

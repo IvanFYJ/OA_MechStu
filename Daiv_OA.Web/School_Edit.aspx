@@ -59,6 +59,14 @@
                                     </tr>
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
+                                            <span class="bvjto styp">学校编号：</span>
+                                            <asp:TextBox ID="SchoolSerie" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="SchoolSerie"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">学校地址：</span>
                                             <asp:TextBox ID="Address" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
                                         </td>

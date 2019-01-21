@@ -29,7 +29,7 @@ namespace Daiv_OA.Web
             model = new Daiv_OA.BLL.SchoolBLL().GetEntity(gid);
             this.Name.Text = model.Name;
             this.Address.Text = model.Address;
-            
+            this.SchoolSerie.Text = model.SchoolSerie;
         }
 
 
@@ -42,6 +42,7 @@ namespace Daiv_OA.Web
             model = SchoolBll.GetEntity(Str2Int(q("id"), 0));
             model.Name = this.Name.Text;
             model.Address = this.Address.Text;
+            model.SchoolSerie = this.SchoolSerie.Text;
             //判断该名称是否存在
             Entity.SchoolEntity stemp = SchoolBll.GetEntityByName(model.Name);
             if(stemp!= null && stemp.ID != model.ID)

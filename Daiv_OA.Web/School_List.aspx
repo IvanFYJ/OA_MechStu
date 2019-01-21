@@ -57,6 +57,9 @@
                                                                     学校名称
                                                                 </td>
                                                                 <td width="width: 200px">
+                                                                    学校编号
+                                                                </td>
+                                                                <td width="width: 200px">
                                                                     学校地址
                                                                 </td>
                                                                 <td style="width: 190px">
@@ -71,6 +74,9 @@
                                                             </td>
                                                             <td align="center">
                                                                 <%# Eval("Name")%>
+                                                            </td>
+                                                            <td align="center">
+                                                                <%# Eval("SchoolSerie")%>
                                                             </td>
                                                             <td align="center">
                                                                 <%# Eval("Address")%>
