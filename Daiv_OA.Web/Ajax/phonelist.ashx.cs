@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Daiv_OA.Utils;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -17,6 +20,14 @@ namespace Daiv_OA.Web.Ajax
             context.Response.ContentType = "text/plain";
             string schoolnumber = HttpContext.Current.Request.QueryString["schoolnumber"];
             string datetime = HttpContext.Current.Request.QueryString["datetime"];
+
+            JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
+            if(ob["schoolnumber"] != null && ob["datetime"] != null)
+            {
+                schoolnumber = ob["schoolnumber"].ToString();
+                datetime = ob["datetime"].ToString();
+            }
+            logHelper.logInfo(" phonelist params：schoolnumber：" + schoolnumber + " datetime:" + datetime );
             //获取情亲号
             BLL.ContactBLL cbll = new BLL.ContactBLL();
             IList<Hashtable> list=  cbll.GetPhoneListBySchoolAndDate(schoolnumber, datetime);
@@ -51,6 +62,18 @@ namespace Daiv_OA.Web.Ajax
                 }
             }
             context.Response.Write(string.Join(",",resultList));
+        }
+
+
+
+        /// <summary>
+        /// 字符流转换成Jsno对象
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static JObject StreamToString(Stream s)
+        {
+            return RequestHelper.StreamToString(s);
         }
 
         public bool IsReusable

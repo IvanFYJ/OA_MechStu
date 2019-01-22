@@ -661,22 +661,22 @@ namespace Daiv_OA.Web.Ajax
         /// <returns></returns>
         public static JObject StreamToString(Stream s)
         {
-            //创建流的对象
-            var sr = new StreamReader(s);
-            //读取request的流：Json字符
-            var stream = sr.ReadToEnd().ToString();
-            //讲读取到的字符用字典存储
-            Dictionary<string, object> str = (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(stream);
+            ////创建流的对象
+            //var sr = new StreamReader(s);
+            ////读取request的流：Json字符
+            //var stream = sr.ReadToEnd().ToString();
+            ////讲读取到的字符用字典存储
+            //Dictionary<string, object> str = (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(stream);
 
-            JObject jo = new JObject();
+            //JObject jo = new JObject();
 
-            foreach (var item in str)
-            {
-                //把字典转换成Json对象
-                jo.Add(item.Key, item.Value.ToString());
+            //foreach (var item in str)
+            //{
+            //    //把字典转换成Json对象
+            //    jo.Add(item.Key, item.Value.ToString());
 
-            }
-            return jo;
+            //}
+            return RequestHelper.StreamToString(s);
         }
         
 

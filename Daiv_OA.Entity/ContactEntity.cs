@@ -46,5 +46,10 @@ namespace Daiv_OA.Entity
         /// 联系人名称
         /// </summary>
         public System.String CPhoneName { get; set; }
+
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public System.DateTime CreatDate { get; set; }
     }
 }

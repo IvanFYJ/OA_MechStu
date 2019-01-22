@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace Daiv_OA.BLL
@@ -35,6 +37,43 @@ namespace Daiv_OA.BLL
         public int Add(Entity.ContactEntity model)
         {
             return dal.Add(model);
+        }
+
+        /// <summary>
+        /// 批量修改情亲号
+        /// </summary>
+        /// <param name="adds"></param>
+        /// <param name="sid"></param>
+        /// <returns></returns>
+        public int AddBatch(List<Entity.ContactEntity> adds,int sid)
+        {
+            List<Entity.ContactEntity> olds = GetEntitysBySid(sid);
+            try
+            {
+                //添加数据
+                for (int i = 0; i < adds.Count; i++)
+                {
+                    Entity.ContactEntity temp = olds.Where(o => o.Cphone == adds[i].Cphone && o.CPhoneName == adds[i].CPhoneName).FirstOrDefault();
+                    if (temp != null)
+                        continue;
+                    adds[i].Sid = sid;
+                    Add(adds[i]);
+                }
+                //删除数据
+                for (int i = 0; i < olds.Count; i++)
+                {
+                    Entity.ContactEntity temp = adds.Where(o => o.Cphone == olds[i].Cphone && o.CPhoneName == olds[i].CPhoneName).FirstOrDefault();
+                    if (temp != null)
+                        continue;
+                    Delete(olds[i].Cid);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return 1;
         }
 
         /// <summary>
@@ -110,6 +149,26 @@ namespace Daiv_OA.BLL
         public DataSet GetList(int Top, string strWhere, string filedOrder)
         {
             return dal.GetList(Top, strWhere, filedOrder);
+        }
+
+        /// <summary>
+        /// 根据学校编号和时间获取亲情号
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie, string datetime)
+        {
+            return dal.GetPhoneListBySchoolAndDate(sserie, datetime);
+        }
+
+
+        /// <summary>
+        /// 获取亲情号最大的修改时间
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable GetMaxCreatTime()
+        {
+            return dal.GetMaxCreatTime();
         }
 
         /// <summary>

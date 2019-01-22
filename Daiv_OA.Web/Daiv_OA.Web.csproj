@@ -851,6 +851,7 @@
     <Compile Include="Ajax\phonelist.ashx.cs">
       <DependentUpon>phonelist.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Ajax\RequestHelper.cs" />
     <Compile Include="Ajax\verify_code.ashx.cs">
       <DependentUpon>verify_code.ashx</DependentUpon>
     </Compile>

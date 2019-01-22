@@ -1,5 +1,6 @@
 ﻿using Daiv_OA.DBUtility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -64,6 +65,7 @@ namespace Daiv_OA.DAL
             StringBuilder strSql1 = new StringBuilder();
             StringBuilder strSql2 = new StringBuilder();
             model.IsDeleted = 0;
+            model.CreatDate = DateTime.Now;
 
             if (model.Sid > 0)
             {
@@ -88,12 +90,17 @@ namespace Daiv_OA.DAL
             if (model.Cphone4 != null) 
             {
                 strSql1.Append("Cphone4,");
-                strSql2.Append("'" + model.Cphone4 + "',");
+                strSql2.Append("'" + model.Cphone4 + "',"); 
             }
             if (model.CPhoneName != null)
             {
                 strSql1.Append("CPhoneName,");
                 strSql2.Append("'" + model.CPhoneName + "',");
+            }
+            if (model.CreatDate != null)
+            {
+                strSql1.Append("CreatDate,");
+                strSql2.Append("'" + model.CreatDate + "',");
             }
             if (model.Cblacklistflag >= 0)
             {
@@ -131,8 +138,9 @@ namespace Daiv_OA.DAL
             strSql.Append("update [OA_Contact] set ");
             strSql.Append("Cphone='" + model.Cphone + "',");
             strSql.Append("Cphone2='" + model.Cphone2 + "',"); 
-            strSql.Append("Cphone3='" + model.Cphone3 + "',");
+            strSql.Append("Cphone3='" + model.Cphone3 + "',"); 
             strSql.Append("CPhoneName='" + model.CPhoneName + "',");
+            strSql.Append("CreatDate='" + model.CreatDate + "',");
             strSql.Append("Cphone4='" + model.Cphone4 + "'");//注意： 最后不需要加逗号
             strSql.Append(" where Cid=" + model.Cid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
@@ -181,7 +189,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag,CPhoneName ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag,CPhoneName ,CreatDate,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             strSql.Append(" where Cid=" + Cid + " ");
             Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
@@ -203,7 +211,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName,CreatDate ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             strSql.Append(" where IsDeleted = 0 and Sid=" + Sid + " ");
             Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
@@ -233,7 +241,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  ");
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName,CreatDate ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             strSql.Append(" where IsDeleted = 0 and Sid in(" +string.Join(",", Sid) + ") ");
             Daiv_OA.Entity.ContactEntity model = new Daiv_OA.Entity.ContactEntity();
@@ -280,8 +288,9 @@ namespace Daiv_OA.DAL
                 model.Cphone = dt.Rows[rowindex]["Cphone"].ToString();
                 model.Cphone2 = dt.Rows[rowindex]["Cphone2"].ToString();
                 model.Cphone3 = dt.Rows[rowindex]["Cphone3"].ToString();
-                model.Cphone4 = dt.Rows[rowindex]["Cphone4"].ToString();
+                model.Cphone4 = dt.Rows[rowindex]["Cphone4"].ToString(); 
                 model.CPhoneName = dt.Rows[rowindex]["CPhoneName"].ToString();
+                model.CreatDate =Convert.ToDateTime( dt.Rows[rowindex]["CreatDate"]);
                 if (dt.Rows[rowindex]["IsDeleted"].ToString() != "")
                 {
                     model.IsDeleted = int.Parse(dt.Rows[rowindex]["IsDeleted"].ToString());
@@ -302,7 +311,7 @@ namespace Daiv_OA.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted   ");
+            strSql.Append("select Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,CreatDate ,IsDeleted   ");
             strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {
@@ -322,7 +331,7 @@ namespace Daiv_OA.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName ,IsDeleted  ");
+            strSql.Append(" Cid,Sid ,Cphone ,Cphone2 ,Cphone3 ,Cphone4 ,Cblacklistflag ,CPhoneName,CreatDate ,IsDeleted  ");
             strSql.Append(" FROM [OA_Contact] ");
             if (strWhere.Trim() != "")
             {
@@ -330,6 +339,49 @@ namespace Daiv_OA.DAL
             }
             strSql.Append(" order by " + filedOrder);
             return DbHelperSQL.Query(strSql.ToString());
+        }
+
+
+
+        /// <summary>
+        /// 根据学校编号和时间获取亲情号
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie,string datetime)
+        {
+            string sql = @"
+select distinct  oc.Cphone 
+from Daiv_OA..OA_Contact oc 
+join Daiv_OA..OA_Student os on oc.Sid = os.Sid
+join Daiv_OA..OA_Grade og on os.Gid = og.Gid
+join Daiv_OA..OA_SchoolGrade osg on osg.ID = og.GgradeID
+join Daiv_OA..OA_School osc on osc.ID = osg.SchoolID
+where osc.SchoolSerie = @ss and oc.CreatDate > @dt and oc.IsDeleted = 0 and ISNULL(oc.Cphone,'') != ''
+";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@ss", SqlDbType.NVarChar,128),
+                    new SqlParameter("@dt", SqlDbType.DateTime)
+            };
+            parameters[0].Value = sserie;
+            parameters[1].Value =datetime;
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+        }
+
+        /// <summary>
+        /// 获取亲情号最大的修改时间
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable GetMaxCreatTime()
+        {
+            string sql = @"
+select MAX(CreatDate) as CreatDate from OA_Contact
+";
+            SqlParameter[] parameters = {
+            };
+            //分页查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters)[0];
         }
 
 

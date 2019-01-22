@@ -68,7 +68,12 @@ namespace Daiv_OA.DAL
             if (model.Name != null)
             {
                 strSql1.Append("Name,");
-                strSql2.Append("'" + model.Name + "',");
+                strSql2.Append("'" + model.Name + "',"); 
+            }
+            if (model.SchoolSerie != null)
+            {
+                strSql1.Append("SchoolSerie,");
+                strSql2.Append("'" + model.SchoolSerie + "',");
             }
             if (model.Address != null)
             {
@@ -109,8 +114,9 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [OA_School] set ");
-            strSql.Append("Name='" + model.Name + "',");
+            strSql.Append("Name='" + model.Name + "',"); 
             strSql.Append("Address='" + model.Address + "',");
+            strSql.Append("SchoolSerie='" + model.SchoolSerie + "',");
             strSql.Append("CreateDate='" + model.CreateDate + "'");//注意： 最后不需要加逗号
             strSql.Append(" where ID=" + model.ID + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
@@ -159,7 +165,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" ID,Name ,Address ,CreateDate,IsDeleted  ");
+            strSql.Append(" ID,Name ,Address,SchoolSerie ,CreateDate,IsDeleted  ");
             strSql.Append(" FROM [OA_School] ");
             strSql.Append(" where ID=" + ID + " ");
             Daiv_OA.Entity.SchoolEntity model = new Daiv_OA.Entity.SchoolEntity();
@@ -181,7 +187,7 @@ namespace Daiv_OA.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select  top 1  ");
-            strSql.Append(" ID,Name ,Address ,CreateDate,IsDeleted  ");
+            strSql.Append(" ID,Name ,Address,SchoolSerie ,CreateDate,IsDeleted  ");
             strSql.Append(" FROM [OA_School] ");
             strSql.Append(" where IsDeleted = 0 and Name='" + name + "' ");
             Daiv_OA.Entity.SchoolEntity model = new Daiv_OA.Entity.SchoolEntity();
@@ -215,6 +221,7 @@ namespace Daiv_OA.DAL
                 }
                 model.Name = dt.Rows[rowindex]["Name"].ToString();
                 model.Address = dt.Rows[rowindex]["Address"].ToString();
+                model.SchoolSerie = dt.Rows[rowindex]["SchoolSerie"].ToString();
                 model.CreateDate =Convert.ToDateTime(dt.Rows[rowindex]["CreateDate"]);
                 if (dt.Rows[rowindex]["IsDeleted"].ToString() != "")
                 {
@@ -236,7 +243,7 @@ namespace Daiv_OA.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  ID,Name ,Address ,CreateDate,IsDeleted  ");
+            strSql.Append("select  ID,Name ,Address,SchoolSerie ,CreateDate,IsDeleted  ");
             strSql.Append(" FROM [OA_School] ");
             if (strWhere.Trim() != "")
             {
@@ -256,7 +263,7 @@ namespace Daiv_OA.DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append("  ID,Name ,Address ,CreateDate,IsDeleted   ");
+            strSql.Append("  ID,Name ,Address,SchoolSerie ,CreateDate,IsDeleted   ");
             strSql.Append(" FROM [OA_School] ");
             if (strWhere.Trim() != "")
             {
