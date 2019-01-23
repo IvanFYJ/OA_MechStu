@@ -94,7 +94,9 @@ JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
 left join OA_SchoolGrade schg on g.GgradeID = schg.ID
 left join OA_School sch on sch.ID = schg.SchoolID
 --LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
-WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
+WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}
+order by sch.Name,schg.Name,g.Gname,st.Sname
+", UserId);
             DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
@@ -103,7 +105,7 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             PagedDataSource pds = new PagedDataSource();
             pds.DataSource = ds.Tables[0].DefaultView;
             pds.AllowPaging = true;//允许分页
-            pds.PageSize = 8;//单页显示项数
+            pds.PageSize = 50;//单页显示项数
             pds.CurrentPageIndex = Convert.ToInt32(Request.QueryString["page"]);
             return pds;
         }

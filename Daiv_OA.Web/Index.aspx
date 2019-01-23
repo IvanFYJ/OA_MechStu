@@ -185,7 +185,7 @@
                    
                       
                       <a ><%=time%></a>
-                
+                      <a href="Logout.aspx" >退出</a>
 
                 </div>
                 <a class=" "><h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OA办公管理系统</h2></a>

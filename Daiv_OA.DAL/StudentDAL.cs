@@ -140,7 +140,7 @@ namespace Daiv_OA.DAL
             strSql.Append("Uid=" + model.Uid + ",");
             strSql.Append("Sname='" + model.Sname + "',");
             strSql.Append("Sbirthday='" + model.Sbirthday + "'");
-            strSql.Append(" where Gid=" + model.Gid + " ");
+            strSql.Append(" where Sid=" + model.Sid + " ");
             DbHelperSQL.ExecuteSql(strSql.ToString());
         }
 

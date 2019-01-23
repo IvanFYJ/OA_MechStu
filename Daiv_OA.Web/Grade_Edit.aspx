@@ -83,12 +83,12 @@
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-                                     <tr>
+                                     <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">地址：</span>
                                             <asp:TextBox ID="Gdescription" runat="server" Width="400px" Height="24px" CssClass="ipt"></asp:TextBox>
-                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Gdescription"
-                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
+<%--                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Gdescription"
+                                                ErrorMessage="*必填选项"></asp:RequiredFieldValidator>--%>
                                         </td>
                                     </tr>
                                     <tr>

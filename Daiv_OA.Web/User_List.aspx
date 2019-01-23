@@ -17,7 +17,7 @@
             <tr>
                 <td width="140">
                     <h1>
-                        人员管理</h1>
+                        管理员员管理</h1>
                 </td>
                 <td class="actions" width="*">
                     <table cellspacing="0" cellpadding="0" border="0" align="right">

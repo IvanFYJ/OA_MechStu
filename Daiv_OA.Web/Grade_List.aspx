@@ -65,8 +65,6 @@
                                                                     </td>
                                                                     <td width="width: 200px">设备电话号码
                                                                     </td>
-                                                                    <td style="*">地址
-                                                                    </td>
                                                                     <td style="width: 70px">班级人数
                                                                     </td>
                                                                     <%--   <td style="width: 130px">
@@ -92,9 +90,6 @@
                                                                 </td>
                                                                 <td align="center">
                                                                     <%# Eval("Mphone")%>
-                                                                </td>
-                                                                <td align="center">
-                                                                    <%# Eval("Gdescription")%>
                                                                 </td>
                                                                 <td align="center">
                                                                     <%# Eval("Gsnumber")%>
