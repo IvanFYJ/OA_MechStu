@@ -380,6 +380,7 @@ namespace Daiv_OA.Web.Ajax
                 IList<Hashtable> list = stubll.List(Convert.ToInt32(pageindex), Convert.ToInt32(pagesize), mPhone);
                 List<Entity.ContactEntity> contactList = null;
                 MechanicalEntity mechEntity = new BLL.MechanicalBLL().GetEntityByImei(mPhone);
+                Entity.GradeEntity gEntity = new BLL.GradeBLL().GetEntity(mechEntity.Gid);
                 if(list != null && list.Count > 0)
                 {
                     contactList = new BLL.ContactBLL().GetEntitysBySids(list.Select(l => Convert.ToInt32(l["Sid"])).ToArray());
@@ -401,7 +402,7 @@ namespace Daiv_OA.Web.Ajax
                     //entity.Data = reuslts;
                     svmodel.Student = reuslts;
                     svmodel.MechPhone = mechEntity.MechPhone;
-                    svmodel.ClassName = mechEntity.ClassName;
+                    svmodel.ClassName = gEntity.Gname;
                 }
             }
             catch (Exception ex)
