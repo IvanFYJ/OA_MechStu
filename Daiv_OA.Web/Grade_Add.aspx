@@ -74,7 +74,7 @@
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">设备电话号码：</span>
                                             <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
@@ -82,9 +82,9 @@
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
                                     </tr>
-                                     <tr style="display:none;">
+                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
-                                            <span class="bvjto styp">地址：</span>
+                                            <span class="bvjto styp">班级地址：</span>
                                             <asp:TextBox ID="Gdescription" runat="server"  Width="400px" Height="24px" CssClass="ipt" Text=""></asp:TextBox>
 <%--                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="Gdescription"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>--%>
