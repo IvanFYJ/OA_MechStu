@@ -381,6 +381,10 @@ namespace Daiv_OA.Web.Ajax
                 List<Entity.ContactEntity> contactList = null;
                 MechanicalEntity mechEntity = new BLL.MechanicalBLL().GetEntityByImei(mPhone);
                 Entity.GradeEntity gEntity = new BLL.GradeBLL().GetEntity(mechEntity.Gid);
+                if(gEntity == null)
+                {
+                    throw new Exception("请检查设备所在班级，无此设备的班级数据!");
+                }
                 if(list != null && list.Count > 0)
                 {
                     contactList = new BLL.ContactBLL().GetEntitysBySids(list.Select(l => Convert.ToInt32(l["Sid"])).ToArray());

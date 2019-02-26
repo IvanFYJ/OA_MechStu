@@ -81,7 +81,14 @@ namespace Daiv_OA.BLL
 
             return dal.GetEntityByImei(imei);
         }
-        
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public Daiv_OA.Entity.MechanicalEntity GetEntityByImeiAndGid(string imei, int gid)
+        {
+            return dal.GetEntityByImeiAndGid(imei, gid);
+        }
 
         /// <summary>
         /// 获得数据列表

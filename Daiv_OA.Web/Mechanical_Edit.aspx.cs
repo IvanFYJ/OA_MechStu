@@ -63,6 +63,13 @@ namespace Daiv_OA.Web
             model.MechIMEI = this.MechIMEI.Text;
             model.MechName = this.MechName.Text;
             model.MechPhone = this.MechPhone.Text;
+            //检查是否已经存在的班级
+            Entity.MechanicalEntity tempEntity =  mechanicalBll.GetEntityByImeiAndGid(model.MechIMEI, model.Gid);
+            if(tempEntity != null && tempEntity.ID != model.ID)
+            {
+                FinalMessage("此班级已经存在此设置号，请使用其他的设备号!", "Mechanical_Edit.aspx?id=" + q("id"), 0);
+                return;
+            }
             mechanicalBll.Update(model);
             logHelper.logInfo("修改设备成功！操作人：" + UserId);
             FinalMessage("操作成功", "Mechanical_List.aspx", 0);

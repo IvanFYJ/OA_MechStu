@@ -54,7 +54,7 @@ namespace Daiv_OA.Web
             }
             catch (Exception ex)
             {
-                FinalMessage("操作失败！" + ex.Message, "Mechanical_List.aspx", 1);
+                FinalMessage("操作失败！" + ex.Message, "Mechanical_Add.aspx", 1);
                 return;
             }
 

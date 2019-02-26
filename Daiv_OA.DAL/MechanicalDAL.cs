@@ -42,14 +42,17 @@ namespace Daiv_OA.DAL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string imei)
+        public bool Exists(string imei,int gid)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) FROM [OA_Mechanical]");
-            strSql.Append(" where MechIMEI=@MechIMEI");
+            strSql.Append(" where MechIMEI=@MechIMEI and Gid=@gid");
             SqlParameter[] parameters = {
-                    new SqlParameter("@MechIMEI", SqlDbType.NVarChar,512)};
+                    new SqlParameter("@MechIMEI", SqlDbType.NVarChar,512),
+                    new SqlParameter("@gid", SqlDbType.Int,4)
+            };
             parameters[0].Value = imei;
+            parameters[1].Value = gid;
             return DbHelperSQL.Exists(strSql.ToString(), parameters);
         }
 
@@ -58,8 +61,8 @@ namespace Daiv_OA.DAL
         /// </summary>
         public int Add(Daiv_OA.Entity.MechanicalEntity model)
         {
-            if (model.ID > 0 && Exists(model.MechIMEI))//已经存在该设备
-                return 0;
+            if ( Exists(model.MechIMEI,model.Gid))//已经存在该设备
+                throw new Exception("设备号已经存在！");
             StringBuilder strSql = new StringBuilder();
             StringBuilder strSql1 = new StringBuilder();
             StringBuilder strSql2 = new StringBuilder();
@@ -207,7 +210,36 @@ namespace Daiv_OA.DAL
                 return null;
             }
         }
-        
+
+
+        /// <summary>
+        /// 得到一个对象实体
+        /// </summary>
+        public Daiv_OA.Entity.MechanicalEntity GetEntityByImeiAndGid(string imei,int gid)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1  ");
+            strSql.Append(" ID,MechName ,MechIMEI ,MechPhone,ClassName,Gid ,IsDeleted   ");
+            strSql.Append(" FROM [OA_Mechanical] ");
+            strSql.Append(" where IsDeleted = 0 and MechIMEI=@imei and Gid=@gid ");
+            Daiv_OA.Entity.MechanicalEntity model = new Daiv_OA.Entity.MechanicalEntity();
+            SqlParameter[] parameters = {
+                    new SqlParameter("@gid", SqlDbType.Int,4),
+                    new SqlParameter("@imei", SqlDbType.NVarChar,512)
+            };
+            parameters[0].Value = gid;
+            parameters[1].Value = imei;
+            DataSet ds = DbHelperSQL.Query(strSql.ToString(),parameters);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                return ConvertModel(ds.Tables[0], 0);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// 构造实体对象
         /// </summary>
