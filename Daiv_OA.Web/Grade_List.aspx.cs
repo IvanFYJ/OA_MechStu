@@ -10,9 +10,24 @@ namespace Daiv_OA.Web
 {
     public partial class Grade_List : Daiv_OA.UI.BasicPage
     {
+        protected int gradeId = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("grade-list");
+            // 年级ID
+            string gid = Request["gid"];
+            if (!string.IsNullOrEmpty(gid))
+            {
+                try
+                {
+                    gradeId = Convert.ToInt32(gid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             if (!this.Page.IsPostBack)
             {
                 this.user_repeater.DataSource = pds();
@@ -55,16 +70,22 @@ namespace Daiv_OA.Web
             model.Updatetype = "删除班级";
             int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
             if (i > 0)
-                FinalMessage("班级删除成功", "Grade_List.aspx", 0);
+                FinalMessage("班级删除成功", "Grade_List.aspx?gid="+gradeId, 0);
             else
-                FinalMessage("班级删除失败", "Grade_List.aspx", 0);
+                FinalMessage("班级删除失败", "Grade_List.aspx?gid=" + gradeId, 0);
         }
 
 
 
         private PagedDataSource pds()
         {
-            DataSet ds = new Daiv_OA.BLL.GradeBLL().GetList(0, " MechID=" + UserId, " Gname asc");
+            string whereSql = "";
+            if (gradeId > 0)
+            {
+                whereSql = " and cg.GgradeID=" + gradeId;
+            }
+
+            DataSet ds = new Daiv_OA.BLL.GradeBLL().GetList(0, " MechID=" + UserId+whereSql, " Gname asc");
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
             //this.user_repeater.DataBind();
@@ -115,7 +136,7 @@ namespace Daiv_OA.Web
                 }
                 else
                 {
-                    lpprev.NavigateUrl = "?page=" + (i - 1);
+                    lpprev.NavigateUrl = "?page=" + (i - 1)+"&gid="+gradeId;
                 }
                 if (i >= n - 1)
                 {
@@ -126,11 +147,11 @@ namespace Daiv_OA.Web
                 }
                 else
                 {
-                    lpnext.NavigateUrl = "?page=" + (i + 1);
+                    lpnext.NavigateUrl = "?page=" + (i + 1) + "&gid=" + gradeId;
                 }
 
-                lpfirst.NavigateUrl = "?page=0";//向本页传递参数page
-                lplast.NavigateUrl = "?page=" + (n - 1);
+                lpfirst.NavigateUrl = "?page=0" + "&gid=" + gradeId;//向本页传递参数page
+                lplast.NavigateUrl = "?page=" + (n - 1) + "&gid=" + gradeId;
 
                 ddlp.SelectedIndex = Convert.ToInt32(pds().CurrentPageIndex);//更新下拉列表框中的当前选中页序号
             }
@@ -140,7 +161,7 @@ namespace Daiv_OA.Web
         protected void ddlp_SelectedIndexChanged(object sender, EventArgs e)
         {//脚模板中的下拉列表框更改时激发
             string pg = Convert.ToString((Convert.ToInt32(((DropDownList)sender).SelectedValue) - 1));//获取列表框当前选中项
-            Response.Redirect("Grade_List.aspx?page=" + pg);//页面转向
+            Response.Redirect("Grade_List.aspx?page=" + pg + "&gid=" + gradeId);//页面转向
         }
     }
 }

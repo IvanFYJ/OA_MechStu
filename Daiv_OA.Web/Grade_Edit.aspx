@@ -12,13 +12,13 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <input type="hidden" name="gid" value="<%=gradeId %>" />
     <div style="margin: 7px;">
         <table class="tabs_head" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
-                <td width="140">
-                    <h1>
-                        班级管理</h1>
-                </td>
+                    <td width="240">
+                        <h1> <span id="pPageSpan" style="cursor:pointer" title="点击退回到年级管理" >年级管理</span>-班级管理</h1>
+                    </td>
                 <td class="actions" width="*">
                     <table cellspacing="0" cellpadding="0" border="0" align="right">
                         <tr>
@@ -28,7 +28,7 @@
                             <td>
                                 <a href="role.aspx?roleid=0">角色列表</a>
                             </td>--%>
-                            <td><a href="Grade_List.aspx">班级列表</a></td>
+                            <td><a href="Grade_List.aspx?gid=<%=gradeId %>">班级列表</a></td>
                             <td class="active">添加班级</td>
 <%--                            <td><a href="Grade_Add2.aspx">添加主管</a></td>
                             <td><a href="Grade_Add3.aspx">添加副主管</a></td>
@@ -105,7 +105,7 @@
                             <ul><li>
                                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click" /></li>
                             <li>
-                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Grade_List.aspx'" /></li>
+                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Grade_List.aspx?gid=<%=gradeId %>'" /></li>
                                         </ul>
                         </div>
                     </td>
@@ -117,10 +117,26 @@
     <asp:Image ID="Image2" runat="server" Width="1px" Height="1px" />
     </form>
 <script type="text/javascript"> 
-	var sgjson = '<%=GetSchoolAndGradeStr()%>';
+    var sgjson = '<%=GetSchoolAndGradeStr()%>';
+    var gcjson='';
     var sgObject = {};
     var shid = <%=SchID%>;
     var gradeid = <%=SchGradeId%>;
+
+    function ddlFinish() {
+        //$('#schGid').attr("disabled", "disabled");
+        //$('#schGradeGid').attr("disabled", "disabled");
+    };
+    $(function(){
+    
+        //退回显示班级
+        $("#pPageSpan").on('click', function () {
+            //iframe层-父子操作
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+            parent.gradeShow();
+        });
+    });
 </script>
 
 </body>

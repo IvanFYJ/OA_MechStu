@@ -78,6 +78,7 @@
     <Compile Include="DepartmentDAL.cs" />
     <Compile Include="FilenameDAL.cs" />
     <Compile Include="GradeDAL.cs" />
+    <Compile Include="GradeUpdateConfigDAL.cs" />
     <Compile Include="Itemsql.cs" />
     <Compile Include="MechanicalDAL.cs" />
     <Compile Include="MessageDAL.cs" />

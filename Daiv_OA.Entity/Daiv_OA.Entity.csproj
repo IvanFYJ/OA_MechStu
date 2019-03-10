@@ -70,6 +70,7 @@
     <Compile Include="ContactEntity.cs" />
     <Compile Include="DepartmentEntity.cs" />
     <Compile Include="GradeEntity.cs" />
+    <Compile Include="GradeUpdateConfigEntity.cs" />
     <Compile Include="MechanicalEntity.cs" />
     <Compile Include="MessageEntity.cs" />
     <Compile Include="OperatelogEntity.cs" />

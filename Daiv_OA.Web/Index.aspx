@@ -8,10 +8,11 @@
    <script type="text/javascript" language="javascript">       window.onerror = function () { return true; };</script>
 <link href="scripts/ui/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
 <link href="images/style.css" rel="stylesheet" type="text/css" />
-<script src="scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
+ <script src="scripts/jquery/jquery-1.3.2.min.js" type="text/javascript"></script>
 <script src="scripts/ui/js/ligerBuild.min.js" type="text/javascript"></script>
 
     <script src="scripts/function.js" type="text/javascript"></script>
+
 
 
 
@@ -81,6 +82,7 @@
         tree = $("#global_channel_tree").ligerGetTreeManager();
         //tree.expandAll(); //默认展开所有节点
         $("#pageloading_bg,#pageloading").hide();
+
     });
 
     //频道菜单异步加载函数，结合ligerMenu.js使用

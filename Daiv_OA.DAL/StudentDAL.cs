@@ -336,6 +336,44 @@ SELECT Gid,Sname,Snumber,Cphone,Cphone2,Cphone3,Cphone4 FROM listtab
             return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
         }
 
+        /// <summary>
+        /// 获取更新年级学生数据
+        /// </summary>
+        /// <returns></returns>
+        public IList<Hashtable> getUpdateGradeData(string where)
+        {
+            string sql =string.Format(@"select stu.Sid,stu.Sname,stu.Snumber,guc.CurrGradeID,guc.UpGradeID
+from Daiv_OA..OA_Student(nolock) stu
+join Daiv_OA..OA_GradeUpdateConfig(nolock) guc on stu.Gid = guc.CurrGradeID
+where guc.IsDeleted = 0 and stu.IsDeleted = 0 {0}", where);
+            SqlParameter[] parameters = {};
+            //查询
+            return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+        }
+
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        /// <returns></returns>
+        public int UpdateStudentGrade(string where = "")
+        {
+
+            string sql = string.Format(@"--获取数据
+select stu.Sid,stu.Sname,stu.Snumber,guc.CurrGradeID,guc.UpGradeID
+into #temp
+from Daiv_OA..OA_Student(nolock) stu
+join Daiv_OA..OA_GradeUpdateConfig(nolock) guc on stu.Gid = guc.CurrGradeID
+where guc.IsDeleted = 0 and stu.IsDeleted = 0 {0}
+
+--更新数据
+update stu
+set stu.Gid = t.UpGradeID
+from Daiv_OA..OA_Student stu
+join #temp t on t.Sid = stu.Sid", where);
+
+            return DbHelperSQL.ExecuteSql(sql);
+        }
+
 
         /// <summary>
         /// 获得数据列表

@@ -14,11 +14,41 @@ namespace Daiv_OA.Web
     public partial class Student_Import : Daiv_OA.UI.BasicPage
     {
 
+        protected int classId = 0;
         string[] colmun = { "学号", "姓名", "班级", "出生年月日", "家长联系电话1", "家长联系电话2", "家长联系电话3", "家长联系电话4" };
 
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("student-add");
+            //班级ID
+            string cid = Request["cid"];
+            if (!string.IsNullOrEmpty(cid))
+            {
+                try
+                {
+                    classId = Convert.ToInt32(cid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            //设置班级
+            SchClassId = classId;
+            //设置年级
+            Entity.GradeEntity cmodel = new BLL.GradeBLL().GetEntity(SchClassId);
+            Entity.SchoolGradeEntity gmodel = null;
+            if (cmodel != null)
+            {
+                SchGradeId = cmodel.GgradeID;
+                //获取学校对象
+                gmodel = new BLL.SchoolGradeBLL().GetEntity(SchGradeId);
+            }
+            //设置学校
+            if (gmodel != null)
+            {
+                SchID = gmodel.SchoolID;
+            }
         }
 
 

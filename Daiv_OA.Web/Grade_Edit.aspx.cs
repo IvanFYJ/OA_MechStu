@@ -10,10 +10,23 @@ namespace Daiv_OA.Web
 {
     public partial class Grade_Edit : Daiv_OA.UI.BasicPage
     {
+        protected int gradeId = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             User_Load("grade-edit");
+            // 年级ID
+            string gid = Request["gid"];
+            if (!string.IsNullOrEmpty(gid))
+            {
+                try
+                {
+                    gradeId = Convert.ToInt32(gid);
+                }
+                catch (Exception)
+                {
+                }
+            }
             if (!this.Page.IsPostBack)
             {
                 Bind();
@@ -66,7 +79,7 @@ namespace Daiv_OA.Web
             }
             new Daiv_OA.BLL.GradeBLL().Update(model);
             logHelper.logInfo("修改班级成功！操作人："+UserId);
-            FinalMessage("操作成功", "Grade_List.aspx", 0);
+            FinalMessage("操作成功", "Grade_List.aspx?gid="+gradeId, 0);
         }
 
     }

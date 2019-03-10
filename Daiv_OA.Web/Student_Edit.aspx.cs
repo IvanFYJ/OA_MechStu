@@ -11,9 +11,23 @@ namespace Daiv_OA.Web
 {
     public partial class Student_Edit : Daiv_OA.UI.BasicPage
     {
+        protected int classId = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("student-edit");
+            //班级ID
+            string cid = Request["cid"];
+            if (!string.IsNullOrEmpty(cid))
+            {
+                try
+                {
+                    classId = Convert.ToInt32(cid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             if (!this.Page.IsPostBack)
             {
                 Bind();
@@ -88,7 +102,7 @@ namespace Daiv_OA.Web
             Daiv_OA.BLL.StudentBLL studentBll = new Daiv_OA.BLL.StudentBLL();
             if (Request["schClassgcid"]== null || string.IsNullOrEmpty(Request["schClassgcid"].ToString()) )
             {
-                FinalMessage("班级无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                FinalMessage("班级无效!", "Student_Edit.aspx?id=" + q("id")+"&cid="+classId, 0);
                 return;
             }
             model = studentBll.GetEntity(Str2Int(q("id"), 0));
@@ -107,7 +121,7 @@ namespace Daiv_OA.Web
                     continue;
                 if (!string.IsNullOrEmpty(contactpArr[i]) && !Validator.IsMobileNum(contactpArr[i]))
                 {
-                    FinalMessage(contactpArr[i] + "电话号码无效!", "Student_Edit.aspx?id=" + q("id"), 0);
+                    FinalMessage(contactpArr[i] + "电话号码无效!", "Student_Edit.aspx?id=" + q("id") + "&cid=" + classId, 0);
                     return;
                 }
                 contactList.Add(new Entity.ContactEntity() { Cphone = contactpArr[i], CPhoneName = contactnArr[i] });
@@ -147,9 +161,9 @@ namespace Daiv_OA.Web
             //    item.Sid = model.Sid;
             //    contactBll.Add(item);
             //}
-            contactBll.AddBatch(contactList, model.Sid);
+            //contactBll.AddBatch(contactList, model.Sid);
             logHelper.logInfo("修改班级成功！操作人：" + UserId);
-            FinalMessage("操作成功", "Student_List.aspx", 0);
+            FinalMessage("操作成功", "Student_List.aspx?cid="+classId, 0);
         }
     }
 }

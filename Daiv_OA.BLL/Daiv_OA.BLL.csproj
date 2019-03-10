@@ -69,6 +69,7 @@
     <Compile Include="DepartmentBLL.cs" />
     <Compile Include="Eemail.cs" />
     <Compile Include="GradeBLL.cs" />
+    <Compile Include="GradeUpdateConfigBLL.cs" />
     <Compile Include="GridviewRowsCell.cs" />
     <Compile Include="MechanicalBLL.cs" />
     <Compile Include="MessageBLL.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="StudentBLL.cs" />
     <Compile Include="SummarizeBLL.cs" />
     <Compile Include="TaskBLL.cs" />
+    <Compile Include="Task\ScheduledTask.cs" />
     <Compile Include="TimeBLL.cs" />
     <Compile Include="URLENCRYP.cs" />
     <Compile Include="UserBLL.cs" />
@@ -138,6 +140,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>

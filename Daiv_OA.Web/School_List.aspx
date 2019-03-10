@@ -9,6 +9,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
     <link href="css/style1.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="_libs/jquery-3.1.1.js"></script>
+    <script type="text/javascript" src="_libs/layer/layer.js"></script>
+    <style type="text/css" >
+        .schoolSpan{
+            color:#0099ff;
+            cursor:pointer;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -70,20 +78,20 @@
                                                     <ItemTemplate>
                                                         <tr>
                                                             <td align="center">
-                                                                <%# Container.ItemIndex + 1 %>
+                                                                <%#Container.ItemIndex + 1 %>
                                                             </td>
                                                             <td align="center">
-                                                                <%# Eval("Name")%>
+                                                               <span class="schoolSpan" schid="<%#Eval("ID")%>" ><%#Eval("Name")%></span>
                                                             </td>
                                                             <td align="center">
-                                                                <%# Eval("SchoolSerie")%>
+                                                                <%#Eval("SchoolSerie")%>
                                                             </td>
                                                             <td align="center">
-                                                                <%# Eval("Address")%>
+                                                                <%#Eval("Address")%>
                                                             </td>
                                                             <td align="center">
                                                                 <a href="School_Edit.aspx?id=<%#Eval("ID") %>">修改信息</a> | 
-                                                                <asp:LinkButton ID="lbDel" runat="server" Text="删除" OnCommand="lbDel_Click" CommandArgument='<%# Eval("ID") %>'
+                                                                <asp:LinkButton ID="lbDel" runat="server" Text="删除" OnCommand="lbDel_Click" CommandArgument='<%#Eval("ID")%>'
                                                                     OnClientClick="javascript:return confirm('删除学校后，与其相关的任何信息都将删除，确定要删除吗？');"></asp:LinkButton>
                                                             </td>
                                                         </tr>
@@ -133,7 +141,55 @@
     </div>
     </form>
 <script type="text/javascript"> 
-	 
+    var shoolName = "";
+    var schoolId = 0;
+    var gradeName = "";
+    var gradeId = 0;
+    var className = "";
+    var classId = 0;
+    var heightFactor = 0.82;
+    var widthFactor = 0.65;
+    $(function () {
+        $(".schoolSpan").on('click', function () {
+            //iframe层-父子操作
+            var shid = $(this).attr('schid');
+            var name = $(this).text();
+            shoolName = name;
+            schoolId = shid;
+            //show(shid, shoolName, '/SchoolGrade_List.aspx?shid=');
+            gradeShow();
+        });
+    });
+
+    //弹出年级方法
+    function gradeShow() {
+        show(schoolId, shoolName, '/SchoolGrade_List.aspx?shid=');
+    }
+
+    //弹出班级方法
+    function classShow() {
+        show(gradeId, shoolName + '->' + gradeName, '/Grade_List.aspx?gid=');
+    }
+    //弹出学生方法
+    function studentShow() {
+        show(classId, shoolName + '->' + gradeName + '->' + className, '/Student_List.aspx?cid=');
+    }
+
+    //弹出框方法
+    function show(id, name, url) {
+        //iframe层-父子操作
+        var shid = id;
+        var showHeight = heightFactor * parseFloat($(document).height()).toFixed(2);
+        var showWidth = widthFactor * parseFloat($(document).width()).toFixed(2);
+        layer.open({
+            type: 2,
+            title: name,
+            area: [showWidth + 'px', showHeight + 'px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: url + shid
+        });
+    }
 </script>
 
 </body>

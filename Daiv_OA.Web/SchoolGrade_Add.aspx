@@ -28,8 +28,9 @@
                 <td class="actions" width="*">
                     <table cellspacing="0" cellpadding="0" border="0" align="right">
                         <tr>
-                            <td><a href="SchoolGrade_List.aspx">年级列表</a></td>
+                            <td><a href="SchoolGrade_List.aspx?shId=<%=schId%>">年级列表</a></td>
                             <td class="active">添加年级</td>
+                            <td><a href="GradeUpdateConfig_List.aspx?shid=<%=schId%>">年级提升配置</a></td>
                         </tr>
                     </table>
                 </td>
@@ -71,7 +72,7 @@
                             <ul><li>
                                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click" /></li>
                             <li>
-                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='SchoolGrade_List.aspx'" /></li>
+                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='SchoolGrade_List.aspx?shId=<%=schId%>'" /></li>
                                         </ul>
                         </div>
                     </td>

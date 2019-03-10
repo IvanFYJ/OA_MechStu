@@ -112,6 +112,7 @@
     <Content Include="commdll\NPOI\NPOI.OpenXml4Net.XML" />
     <Content Include="commdll\NPOI\NPOI.OpenXmlFormats.dll" />
     <Content Include="commdll\NPOI\NPOI.XML" />
+    <Content Include="GradeUpdateConfig_List.aspx" />
     <Content Include="Grade_Add.aspx" />
     <Content Include="Grade_Edit.aspx" />
     <Content Include="Grade_List.aspx" />
@@ -747,6 +748,15 @@
     <Content Include="js\menu.js" />
     <Content Include="_libs\jquery-1.2.6.js" />
     <Content Include="Locked.aspx" />
+    <Content Include="_libs\layer\layer.js" />
+    <Content Include="_libs\layer\mobile\layer.js" />
+    <Content Include="_libs\layer\mobile\need\layer.css" />
+    <Content Include="_libs\layer\theme\default\icon-ext.png" />
+    <Content Include="_libs\layer\theme\default\icon.png" />
+    <Content Include="_libs\layer\theme\default\layer.css" />
+    <Content Include="_libs\layer\theme\default\loading-0.gif" />
+    <Content Include="_libs\layer\theme\default\loading-1.gif" />
+    <Content Include="_libs\layer\theme\default\loading-2.gif" />
     <Content Include="_libs\My97DatePicker\calendar.js" />
     <Content Include="_libs\My97DatePicker\config.js" />
     <Content Include="_libs\My97DatePicker\lang\en.js" />
@@ -868,6 +878,13 @@
     </Compile>
     <Compile Include="Callinfo_Show.aspx.designer.cs">
       <DependentUpon>Callinfo_Show.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GradeUpdateConfig_List.aspx.cs">
+      <DependentUpon>GradeUpdateConfig_List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GradeUpdateConfig_List.aspx.designer.cs">
+      <DependentUpon>GradeUpdateConfig_List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Grade_Add.aspx.cs">
       <DependentUpon>Grade_Add.aspx</DependentUpon>

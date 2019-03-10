@@ -102,6 +102,9 @@ namespace Daiv_OA.Web.Ajax
                     case "getclass":
                         entity = GetClass(context, ob);
                         break;
+                    case "updategrade":
+                        entity = UpdateStudentGrade(context,ob);
+                        break;
                 }
                 #endregion
             }
@@ -112,6 +115,29 @@ namespace Daiv_OA.Web.Ajax
             }
 
             ResponseData(context, entity);
+        }
+
+        /// <summary>
+        /// 更新学生年级
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="ob"></param>
+        /// <returns></returns>
+        private ResponeDataEntity UpdateStudentGrade(HttpContext context, JObject ob)
+        {
+            ResponeDataEntity reResult = new ResponeDataEntity();
+            try
+            {
+                new BLL.StudentBLL().UpdateStudentGrade();
+                reResult.Status = 1;
+                reResult.Msg = "更新成功";
+            }
+            catch (Exception ex)
+            {
+                reResult.Status = 0;
+                reResult.Msg = ex.Message;
+            }
+            return reResult;
         }
 
         private ResponeDataEntity GetGrade(HttpContext context, JObject ob)
@@ -496,6 +522,7 @@ namespace Daiv_OA.Web.Ajax
         private ResponeDataEntity SetContact(HttpContext context, JObject ob)
         {
             string snumber = ob["sNumber"].ToString();
+            string password = ob["password"].ToString();
             string cPhone = ob["cPhone"].ToString();
             string cPhoneName = ob["cPhoneName"].ToString();
             string cPhone2 = ob["cPhone2"].ToString();
@@ -508,6 +535,11 @@ namespace Daiv_OA.Web.Ajax
             Daiv_OA.Entity.StudentEntity stuEntity =  stubll.GetEntityByNumber(snumber);
             if(stuEntity == null)
                 return new ResponeDataEntity() { Status = 0, Msg = snumber + "学生学号无效!" };
+            string uid = new Daiv_OA.BLL.UserBLL().Existslongin(snumber, Daiv_OA.Utils.MD5.Lower32(password));
+            if (string.IsNullOrEmpty(uid))
+            {
+                return new ResponeDataEntity() { Status = 0, Msg = snumber + "输入密码无效!" };
+            }
             //Daiv_OA.Entity.ContactEntity ctEntity = ctbll.GetEntityBySid(stuEntity.Sid);
 
             //电话号码验证

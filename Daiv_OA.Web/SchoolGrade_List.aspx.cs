@@ -11,10 +11,25 @@ namespace Daiv_OA.Web
 {
     public partial class SchoolGrade_List : Daiv_OA.UI.BasicPage
     {
+        protected int schId = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             User_Load("schgrade-list");
+
+            //学校ID
+            string shid = Request["shid"];
+            if (!string.IsNullOrEmpty(shid))
+            {
+                try
+                {
+                    schId = Convert.ToInt32(shid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             if (!this.Page.IsPostBack)
             {
                 this.user_repeater.DataSource = pds();
@@ -44,7 +59,12 @@ namespace Daiv_OA.Web
         //数据绑定
         void Bind()
         {
-            string sql = string.Format(@"select * from OA_SchoolGrade where IsDeleted = 0", UserId);
+            string whereSql = "";
+            if (schId > 0)
+            {
+                whereSql = " and SchoolID=" + schId;
+            }
+            string sql = string.Format(@"select * from OA_SchoolGrade where IsDeleted = 0 {0}", whereSql);
             this.user_repeater.DataSource = new Daiv_OA.BLL.SchoolGradeBLL().Getall(sql);
             this.user_repeater.DataBind();
         }
@@ -59,9 +79,9 @@ namespace Daiv_OA.Web
             model.Updatetype = "删除年级";
             int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
             if (i > 0)
-                FinalMessage("年级删除成功", "SchoolGrade_List.aspx", 0);
+                FinalMessage("年级删除成功", "SchoolGrade_List.aspx?shid="+schId, 0);
             else
-                FinalMessage("年级删除失败", "SchoolGrade_List.aspx", 0);
+                FinalMessage("年级删除失败", "SchoolGrade_List.aspx?shid=" + schId, 0);
         }
 
 
@@ -76,7 +96,12 @@ namespace Daiv_OA.Web
 
         private PagedDataSource pds()
         {
-            string sql = string.Format(@"select sg.*,s.Name as SchoolName from OA_SchoolGrade sg join OA_School s on sg.SchoolID=s.ID where sg.IsDeleted = 0", UserId);
+            string whereSql = "";
+            if (schId > 0)
+            {
+                whereSql = " and SchoolID=" + schId;
+            }
+            string sql = string.Format(@"select sg.*,s.Name as SchoolName from OA_SchoolGrade sg join OA_School s on sg.SchoolID=s.ID where sg.IsDeleted = 0 {0}", whereSql);
             DataSet ds = new Daiv_OA.BLL.SchoolGradeBLL().Getall(sql);
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
@@ -128,7 +153,7 @@ namespace Daiv_OA.Web
                 }
                 else
                 {
-                    lpprev.NavigateUrl = "?page=" + (i - 1);
+                    lpprev.NavigateUrl = "?page=" + (i - 1)+"&shid="+schId;
                 }
                 if (i >= n - 1)
                 {
@@ -139,11 +164,11 @@ namespace Daiv_OA.Web
                 }
                 else
                 {
-                    lpnext.NavigateUrl = "?page=" + (i + 1);
+                    lpnext.NavigateUrl = "?page=" + (i + 1) + "&shid=" + schId;
                 }
 
-                lpfirst.NavigateUrl = "?page=0";//向本页传递参数page
-                lplast.NavigateUrl = "?page=" + (n - 1);
+                lpfirst.NavigateUrl = "?page=0" + "&shid=" + schId;//向本页传递参数page
+                lplast.NavigateUrl = "?page=" + (n - 1) + "&shid=" + schId;
 
                 ddlp.SelectedIndex = Convert.ToInt32(pds().CurrentPageIndex);//更新下拉列表框中的当前选中页序号
             }
@@ -153,7 +178,7 @@ namespace Daiv_OA.Web
         protected void ddlp_SelectedIndexChanged(object sender, EventArgs e)
         {//脚模板中的下拉列表框更改时激发
             string pg = Convert.ToString((Convert.ToInt32(((DropDownList)sender).SelectedValue) - 1));//获取列表框当前选中项
-            Response.Redirect("SchoolGrade_List.aspx?page=" + pg);//页面转向
+            Response.Redirect("SchoolGrade_List.aspx?page=" + pg + "&shid=" + schId);//页面转向
         }
     }
 }

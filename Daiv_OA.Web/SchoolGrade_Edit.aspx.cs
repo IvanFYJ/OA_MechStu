@@ -11,9 +11,25 @@ namespace Daiv_OA.Web
 {
     public partial class SchoolGrade_Edit : Daiv_OA.UI.BasicPage
     {
+        protected int schId = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("schgrade-list");
+
+            //学校ID
+            string shid = Request["shid"];
+            if (!string.IsNullOrEmpty(shid))
+            {
+                try
+                {
+                    schId = Convert.ToInt32(shid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             if (!this.Page.IsPostBack)
             {
                 Bind();
@@ -31,6 +47,10 @@ namespace Daiv_OA.Web
 
 
             string sql = "";
+            if (schId > 0)
+            {
+                sql = " ID=" + schId;
+            }
             Daiv_OA.BLL.SchoolBLL dp = new Daiv_OA.BLL.SchoolBLL();
             DataSet ds = dp.GetList(sql);
             for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
@@ -58,12 +78,12 @@ namespace Daiv_OA.Web
             Entity.SchoolGradeEntity sgEntity = SchoolGradeBll.GetEntityByNameAndScId(model.Name, model.SchoolID);
             if(sgEntity != null && sgEntity.ID != model.ID)
             {
-                FinalMessage("已经存在：此学校的班级："+model.Name, "SchoolGrade_Edit.aspx?id="+model.ID, 0);
+                FinalMessage("已经存在：此学校的班级："+model.Name, "SchoolGrade_Edit.aspx?id="+model.ID+ "&shid="+schId, 0);
                 return;
             }
             SchoolGradeBll.Update(model);
             logHelper.logInfo("修改设备成功！操作人：" + UserId);
-            FinalMessage("操作成功", "SchoolGrade_List.aspx", 0);
+            FinalMessage("操作成功", "SchoolGrade_List.aspx?shid="+schId, 0);
         }
     }
 }

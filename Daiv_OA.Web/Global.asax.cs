@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Timers;
+using Daiv_OA.BLL.Task;
 
 namespace Daiv_OA.Web
 {
@@ -22,6 +23,8 @@ namespace Daiv_OA.Web
             aTimer.Elapsed += new ElapsedEventHandler(TimeEvent);
             aTimer.Interval = 10000;// 设置引发时间的时间间隔　此处设置为１0秒
             aTimer.Enabled = true;
+
+            ScheduledTask.Instance().Start();
         }
         private void TimeEvent(object source, ElapsedEventArgs e)
         { 
@@ -84,7 +87,7 @@ namespace Daiv_OA.Web
 
         protected void Application_End(object sender, EventArgs e)
         {
-
+            ScheduledTask.Instance().Stop();
         }
     }
 }

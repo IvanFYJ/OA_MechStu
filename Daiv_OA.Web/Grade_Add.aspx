@@ -15,10 +15,9 @@
     <div style="margin: 7px;">
         <table class="tabs_head" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
-                <td width="140">
-                    <h1>
-                        班级管理</h1>
-                </td>
+                    <td width="240">
+                        <h1> <span id="pPageSpan" style="cursor:pointer" title="点击退回到年级管理" >年级管理</span>-班级管理</h1>
+                    </td>
                 <td class="actions" width="*">
                     <table cellspacing="0" cellpadding="0" border="0" align="right">
                         <tr>
@@ -28,7 +27,7 @@
                             <td>
                                 <a href="role.aspx?roleid=0">角色列表</a>
                             </td>--%>
-                            <td><a href="Grade_List.aspx">班级列表</a></td>
+                            <td><a href="Grade_List.aspx?gid=<%=gradeId %>">班级列表</a></td>
                             <td class="active">添加班级</td>
 <%--                            <td><a href="Grade_Add2.aspx">添加主管</a></td>
                             <td><a href="Grade_Add3.aspx">添加副主管</a></td>
@@ -77,7 +76,7 @@
                                     <tr style="display:none;">
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">设备电话号码：</span>
-                                            <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:TextBox ID="Mphone" runat="server" Width="220px" Height="24px" CssClass="ipt" Text="111" ></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="Mphone"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>
@@ -104,7 +103,7 @@
                             <ul><li>
                                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click" /></li>
                             <li>
-                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Grade_List.aspx'" /></li>
+                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Grade_List.aspx?gid=<%=gradeId %>'" /></li>
                                         </ul>
                         </div>
                     </td>
@@ -117,10 +116,26 @@
     </form>
 <script type="text/javascript"> 
     var sgjson = '<%=GetSchoolAndGradeStr()%>';
+    var gcjson = '';
     var sgObject = {};
-    var shid = 0;
-    var gradeid = 0;
+    var shid = <%=SchID%>;
+    var gradeid = <%=SchGradeId%>;
 
+    function ddlFinish() {
+        //$('#schGid').attr("disabled", "disabled");
+        //$('#schGradeGid').attr("disabled", "disabled");
+    };
+    
+    $(function(){
+    
+        //退回显示班级
+        $("#pPageSpan").on('click', function () {
+            //iframe层-父子操作
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+            parent.gradeShow();
+        });
+    });
 </script>
 
 </body>

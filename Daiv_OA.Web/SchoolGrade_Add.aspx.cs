@@ -10,13 +10,33 @@ namespace Daiv_OA.Web
 {
     public partial class SchoolGrade_Add : Daiv_OA.UI.BasicPage
     {
+        protected int schId = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
             User_Load("schgrade-list");
+
+            //学校ID
+            string shid = Request["shid"];
+            if (!string.IsNullOrEmpty(shid))
+            {
+                try
+                {
+                    schId = Convert.ToInt32(shid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
             if (!this.IsPostBack)
             {
                 string sql = "";
+                if(schId > 0)
+                {
+                    sql = " ID=" + schId;
+                }
                 Daiv_OA.BLL.SchoolBLL dp = new Daiv_OA.BLL.SchoolBLL();
                 DataSet ds = dp.GetList(sql);
                 for (int j = 0; j < ds.Tables[0].Rows.Count; j++)
@@ -48,11 +68,11 @@ namespace Daiv_OA.Web
             }
             catch (Exception ex)
             {
-                FinalMessage("操作失败！" + ex.Message, "SchoolGrade_List.aspx", 1);
+                FinalMessage("操作失败！" + ex.Message, "SchoolGrade_List.aspx?shid="+schId, 1);
                 return;
             }
 
-            FinalMessage("操作成功", "SchoolGrade_List.aspx", 0);
+            FinalMessage("操作成功", "SchoolGrade_List.aspx?shid=" + schId, 0);
         }
     }
 }

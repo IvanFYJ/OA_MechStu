@@ -499,9 +499,9 @@ namespace Daiv_OA.UI
         /// 获取学和年级字符串
         /// </summary>
         /// <returns></returns>
-        public string GetSchoolAndGradeStr()
+        public string GetSchoolAndGradeStr(int schId = 0)
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(new BLL.SchoolGradeBLL().GetSchoolAndGradeData());
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new BLL.SchoolGradeBLL().GetSchoolAndGradeData(schId));
         }
 
         /// <summary>

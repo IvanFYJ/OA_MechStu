@@ -10,9 +10,32 @@ namespace Daiv_OA.Web
 {
     public partial class Student_List : Daiv_OA.UI.BasicPage
     {
+        protected int classId = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             User_Load("student-list");
+
+            //班级ID
+            string cid = Request["cid"];
+            if (!string.IsNullOrEmpty(cid))
+            {
+                try
+                {
+                    classId = Convert.ToInt32(cid);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            //设置班级
+            SchClassId = classId;
+            //设置年级
+            Entity.GradeEntity cmodel = new BLL.GradeBLL().GetEntity(SchClassId);
+            if (cmodel != null)
+            {
+                SchGradeId = cmodel.GgradeID;
+            }
+
             if (!this.Page.IsPostBack)
             {
                 this.user_repeater.DataSource = pds();
@@ -45,6 +68,11 @@ namespace Daiv_OA.Web
         //数据绑定
         void Bind()
         {
+            string whereSql = "";
+            if (classId > 0)
+            {
+                whereSql = " and st.Gid=" + classId;
+            }
             string sql = string.Format(@"SELECT 
 st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Gname,st.Sname,st.MechID,st.IsDeleted,
 g.Gdescription,g.GgradeName,g.Gname
@@ -53,7 +81,7 @@ g.Gdescription,g.GgradeName,g.Gname
 FROM Daiv_OA..OA_Student(NOLOCK) st 
 JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
 --LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
-WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
+WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}{1}", UserId,whereSql);
             this.user_repeater.DataSource = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             this.user_repeater.DataBind();
         }
@@ -67,9 +95,9 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
             model.Updatetype = "删除学生";
             int i = new Daiv_OA.BLL.AdminlogBLL().Add(model);
             if (i > 0)
-                FinalMessage("学生删除成功", "Student_List.aspx", 0);
+                FinalMessage("学生删除成功", "Student_List.aspx?cid="+classId, 0);
             else
-                FinalMessage("学生删除失败", "Student_List.aspx", 0);
+                FinalMessage("学生删除失败", "Student_List.aspx?cid=" + classId, 0);
         }
 
         //通过参数获取被更改的用户名
@@ -83,6 +111,11 @@ WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}", UserId);
 
         private PagedDataSource pds()
         {
+            string whereSql = "";
+            if (classId > 0)
+            {
+                whereSql = " and st.Gid=" + classId;
+            }
             string sql = string.Format(@"SELECT 
 st.Sid,st.Snumber,st.Gid,st.Uid,st.Sbirthday,st.Sname,st.MechID,st.IsDeleted,
 g.Gdescription,g.GgradeName,g.Gname,
@@ -94,9 +127,9 @@ JOIN Daiv_OA..OA_Grade(NOLOCK) g ON g.Gid = st.Gid
 left join OA_SchoolGrade schg on g.GgradeID = schg.ID
 left join OA_School sch on sch.ID = schg.SchoolID
 --LEFT JOIN Daiv_OA..OA_Contact(NOLOCK) cat ON cat.Sid = st.Sid
-WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}
+WHERE st.IsDeleted = 0 AND g.IsDeleted = 0  AND st.MechID ={0}{1}
 order by sch.Name,schg.Name,g.Gname,st.Sname
-", UserId);
+", UserId,whereSql);
             DataSet ds = new Daiv_OA.BLL.GradeBLL().Getall(sql);
             //this.user_repeater.DataBind();
             //this.user_repeater.DataSource = new Daiv_OA.BLL.UserBLL().Getall(sql);
@@ -148,7 +181,7 @@ order by sch.Name,schg.Name,g.Gname,st.Sname
                 }
                 else
                 {
-                    lpprev.NavigateUrl = "?page=" + (i - 1);
+                    lpprev.NavigateUrl = "?page=" + (i - 1)+"&cid="+classId;
                 }
                 if (i >= n - 1)
                 {
@@ -159,11 +192,11 @@ order by sch.Name,schg.Name,g.Gname,st.Sname
                 }
                 else
                 {
-                    lpnext.NavigateUrl = "?page=" + (i + 1);
+                    lpnext.NavigateUrl = "?page=" + (i + 1) + "&cid=" + classId;
                 }
 
-                lpfirst.NavigateUrl = "?page=0";//向本页传递参数page
-                lplast.NavigateUrl = "?page=" + (n - 1);
+                lpfirst.NavigateUrl = "?page=0" + "&cid=" + classId;//向本页传递参数page
+                lplast.NavigateUrl = "?page=" + (n - 1) + "&cid=" + classId;
 
                 ddlp.SelectedIndex = Convert.ToInt32(pds().CurrentPageIndex);//更新下拉列表框中的当前选中页序号
             }
@@ -173,7 +206,7 @@ order by sch.Name,schg.Name,g.Gname,st.Sname
         protected void ddlp_SelectedIndexChanged(object sender, EventArgs e)
         {//脚模板中的下拉列表框更改时激发
             string pg = Convert.ToString((Convert.ToInt32(((DropDownList)sender).SelectedValue) - 1));//获取列表框当前选中项
-            Response.Redirect("Student_List.aspx?page=" + pg);//页面转向
+            Response.Redirect("Student_List.aspx?page=" + pg+"&cid=" + classId);//页面转向
         }
     }
 }

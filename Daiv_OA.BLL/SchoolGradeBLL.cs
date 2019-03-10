@@ -96,7 +96,7 @@ namespace Daiv_OA.BLL
         /// 获取学校和年级json字符串
         /// </summary>
         /// <returns></returns>
-        public List<object> GetSchoolAndGradeData()
+        public List<object> GetSchoolAndGradeData(int schId = 0)
         {
             SchoolBLL sbll = new SchoolBLL();
             SchoolGradeBLL sbgradell = new SchoolGradeBLL();
@@ -105,6 +105,10 @@ namespace Daiv_OA.BLL
             List<object> resultList = new List<object>();
             foreach (var item in schList)
             {
+                if(schId > 0 && item.ID != schId)
+                {
+                    continue;
+                }
                 List<Entity.SchoolGradeEntity> sgTemp = sbgradelList.Where(g => g.SchoolID == item.ID).ToList();
                 resultList.Add(new { shname = item.Name, shid = item.ID, grades = sgTemp });
             }

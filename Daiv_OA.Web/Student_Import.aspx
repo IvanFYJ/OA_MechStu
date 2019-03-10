@@ -23,15 +23,15 @@
     <div style="margin: 7px;">
         <table class="tabs_head" cellpadding="0" cellspacing="0" border="0" width="100%">
             <tr>
-                <td width="140">
-                    <h1>
-                        学生管理</h1>
+                <td width="240">
+                            <h1> <span id="pPageSpan" style="cursor:pointer" title="点击退回到班级管理" >班级管理</span>-学生管理</h1>
+                            
                 </td>
                 <td class="actions" width="*">
                     <table cellspacing="0" cellpadding="0" border="0" align="right">
                         <tr>
-                            <td><a href="Student_List.aspx">学生列表</a></td>
-                            <td ><a href="Student_Add.aspx">添加学生</a></td>
+                            <td><a href="Student_List.aspx?cid=<%=classId%>">学生列表</a></td>
+                            <td ><a href="Student_Add.aspx?cid=<%=classId%>">添加学生</a></td>
                             <td class="active">导入学生</td>
                         </tr>
                     </table>
@@ -93,7 +93,7 @@
                             <ul><li>
                                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="images/btn_submit.gif" OnClick="ImageButton1_Click" /></li>
                             <li>
-                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Student_List.aspx'" /></li>
+                                        <img alt="取消返回" src="images/btn_cancel.gif" style="cursor:pointer;" onclick="location.href='Student_List.aspx?cid=<%=classId%>'" /></li>
                                         </ul>
                         </div>
                     </td>
@@ -109,10 +109,19 @@
     var gcjson = '<%=GetGradeClassStr()%>';
     var sgObject = {};
     var gcObject = {};
-    var shid = 0;
-    var gradeid = 0;
-    var gclassid = 0;
-
+    var shid = <%=SchID%>;
+    var gradeid =  <%=SchGradeId%>;
+    var gclassid =  <%=SchClassId%>;
+    $(function(){
+    
+        //退回显示班级
+        $("#pPageSpan").on('click', function () {
+            //iframe层-父子操作
+            var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            parent.layer.close(index);
+            parent.classShow();
+        })
+    });
 </script>
 
 </body>

@@ -3,7 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Text;
+using System.Web;
+using System.Web.Script.Serialization;
 
 namespace Daiv_OA.BLL
 {
@@ -186,6 +189,57 @@ namespace Daiv_OA.BLL
                 //return dal.List(mPhone); 
             #endregion
             return dal.List(pageIndex, pageSize, mPhone);
+        }
+
+
+        /// <summary>
+        /// 获取更新年级学生数据
+        /// </summary>
+        /// <returns></returns>
+        public IList<Hashtable> getUpdateGradeData()
+        {
+            string where = "";
+            return dal.getUpdateGradeData(where);
+        }
+
+        /// <summary>
+        /// 更新学生年级
+        /// </summary>
+        public void UpdateStudentGrade(string webroot = "")
+        {
+            string dateStr = DateTime.Now.ToString("yyyy-MM-dd");
+            string updateStr = "UP";
+            string directoryPath = "databak\\";
+            if (string.IsNullOrEmpty(webroot))
+            {
+                webroot = HttpContext.Current.Server.MapPath("/");
+            }
+            logHelper.logInfo("当前项目根路径："+webroot);
+            //判断当前时间是否为每年的8月30号
+            if (8!=DateTime.Now.Month || 30!= DateTime.Now.Day)
+            {
+                logHelper.logInfo("不是8月30号，不需要更新！");
+                return;
+            }
+            //判断执行文件是否存在，如果存在，直接返回
+            if (File.Exists(webroot + directoryPath + dateStr + "-"+updateStr+ ".txt"))
+            {
+                logHelper.logInfo("更新文件已经存在，不需要更新！");
+                return;
+            }
+            if (!Directory.Exists(webroot + directoryPath))
+            {
+                Directory.CreateDirectory(webroot + directoryPath);
+            }
+            //1.获取需要更新的数据，备份到一个文件中,文件名称：当前年  xxxx-8-30.txt 号
+            IList<Hashtable> list = getUpdateGradeData();
+            string seriesdata = new JavaScriptSerializer().Serialize(list);
+            System.IO.File.WriteAllText(webroot+directoryPath+dateStr+".txt", seriesdata, Encoding.UTF8);
+
+            //2.更新数据
+            dal.UpdateStudentGrade();
+            System.IO.File.WriteAllText(webroot + directoryPath + dateStr +"-"+updateStr+ ".txt", dateStr, Encoding.UTF8);
+
         }
 
         /// <summary>
