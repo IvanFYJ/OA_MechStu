@@ -1,10 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Student_List.aspx.cs" Inherits="Daiv_OA.Web.Student_List" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="School_Student_List.aspx.cs" Inherits="Daiv_OA.Web.School_Student_List" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>学生列表</title>
+    <title>全校学生列表</title>
     <script type="text/javascript" language="javascript">window.onerror = function () { return true; };</script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
@@ -27,8 +26,8 @@
                          
                         <%--  <td><a href="role.aspx?roleid=1">部门管理</a></td>
                           <td><a href="role.aspx?roleid=0">角色管理</a></td>--%>
-                            <td class="active">学生列表</td>
-                            <td><a href="School_Student_List.aspx?cid=<%=classId%>">全校学生列表</a></td>
+                            <td><a href="Student_List.aspx?cid=<%=classId%>">学生列表</a></td>
+                            <td class="active">全校学生列表</td>
                             <td><a href="Student_Add.aspx?cid=<%=classId%>">添加学生</a></td>
                             <td><a href="Student_Import.aspx?cid=<%=classId%>">导入学生</a></td>
 <%--                            <td><a href="User_Add2.aspx">添加主管</a></td>
@@ -168,4 +167,3 @@
 
 </body>
 </html>
-
