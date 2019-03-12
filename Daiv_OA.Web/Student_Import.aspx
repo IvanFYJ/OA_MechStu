@@ -31,8 +31,10 @@
                     <table cellspacing="0" cellpadding="0" border="0" align="right">
                         <tr>
                             <td><a href="Student_List.aspx?cid=<%=classId%>">学生列表</a></td>
+                            <td ><a href="School_Student_List.aspx?cid=<%=classId%>">全校学生列表</a></td>
                             <td ><a href="Student_Add.aspx?cid=<%=classId%>">添加学生</a></td>
                             <td class="active">导入学生</td>
+                            <td><a href="Student_FlowInfo.aspx?cid=<%=classId%>">学生费用列表</a></td>
                         </tr>
                     </table>
                 </td>

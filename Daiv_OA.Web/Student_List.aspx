@@ -31,6 +31,7 @@
                             <td><a href="School_Student_List.aspx?cid=<%=classId%>">全校学生列表</a></td>
                             <td><a href="Student_Add.aspx?cid=<%=classId%>">添加学生</a></td>
                             <td><a href="Student_Import.aspx?cid=<%=classId%>">导入学生</a></td>
+                            <td><a href="Student_FlowInfo.aspx?cid=<%=classId%>">学生费用列表</a></td>
 <%--                            <td><a href="User_Add2.aspx">添加主管</a></td>
                             <td><a href="User_Add3.aspx">添加副主管</a></td>
                             <td><a href="User_Add4.aspx">添加员工</a></td>--%>

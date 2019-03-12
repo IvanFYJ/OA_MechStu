@@ -709,6 +709,7 @@
     <Content Include="scripts\ui\skins\icons\true.gif" />
     <Content Include="scripts\ui\skins\icons\up.gif" />
     <Content Include="scripts\ui\skins\ligerui-icons.css" />
+    <Content Include="Student_FlowInfo.aspx" />
     <Content Include="Student_Add.aspx" />
     <Content Include="Student_Edit.aspx" />
     <Content Include="Student_Import.aspx" />
@@ -1236,6 +1237,13 @@
     </Compile>
     <Compile Include="Scorlist2.aspx.designer.cs">
       <DependentUpon>Scorlist2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Student_FlowInfo.aspx.cs">
+      <DependentUpon>Student_FlowInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Student_FlowInfo.aspx.designer.cs">
+      <DependentUpon>Student_FlowInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Student_Add.aspx.cs">
       <DependentUpon>Student_Add.aspx</DependentUpon>
