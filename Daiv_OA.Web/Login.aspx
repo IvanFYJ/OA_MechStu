@@ -72,8 +72,8 @@
             <asp:Label ID="lblTip" runat="server" Text="请输入用户名及密码" Visible="False" />
         </div>
     </div>
-	<div class="login_copyright">Copyright © 2012 - 2012 daiv.cn Inc. All Rights Reserved.<br />
-        新启航 版权所有</div>
+	<div class="login_copyright">Copyright © 2019 - 2019 szhonganxin.cn Inc. All Rights Reserved.<br />
+        深圳市鸿安信科技有限公司 版权所有</div>
 </div>
 </form>
 </body>

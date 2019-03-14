@@ -164,7 +164,8 @@ namespace Daiv_OA.Utils
         /// <returns></returns>
         public static bool IsMobileNum(string _value)
         {
-            Regex regex = new Regex(@"^(13|15)\d{9}$", RegexOptions.IgnoreCase);
+            return true;
+            Regex regex = new Regex(@"^(13|15|18)\d{9}$", RegexOptions.IgnoreCase);
             return regex.Match(_value).Success;
         }
         /// <summary>
