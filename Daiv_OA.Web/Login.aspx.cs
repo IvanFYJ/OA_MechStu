@@ -13,13 +13,20 @@ namespace Daiv_OA.Web
 {
     public partial class Login : System.Web.UI.Page
     {
-      
+
+        protected string userName = "";
+        protected string password = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["UserName"] = null;
             if (!this.Page.IsPostBack)
             {
                 Autologin();
+            }
+            if (Request.Url.ToString().ToLower().Contains("localhost"))
+            {
+                userName = "51aspx";
+                password = "111111";
             }
         }
 

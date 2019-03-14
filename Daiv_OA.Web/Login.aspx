@@ -31,8 +31,8 @@
 //            }
         //        });
         if (document.location.href.indexOf('localhost') > -1) {
-            $('#txtUserName').val('51aspx');
-            $('#txtUserPwd').val('111111');
+            $('#txtUserName').val('<%=userName%>');
+            $('#txtUserPwd').val('<%=password%>');
         }
     });
 
