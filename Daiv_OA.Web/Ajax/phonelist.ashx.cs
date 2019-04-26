@@ -21,11 +21,21 @@ namespace Daiv_OA.Web.Ajax
             string schoolnumber = HttpContext.Current.Request.QueryString["schoolnumber"];
             string datetime = HttpContext.Current.Request.QueryString["datetime"];
 
-            JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
-            if(ob["schoolnumber"] != null && ob["datetime"] != null)
+            if(string.IsNullOrEmpty(schoolnumber) && string.IsNullOrEmpty(datetime))
             {
-                schoolnumber = ob["schoolnumber"].ToString();
-                datetime = ob["datetime"].ToString();
+                try
+                {
+                    JObject ob = StreamToString(HttpContext.Current.Request.InputStream);
+                    if (ob["schoolnumber"] != null && ob["datetime"] != null)
+                    {
+                        schoolnumber = ob["schoolnumber"].ToString();
+                        datetime = ob["datetime"].ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
             logHelper.logInfo(" phonelist params：schoolnumber：" + schoolnumber + " datetime:" + datetime );
             //获取情亲号
