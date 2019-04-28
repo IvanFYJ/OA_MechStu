@@ -156,9 +156,20 @@ namespace Daiv_OA.BLL
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie, string datetime)
+        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie, string datetime, string pageindex, string pagesize)
         {
-            return dal.GetPhoneListBySchoolAndDate(sserie, datetime);
+            DateTime dt2 = Convert.ToDateTime(datetime);
+            IList<Hashtable> list = dal.GetPhoneListBySchoolAndDate(sserie, datetime, pageindex, pagesize);
+            if(list == null && list.Count <= 0)
+            {
+                return list;
+            }
+            DateTime dt1 = Convert.ToDateTime(list[0]["MaxDate"]);
+            if (!( dt2.CompareTo(dt1)<=0))
+            {
+                return null;
+            }
+            return list;
         }
 
 

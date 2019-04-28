@@ -20,8 +20,10 @@ namespace Daiv_OA.Web.Ajax
             context.Response.ContentType = "text/plain";
             string schoolnumber = HttpContext.Current.Request.QueryString["schoolnumber"];
             string datetime = HttpContext.Current.Request.QueryString["datetime"];
+            string pageindex = HttpContext.Current.Request.QueryString["pageindex"];
+            string pagesize = HttpContext.Current.Request.QueryString["pagesize"];
 
-            if(string.IsNullOrEmpty(schoolnumber) && string.IsNullOrEmpty(datetime))
+            if (string.IsNullOrEmpty(schoolnumber) && string.IsNullOrEmpty(datetime))
             {
                 try
                 {
@@ -40,10 +42,12 @@ namespace Daiv_OA.Web.Ajax
             logHelper.logInfo(" phonelist params：schoolnumber：" + schoolnumber + " datetime:" + datetime );
             //获取情亲号
             BLL.ContactBLL cbll = new BLL.ContactBLL();
-            IList<Hashtable> list=  cbll.GetPhoneListBySchoolAndDate(schoolnumber, datetime);
+            IList<Hashtable> list=  cbll.GetPhoneListBySchoolAndDate(schoolnumber, datetime,pageindex,pagesize);
             List<string> resultList = new List<string>();
             if(list != null && list.Count > 0)
             {
+                resultList.Add("[" + list[0]["Total"] + "]");
+                resultList.Add("[" + list[0]["MaxDate"] + "]");
                 foreach (var item in list)
                 {
                     resultList.Add("["+item["Cphone"].ToString()+"]");

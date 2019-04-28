@@ -348,17 +348,41 @@ namespace Daiv_OA.DAL
         /// </summary>
         /// <param name="openId"></param>
         /// <returns></returns>
-        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie,string datetime)
+        public IList<Hashtable> GetPhoneListBySchoolAndDate(string sserie,string datetime, string pageindex,string pagesize)
         {
+            StringBuilder sqlPage = new StringBuilder();
+            if(!string.IsNullOrEmpty(pageindex) && !string.IsNullOrEmpty(pagesize))
+            {
+                try
+                {
+                    int pIndex = Convert.ToInt32(pageindex);
+                    int pSize = Convert.ToInt32(pagesize);
+                    if(pIndex > 0 && pSize > 0)
+                    {
+                        sqlPage.Append(string.Format(" and  req >{0} and req <={1}", pSize * (pIndex - 1), pSize * pIndex));
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
             string sql = @"
-select distinct  oc.Cphone 
+declare @total int ;
+declare @minDate datetime;
+if object_id('tempdb..#temp') is not null begin drop table #temp end
+select distinct  oc.Cphone,oc.CreatDate,ROW_NUMBER() over(order by oc.Cphone) as req
+into #temp
 from Daiv_OA..OA_Contact oc 
 join Daiv_OA..OA_Student os on oc.Sid = os.Sid
 join Daiv_OA..OA_Grade og on os.Gid = og.Gid
 join Daiv_OA..OA_SchoolGrade osg on osg.ID = og.GgradeID
 join Daiv_OA..OA_School osc on osc.ID = osg.SchoolID
-where osc.SchoolSerie = @ss and oc.CreatDate > @dt and oc.IsDeleted = 0 and ISNULL(oc.Cphone,'') != ''
-";
+where osc.SchoolSerie = @ss  and oc.IsDeleted = 0 and ISNULL(oc.Cphone,'') != ''
+
+select @total= COUNT(1) from #temp
+select @minDate=MAX(CreatDate) from #temp
+select *,@total as Total ,@minDate as MaxDate from #temp where 1=1 "+sqlPage.ToString();
             SqlParameter[] parameters = {
                     new SqlParameter("@ss", SqlDbType.NVarChar,128),
                     new SqlParameter("@dt", SqlDbType.DateTime)
@@ -376,13 +400,15 @@ where osc.SchoolSerie = @ss and oc.CreatDate > @dt and oc.IsDeleted = 0 and ISNU
         public Hashtable GetMaxCreatTime()
         {
             string sql = @"
-select MAX(CreatDate) as CreatDate from OA_Contact
+select MAX(CreatDate) as CreatDate from OA_Contact oc where oc.IsDeleted = 0  and ISNULL(oc.Cphone,'') != ''
 ";
             SqlParameter[] parameters = {
             };
             //分页查询
             return DbHelperSQL.ExecuteReaderHashtable(sql, parameters)[0];
         }
+
+        
 
 
         /// <summary>
