@@ -60,7 +60,7 @@
                                     <tr>
                                         <td height="20" bgcolor="#f6f9fe" style="border-bottom: 1px solid #f3f6fb; border-top: 1px solid #FFFFFF;">
                                             <span class="bvjto styp">学校编号：</span>
-                                            <asp:TextBox ID="SchoolSerie" runat="server" Width="220px" MaxLength="8" Height="24px" CssClass="ipt"></asp:TextBox>
+                                            <asp:TextBox ID="SchoolSerie" runat="server" Width="220px" MaxLength="8" Height="24px" CssClass="ipt" onkeyup="value=value.replace(/[^0-9]/g,'')" onpaste="return false" oncontextmenu="return false;"></asp:TextBox>
                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="SchoolSerie"
                                                 ErrorMessage="*必填选项"></asp:RequiredFieldValidator>
                                         </td>

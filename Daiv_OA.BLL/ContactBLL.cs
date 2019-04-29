@@ -160,7 +160,7 @@ namespace Daiv_OA.BLL
         {
             DateTime dt2 = Convert.ToDateTime(datetime);
             IList<Hashtable> list = dal.GetPhoneListBySchoolAndDate(sserie, datetime, pageindex, pagesize);
-            if(list == null && list.Count <= 0)
+            if(list == null || list.Count <= 0)
             {
                 return list;
             }

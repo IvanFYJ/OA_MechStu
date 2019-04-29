@@ -59,21 +59,9 @@ namespace Daiv_OA.Web.Ajax
                 Hashtable ht = cbll.GetMaxCreatTime();
                 if(ht != null && ht["CreatDate"] != null)
                 {
-                    DateTime dt1 = Convert.ToDateTime(ht["CreatDate"]);
-                    DateTime dt2 = Convert.ToDateTime(datetime);
-                    if(dt2.CompareTo(dt1) <= 0)
-                    {
-                        resultList.Add("[END]");
-                    }
-                    else
-                    {
-                        resultList.Add("[NO RECORD]");
-                    }
+                    resultList.Add("[" + ht["CreatDate"].ToString() + "]");
                 }
-                else
-                {
-                    resultList.Add("[NO RECORD]");
-                }
+                resultList.Add("[NO RECORD]");
             }
             context.Response.Write(string.Join(",",resultList));
         }
