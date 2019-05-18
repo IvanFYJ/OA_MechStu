@@ -172,6 +172,12 @@ namespace Daiv_OA.BLL
             return list;
         }
 
+        public Hashtable GetPhoneListBySchoolAndPhonenum(string sserie, string phonenum)
+        {
+            if (string.IsNullOrEmpty(sserie) || string.IsNullOrEmpty(phonenum))
+                return null;
+            return dal.GetPhoneListBySchoolAndPhonenum(sserie, phonenum);
+        }
 
         /// <summary>
         /// 获取亲情号最大的修改时间

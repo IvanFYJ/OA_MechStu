@@ -393,6 +393,34 @@ select *,@total as Total ,@minDate as MaxDate from #temp where 1=1 "+sqlPage.ToS
             return DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
         }
 
+
+        /// <summary>
+        /// 根据学校序列号和电话号码获取数据
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable GetPhoneListBySchoolAndPhonenum(string sserie, string phonenum)
+        {
+            string sql = @"select distinct  oc.Cphone,osc.SchoolSerie
+from Daiv_OA..OA_Contact oc 
+join Daiv_OA..OA_Student os on oc.Sid = os.Sid
+join Daiv_OA..OA_Grade og on os.Gid = og.Gid
+join Daiv_OA..OA_SchoolGrade osg on osg.ID = og.GgradeID
+join Daiv_OA..OA_School osc on osc.ID = osg.SchoolID
+where oc.Cphone = @phone and osc.SchoolSerie =@ss  and oc.IsDeleted = 0 and ISNULL(oc.Cphone,'') != ''
+";
+            SqlParameter[] parameters = {
+                    new SqlParameter("@ss", SqlDbType.NVarChar,128),
+                    new SqlParameter("@phone", SqlDbType.NVarChar,50)
+            };
+            parameters[0].Value = sserie;
+            parameters[1].Value = phonenum;
+            //查询结果
+            IList<Hashtable> resultList = DbHelperSQL.ExecuteReaderHashtable(sql, parameters);
+            if (resultList != null && resultList.Count > 0)
+                return resultList[0];
+            return null;
+        }
+
         /// <summary>
         /// 获取亲情号最大的修改时间
         /// </summary>
